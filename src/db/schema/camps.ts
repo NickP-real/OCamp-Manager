@@ -10,7 +10,7 @@ import {
 	uniqueIndex,
 	varchar
 } from 'drizzle-orm/pg-core';
-import softDeleteColumns from '../soft-delete-columns';
+import { softDeleteColumns } from '../util-columns';
 import { staff, student } from './users';
 
 export const camp = pgTable(

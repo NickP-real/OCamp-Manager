@@ -8,7 +8,7 @@ import {
 	uniqueIndex,
 	varchar
 } from 'drizzle-orm/pg-core';
-import softDeleteColumns from '../soft-delete-columns';
+import { softDeleteColumns } from '../util-columns';
 
 export const student = pgTable(
 	'student',
