@@ -1,5 +1,5 @@
 {
-  "id": "99d160e6-bc13-4d7b-af63-76f1a33ba365",
+  "id": "02ed0ccc-c76a-4467-9cb7-53f59ad2aaab",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "5",
   "dialect": "pg",
@@ -828,16 +828,17 @@
           "onUpdate": "no action"
         }
       },
-      "compositePrimaryKeys": {
-        "room_camp_id_name_pk": {
-          "name": "room_camp_id_name_pk",
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "room_unq_1": {
+          "name": "room_unq_1",
+          "nullsNotDistinct": false,
           "columns": [
-            "camp_id",
-            "name"
+            "name",
+            "camp_id"
           ]
         }
-      },
-      "uniqueConstraints": {}
+      }
     },
     "room_student": {
       "name": "room_student",
@@ -948,16 +949,17 @@
           "onUpdate": "no action"
         }
       },
-      "compositePrimaryKeys": {
-        "room_student_student_id_room_id_pk": {
-          "name": "room_student_student_id_room_id_pk",
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "room_student_unq_1": {
+          "name": "room_student_unq_1",
+          "nullsNotDistinct": false,
           "columns": [
             "student_id",
             "room_id"
           ]
         }
-      },
-      "uniqueConstraints": {}
+      }
     },
     "staff": {
       "name": "staff",

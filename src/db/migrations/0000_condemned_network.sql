@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS "room" (
 	"deleted_at" timestamp DEFAULT '1970-01-01 00:00:00.001' NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
-	CONSTRAINT "room_camp_id_name_pk" PRIMARY KEY("camp_id","name")
+	CONSTRAINT "room_unq_1" UNIQUE("name","camp_id")
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "room_student" (
@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS "room_student" (
 	"deleted_at" timestamp DEFAULT '1970-01-01 00:00:00.001' NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
-	CONSTRAINT "room_student_student_id_room_id_pk" PRIMARY KEY("student_id","room_id")
+	CONSTRAINT "room_student_unq_1" UNIQUE("student_id","room_id")
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "staff" (

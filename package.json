@@ -12,8 +12,8 @@
 		"format": "prettier --write .",
 		"test:integration": "playwright test",
 		"test:unit": "vitest",
-		"db:generate": "drizzle-kit generate --schema ./src/db/schema --out ./src/db/migrations",
-		"db:migrate": "drizzle-kit push:pg"
+		"db:generate": "drizzle-kit generate:pg --schema ./src/db/schema --out=./src/db/migrations",
+		"db:migrate": "npx tsx ./src/db/migrate.ts"
 	},
 	"devDependencies": {
 		"@fontsource/fira-mono": "^4.5.10",
@@ -44,6 +44,7 @@
 	"type": "module",
 	"dependencies": {
 		"@vercel/postgres": "^0.7.2",
+		"dotenv-flow": "^4.1.0",
 		"drizzle-orm": "^0.30.2",
 		"pg": "^8.11.3"
 	}

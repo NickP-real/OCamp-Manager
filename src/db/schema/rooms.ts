@@ -2,9 +2,9 @@ import {
 	index,
 	integer,
 	pgTable,
-	primaryKey,
 	serial,
 	text,
+	unique,
 	uniqueIndex,
 	varchar
 } from 'drizzle-orm/pg-core';
@@ -23,7 +23,7 @@ export const room = pgTable(
 		...softDeleteColumns
 	},
 	(room) => ({
-		composite: primaryKey({ columns: [room.campId, room.name] }),
+		roomUnq1: unique('room_unq_1').on(room.name, room.campId),
 		roomIdx1: uniqueIndex('room_idx_1').on(room.name),
 		roomIdx2: index('room_idx_2').on(room.campId),
 		roomIdx3: index('room_idx_3').on(room.deletedAt),
@@ -41,7 +41,7 @@ export const roomStudent = pgTable(
 		...softDeleteColumns
 	},
 	(roomStudent) => ({
-		composite: primaryKey({ columns: [roomStudent.studentId, roomStudent.roomId] }),
+		roomStudentUnq1: unique('room_student_unq_1').on(roomStudent.studentId, roomStudent.roomId),
 		roomStudentIdx1: uniqueIndex('room_student_idx_1').on(roomStudent.roomId),
 		roomStudentIdx2: uniqueIndex('room_student_idx_2').on(roomStudent.studentId),
 		roomStudentIdx3: index('room_student_idx_3').on(roomStudent.deletedAt),
