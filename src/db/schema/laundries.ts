@@ -1,6 +1,7 @@
 import { index, integer, pgTable, serial, uniqueIndex, varchar } from 'drizzle-orm/pg-core';
 import { room } from './rooms';
 import { softDeleteColumns } from '../util-columns';
+import { paymentMethodEnum } from './enums';
 
 export const laundryItem = pgTable(
 	'laundry_item',
@@ -24,6 +25,7 @@ export const roomLaundryItem = pgTable(
 		roomId: integer('room_id').references(() => room.id),
 		item_id: integer('item_id').references(() => laundryItem.id),
 		quantity: integer('quantity').notNull(),
+		paymentMethod: paymentMethodEnum('payment_method').notNull(),
 		...softDeleteColumns
 	},
 	(roomLaundryItem) => ({
