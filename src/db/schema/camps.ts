@@ -7,11 +7,12 @@ import {
 	pgTable,
 	serial,
 	text,
+	unique,
 	uniqueIndex,
 	varchar
 } from 'drizzle-orm/pg-core';
 import { softDeleteColumns } from '../util-columns';
-import { staff, student } from './users';
+import { staff, paticipant } from './users';
 
 export const camp = pgTable(
 	'camp',
@@ -77,6 +78,7 @@ export const campStaff = pgTable(
 		...softDeleteColumns
 	},
 	(campStaff) => ({
+		campStaffUnq1: unique('camp_staff_unq_1').on(campStaff.campId, campStaff.staffId),
 		campStaffIdx1: index('camp_staff_idx_1').on(campStaff.campId),
 		campStaffIdx2: index('camp_staff_idx_2').on(campStaff.staffId),
 		campStaffIdx3: index('camp_staff_idx_3').on(campStaff.deletedAt),
@@ -85,19 +87,23 @@ export const campStaff = pgTable(
 	})
 );
 
-export const campStudent = pgTable(
-	'camp_student',
+export const campParticipant = pgTable(
+	'camp_participant',
 	{
 		id: serial('id').primaryKey(),
 		campId: integer('camp_id').references(() => camp.id),
-		studentId: integer('staff_id').references(() => student.id),
+		participantId: integer('participant_id').references(() => paticipant.id),
 		...softDeleteColumns
 	},
-	(campStudent) => ({
-		campStudentIdx1: index('camp_student_idx_1').on(campStudent.campId),
-		campStudentIdx2: index('camp_student_idx_2').on(campStudent.studentId),
-		campStudentIdx3: index('camp_student_idx_3').on(campStudent.deletedAt),
-		campStudentIdx4: index('camp_student_idx_4').on(campStudent.createdAt),
-		campStudentIdx5: index('camp_student_idx_5').on(campStudent.updatedAt)
+	(campParticipant) => ({
+		campParticipantUnq1: unique('camp_participant_unq_1').on(
+			campParticipant.campId,
+			campParticipant.participantId
+		),
+		campParticipantIdx1: index('camp_participant_idx_1').on(campParticipant.campId),
+		campParticipantIdx2: index('camp_participant_idx_2').on(campParticipant.participantId),
+		campParticipantIdx3: index('camp_participant_idx_3').on(campParticipant.deletedAt),
+		campParticipantIdx4: index('camp_participant_idx_4').on(campParticipant.createdAt),
+		campParticipantIdx5: index('camp_participant_idx_5').on(campParticipant.updatedAt)
 	})
 );

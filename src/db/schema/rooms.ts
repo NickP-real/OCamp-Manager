@@ -8,11 +8,9 @@ import {
 	uniqueIndex,
 	varchar
 } from 'drizzle-orm/pg-core';
-import { camp } from './camps';
+import { camp, campParticipant, campStaff } from './camps';
 import { softDeleteColumns } from '../util-columns';
-import { student } from './users';
 
-// TODO: add staff room, or perhaps TA room
 export const room = pgTable(
 	'room',
 	{
@@ -32,20 +30,43 @@ export const room = pgTable(
 	})
 );
 
-export const roomStudent = pgTable(
-	'room_student',
+export const roomParticipant = pgTable(
+	'room_participant',
 	{
 		id: serial('id').primaryKey(),
 		roomId: integer('room_id').references(() => room.id),
-		studentId: integer('student_id').references(() => student.id),
+		campParticipantId: integer('camp_participant_id').references(() => campParticipant.id),
 		...softDeleteColumns
 	},
-	(roomStudent) => ({
-		roomStudentUnq1: unique('room_student_unq_1').on(roomStudent.studentId, roomStudent.roomId),
-		roomStudentIdx1: uniqueIndex('room_student_idx_1').on(roomStudent.roomId),
-		roomStudentIdx2: uniqueIndex('room_student_idx_2').on(roomStudent.studentId),
-		roomStudentIdx3: index('room_student_idx_3').on(roomStudent.deletedAt),
-		roomStudentIdx4: index('room_student_idx_4').on(roomStudent.createdAt),
-		roomStudentIdx5: index('room_student_idx_5').on(roomStudent.updatedAt)
+	(roomParticipant) => ({
+		roomParticipantUnq1: unique('room_participant_unq_1').on(
+			roomParticipant.campParticipantId,
+			roomParticipant.roomId
+		),
+		roomParticipantIdx1: uniqueIndex('room_participant_idx_1').on(roomParticipant.roomId),
+		roomParticipantIdx2: uniqueIndex('room_participant_idx_2').on(
+			roomParticipant.campParticipantId
+		),
+		roomParticipantIdx3: index('room_participant_idx_3').on(roomParticipant.deletedAt),
+		roomParticipantIdx4: index('room_participant_idx_4').on(roomParticipant.createdAt),
+		roomParticipantIdx5: index('room_participant_idx_5').on(roomParticipant.updatedAt)
+	})
+);
+
+export const roomStaff = pgTable(
+	'room_staff',
+	{
+		id: serial('id').primaryKey(),
+		roomId: integer('room_id').references(() => room.id),
+		campStaffId: integer('camp_staff_id').references(() => campStaff.id),
+		...softDeleteColumns
+	},
+	(roomStaff) => ({
+		roomStaffUnq1: unique('room_staff_unq_1').on(roomStaff.campStaffId, roomStaff.roomId),
+		roomStaffIdx1: uniqueIndex('room_staff_idx_1').on(roomStaff.roomId),
+		roomStaffIdx2: uniqueIndex('room_staff_idx_2').on(roomStaff.campStaffId),
+		roomStaffIdx3: index('room_staff_idx_3').on(roomStaff.deletedAt),
+		roomStaffIdx4: index('room_staff_idx_4').on(roomStaff.createdAt),
+		roomStaffIdx5: index('room_staff_idx_5').on(roomStaff.updatedAt)
 	})
 );

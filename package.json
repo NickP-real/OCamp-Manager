@@ -13,6 +13,7 @@
 		"test:integration": "playwright test",
 		"test:unit": "vitest",
 		"db:generate": "drizzle-kit generate:pg --schema ./src/db/schema --out=./src/db/migrations",
+    "db:push": "drizzle-kit push:pg",
 		"db:migrate": "npx tsx ./src/db/migrate.ts"
 	},
 	"devDependencies": {

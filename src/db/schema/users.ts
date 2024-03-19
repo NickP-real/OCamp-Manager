@@ -9,26 +9,28 @@ import {
 	varchar
 } from 'drizzle-orm/pg-core';
 import { softDeleteColumns } from '../util-columns';
+import { sexEnum } from './enums';
 
-export const student = pgTable(
-	'student',
+export const paticipant = pgTable(
+	'participant',
 	{
 		id: serial('id').primaryKey(),
 		firstName: varchar('first_name', { length: 256 }).notNull(),
 		lastName: varchar('last_name', { length: 256 }).notNull(),
 		nickname: varchar('nickname', { length: 256 }),
 		phone: varchar('phone', { length: 191 }),
-		birthday: date('deleted_at').notNull(),
+		birthday: date('birthday').notNull(),
+		sex: sexEnum('sex').notNull(),
 		additionalInfo: text('additional_info'),
 		...softDeleteColumns
 	},
-	(student) => ({
-		studentIdx1: index('student_idx_1').on(student.firstName),
-		studentIdx2: index('student_idx_2').on(student.lastName),
-		studentIdx3: index('student_idx_3').on(student.phone),
-		studentIdx4: index('student_idx_4').on(student.deletedAt),
-		studentIdx5: index('student_idx_5').on(student.createdAt),
-		studentIdx6: index('student_idx_6').on(student.updatedAt)
+	(participant) => ({
+		participantIdx1: index('participant_idx_1').on(participant.firstName),
+		participantIdx2: index('participant_idx_2').on(participant.lastName),
+		participantIdx3: index('participant_idx_3').on(participant.phone),
+		participantIdx4: index('participant_idx_4').on(participant.deletedAt),
+		participantIdx5: index('participant_idx_5').on(participant.createdAt),
+		participantIdx6: index('participant_idx_6').on(participant.updatedAt)
 	})
 );
 
