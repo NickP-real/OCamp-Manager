@@ -12,7 +12,8 @@ import {
 	varchar
 } from 'drizzle-orm/pg-core';
 import { softDeleteColumns } from '../util-columns';
-import { staff, paticipant } from './users';
+import { staff, participant } from './users';
+import { DEFAULT_LAUNDRY_PRICE } from '@db/db-constant';
 
 export const camp = pgTable(
 	'camp',
@@ -23,7 +24,9 @@ export const camp = pgTable(
 		toDate: date('to_date').notNull(),
 		description: text('text').notNull(),
 		hasLaundry: boolean('hasLaundry').notNull().default(true),
-		laundryPrice: numeric('laundry_price', { precision: 10, scale: 2 }),
+		laundryPrice: numeric('laundry_price', { precision: 10, scale: 2 }).default(
+			DEFAULT_LAUNDRY_PRICE.toString()
+		),
 		...softDeleteColumns
 	},
 	(camp) => ({
@@ -92,7 +95,7 @@ export const campParticipant = pgTable(
 	{
 		id: serial('id').primaryKey(),
 		campId: integer('camp_id').references(() => camp.id),
-		participantId: integer('participant_id').references(() => paticipant.id),
+		participantId: integer('participant_id').references(() => participant.id),
 		...softDeleteColumns
 	},
 	(campParticipant) => ({
@@ -107,3 +110,5 @@ export const campParticipant = pgTable(
 		campParticipantIdx5: index('camp_participant_idx_5').on(campParticipant.updatedAt)
 	})
 );
+
+export type CampInsertBody = typeof camp.$inferInsert;
