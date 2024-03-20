@@ -41,7 +41,7 @@ export const major = pgTable(
 	'major',
 	{
 		id: serial('id').primaryKey(),
-		name: varchar('name', { length: 256 }).unique().notNull(),
+		name: varchar('name', { length: 256 }).notNull(),
 		...softDeleteColumns
 	},
 	(major) => ({
