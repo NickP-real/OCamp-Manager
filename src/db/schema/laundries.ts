@@ -7,7 +7,7 @@ export const laundryItem = pgTable(
 	'laundry_item',
 	{
 		id: serial('id').primaryKey(),
-		name: varchar('name', { length: 256 }).notNull().unique(),
+		name: varchar('name', { length: 256 }).notNull(),
 		...softDeleteColumns
 	},
 	(laundryItem) => ({
