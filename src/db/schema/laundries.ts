@@ -7,7 +7,7 @@ export const laundryItem = pgTable(
 	'laundry_item',
 	{
 		id: serial('id').primaryKey(),
-		name: varchar('name', { length: 256 }).notNull(),
+		name: varchar('name', { length: 256 }).notNull().unique(),
 		...softDeleteColumns
 	},
 	(laundryItem) => ({
@@ -22,15 +22,19 @@ export const roomLaundryItem = pgTable(
 	'room_laundry_item',
 	{
 		id: serial('id').primaryKey(),
-		roomId: integer('room_id').references(() => room.id),
-		item_id: integer('item_id').references(() => laundryItem.id),
+		roomId: integer('room_id')
+			.notNull()
+			.references(() => room.id),
+		itemId: integer('item_id')
+			.notNull()
+			.references(() => laundryItem.id),
 		quantity: integer('quantity').notNull(),
 		paymentMethod: paymentMethodEnum('payment_method').notNull(),
 		...softDeleteColumns
 	},
 	(roomLaundryItem) => ({
 		roomLaundryItemIdx1: index('room_laundry_item_idx_1').on(roomLaundryItem.roomId),
-		roomLaundryItemIdx2: index('room_laundry_item_idx_2').on(roomLaundryItem.item_id),
+		roomLaundryItemIdx2: index('room_laundry_item_idx_2').on(roomLaundryItem.itemId),
 		roomLaundryItemIdx3: index('room_laundry_item_idx_3').on(roomLaundryItem.deletedAt),
 		roomLaundryItemIdx4: index('room_laundry_item_idx_4').on(roomLaundryItem.createdAt),
 		roomLaundryItemIdx5: index('room_laundry_item_idx_5').on(roomLaundryItem.updatedAt)

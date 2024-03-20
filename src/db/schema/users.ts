@@ -62,6 +62,7 @@ export const staffAccount = pgTable(
 		id: serial('id').primaryKey(),
 		staffId: integer('staff_id')
 			.unique()
+			.notNull()
 			.references(() => staff.id),
 		email: varchar('email', { length: 256 }).notNull(),
 		password: varchar('password', { length: 256 }).notNull(),

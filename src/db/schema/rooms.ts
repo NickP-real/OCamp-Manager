@@ -17,7 +17,9 @@ export const room = pgTable(
 		id: serial('id').primaryKey(),
 		name: varchar('name', { length: 256 }).notNull(),
 		description: text('description'),
-		campId: integer('camp_id').references(() => camp.id),
+		campId: integer('camp_id')
+			.notNull()
+			.references(() => camp.id),
 		...softDeleteColumns
 	},
 	(room) => ({
@@ -34,8 +36,12 @@ export const roomParticipant = pgTable(
 	'room_participant',
 	{
 		id: serial('id').primaryKey(),
-		roomId: integer('room_id').references(() => room.id),
-		campParticipantId: integer('camp_participant_id').references(() => campParticipant.id),
+		roomId: integer('room_id')
+			.notNull()
+			.references(() => room.id),
+		campParticipantId: integer('camp_participant_id')
+			.notNull()
+			.references(() => campParticipant.id),
 		...softDeleteColumns
 	},
 	(roomParticipant) => ({
@@ -57,8 +63,12 @@ export const roomStaff = pgTable(
 	'room_staff',
 	{
 		id: serial('id').primaryKey(),
-		roomId: integer('room_id').references(() => room.id),
-		campStaffId: integer('camp_staff_id').references(() => campStaff.id),
+		roomId: integer('room_id')
+			.notNull()
+			.references(() => room.id),
+		campStaffId: integer('camp_staff_id')
+			.notNull()
+			.references(() => campStaff.id),
 		...softDeleteColumns
 	},
 	(roomStaff) => ({

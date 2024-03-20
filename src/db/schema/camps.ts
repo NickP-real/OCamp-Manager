@@ -18,7 +18,7 @@ export const camp = pgTable(
 	'camp',
 	{
 		id: serial('id').primaryKey(),
-		name: varchar('name', { length: 256 }).notNull(),
+		name: varchar('name', { length: 256 }).unique().notNull(),
 		fromDate: date('from_date').notNull(),
 		toDate: date('to_date').notNull(),
 		description: text('text').notNull(),
@@ -41,7 +41,7 @@ export const major = pgTable(
 	'major',
 	{
 		id: serial('id').primaryKey(),
-		name: varchar('name', { length: 256 }).notNull(),
+		name: varchar('name', { length: 256 }).unique().notNull(),
 		...softDeleteColumns
 	},
 	(major) => ({
@@ -56,8 +56,12 @@ export const campMajor = pgTable(
 	'camp_major',
 	{
 		id: serial('id').primaryKey(),
-		campId: integer('camp_id').references(() => camp.id),
-		majorId: integer('major_id').references(() => major.id),
+		campId: integer('camp_id')
+			.notNull()
+			.references(() => camp.id),
+		majorId: integer('major_id')
+			.notNull()
+			.references(() => major.id),
 		...softDeleteColumns
 	},
 	(campMajor) => ({
@@ -73,8 +77,12 @@ export const campStaff = pgTable(
 	'camp_staff',
 	{
 		id: serial('id').primaryKey(),
-		campId: integer('camp_id').references(() => camp.id),
-		staffId: integer('staff_id').references(() => staff.id),
+		campId: integer('camp_id')
+			.notNull()
+			.references(() => camp.id),
+		staffId: integer('staff_id')
+			.notNull()
+			.references(() => staff.id),
 		...softDeleteColumns
 	},
 	(campStaff) => ({
@@ -91,8 +99,12 @@ export const campParticipant = pgTable(
 	'camp_participant',
 	{
 		id: serial('id').primaryKey(),
-		campId: integer('camp_id').references(() => camp.id),
-		participantId: integer('participant_id').references(() => participant.id),
+		campId: integer('camp_id')
+			.notNull()
+			.references(() => camp.id),
+		participantId: integer('participant_id')
+			.notNull()
+			.references(() => participant.id),
 		...softDeleteColumns
 	},
 	(campParticipant) => ({
