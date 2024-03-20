@@ -13,7 +13,6 @@ import {
 } from 'drizzle-orm/pg-core';
 import { softDeleteColumns } from '../util-columns';
 import { staff, participant } from './users';
-import { DEFAULT_LAUNDRY_PRICE } from '@db/db-constant';
 
 export const camp = pgTable(
 	'camp',
@@ -24,9 +23,7 @@ export const camp = pgTable(
 		toDate: date('to_date').notNull(),
 		description: text('text').notNull(),
 		hasLaundry: boolean('hasLaundry').notNull().default(true),
-		laundryPrice: numeric('laundry_price', { precision: 10, scale: 2 }).default(
-			DEFAULT_LAUNDRY_PRICE.toString()
-		),
+		laundryPrice: numeric('laundry_price', { precision: 10, scale: 2 }),
 		...softDeleteColumns
 	},
 	(camp) => ({
