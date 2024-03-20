@@ -11,7 +11,7 @@ import {
 import { softDeleteColumns } from '../util-columns';
 import { sexEnum } from './enums';
 
-export const paticipant = pgTable(
+export const participant = pgTable(
 	'participant',
 	{
 		id: serial('id').primaryKey(),
