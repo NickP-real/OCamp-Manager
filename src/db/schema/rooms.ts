@@ -9,7 +9,8 @@ import {
 	varchar
 } from 'drizzle-orm/pg-core';
 import { camp, campParticipant, campStaff } from './camps';
-import { softDeleteColumns } from '../util-columns';
+import { softDeleteColumns } from '../utils/columns-util';
+import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 
 export const room = pgTable(
 	'room',
@@ -31,6 +32,9 @@ export const room = pgTable(
 		roomIdx5: index('room_idx_5').on(room.createdAt)
 	})
 );
+
+export const selectRoomSchema = createSelectSchema(room);
+export const insertRoomSchema = createInsertSchema(room);
 
 export const roomParticipant = pgTable(
 	'room_participant',
@@ -59,6 +63,9 @@ export const roomParticipant = pgTable(
 	})
 );
 
+export const selectRoomParticipantSchema = createSelectSchema(roomParticipant);
+export const insertRoomParticipantSchema = createInsertSchema(roomParticipant);
+
 export const roomStaff = pgTable(
 	'room_staff',
 	{
@@ -80,3 +87,6 @@ export const roomStaff = pgTable(
 		roomStaffIdx5: index('room_staff_idx_5').on(roomStaff.updatedAt)
 	})
 );
+
+export const selectRoomStaffSchema = createSelectSchema(roomStaff);
+export const insertRoomStaffSchema = createInsertSchema(roomStaff);

@@ -11,8 +11,9 @@ import {
 	uniqueIndex,
 	varchar
 } from 'drizzle-orm/pg-core';
-import { softDeleteColumns } from '../util-columns';
+import { softDeleteColumns } from '../utils/columns-util';
 import { staff, participant } from './users';
+import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 
 export const camp = pgTable(
 	'camp',
@@ -37,6 +38,9 @@ export const camp = pgTable(
 	})
 );
 
+export const selectCampSchema = createSelectSchema(camp);
+export const insertCampSchema = createInsertSchema(camp);
+
 export const major = pgTable(
 	'major',
 	{
@@ -51,6 +55,9 @@ export const major = pgTable(
 		majorIdx4: index('major_idx_4').on(major.updatedAt)
 	})
 );
+
+export const selectMajorSchema = createSelectSchema(major);
+export const insertMajorSchema = createInsertSchema(major);
 
 export const campMajor = pgTable(
 	'camp_major',
@@ -73,6 +80,9 @@ export const campMajor = pgTable(
 	})
 );
 
+export const selectCampMajorSchema = createSelectSchema(campMajor);
+export const insertCampMajorSchema = createInsertSchema(campMajor);
+
 export const campStaff = pgTable(
 	'camp_staff',
 	{
@@ -94,6 +104,9 @@ export const campStaff = pgTable(
 		campStaffIdx5: index('camp_staff_idx_5').on(campStaff.updatedAt)
 	})
 );
+
+export const selectCampStaffSchema = createSelectSchema(campStaff);
+export const insertCampStaffSchema = createInsertSchema(campStaff);
 
 export const campParticipant = pgTable(
 	'camp_participant',
@@ -120,4 +133,5 @@ export const campParticipant = pgTable(
 	})
 );
 
-export type CampInsertBody = typeof camp.$inferInsert;
+export const selectCampParticipantSchema = createSelectSchema(campParticipant);
+export const insertCampParticipantSchema = createInsertSchema(campParticipant);

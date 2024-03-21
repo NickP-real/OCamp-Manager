@@ -47,6 +47,8 @@
 		"@vercel/postgres": "^0.7.2",
 		"dotenv-flow": "^4.1.0",
 		"drizzle-orm": "^0.30.4",
-		"pg": "^8.11.3"
+		"drizzle-zod": "^0.5.1",
+		"pg": "^8.11.3",
+		"zod": "^3.22.4"
 	}
 }

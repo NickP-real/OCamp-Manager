@@ -1,7 +1,8 @@
 import { index, integer, pgTable, serial, uniqueIndex, varchar } from 'drizzle-orm/pg-core';
 import { room } from './rooms';
-import { softDeleteColumns } from '../util-columns';
+import { softDeleteColumns } from '../utils/columns-util';
 import { paymentMethodEnum } from './enums';
+import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 
 export const laundryItem = pgTable(
 	'laundry_item',
@@ -17,6 +18,9 @@ export const laundryItem = pgTable(
 		laundryItemIdx4: index('laundry_item_idx_4').on(laundryItem.updatedAt)
 	})
 );
+
+export const selectLaundryItemSchema = createSelectSchema(laundryItem);
+export const insertLaundryItemSchema = createInsertSchema(laundryItem);
 
 export const roomLaundryItem = pgTable(
 	'room_laundry_item',
@@ -40,3 +44,6 @@ export const roomLaundryItem = pgTable(
 		roomLaundryItemIdx5: index('room_laundry_item_idx_5').on(roomLaundryItem.updatedAt)
 	})
 );
+
+export const selectRoomLaundryItemSchema = createSelectSchema(roomLaundryItem);
+export const insertRoomLaundryItemSchema = createInsertSchema(roomLaundryItem);

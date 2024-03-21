@@ -8,8 +8,9 @@ import {
 	uniqueIndex,
 	varchar
 } from 'drizzle-orm/pg-core';
-import { softDeleteColumns } from '../util-columns';
+import { softDeleteColumns } from '../utils/columns-util';
 import { sexEnum } from './enums';
+import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 
 export const participant = pgTable(
 	'participant',
@@ -34,6 +35,9 @@ export const participant = pgTable(
 	})
 );
 
+export const selectParticipantSchema = createSelectSchema(participant);
+export const insertParticipantSchema = createInsertSchema(participant);
+
 export const staff = pgTable(
 	'staff',
 	{
@@ -56,6 +60,9 @@ export const staff = pgTable(
 	})
 );
 
+export const selectStaffSchema = createSelectSchema(staff);
+export const insertStaffSchema = createInsertSchema(staff);
+
 export const staffAccount = pgTable(
 	'staff_account',
 	{
@@ -76,3 +83,6 @@ export const staffAccount = pgTable(
 		staffAccountIdx5: index('staff_account_idx_5').on(staffAccount.updatedAt)
 	})
 );
+
+export const selectStaffAccountSchema = createSelectSchema(staffAccount);
+export const insertStaffAccountSchema = createInsertSchema(staffAccount);

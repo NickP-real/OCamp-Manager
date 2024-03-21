@@ -5,3 +5,5 @@ export const softDeleteColumns = {
 	createdAt: timestamp('created_at').notNull().defaultNow(),
 	updatedAt: timestamp('updated_at').notNull().defaultNow()
 };
+
+export type SoftDeleteColumnKey = keyof typeof softDeleteColumns;
