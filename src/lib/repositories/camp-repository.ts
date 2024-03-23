@@ -1,7 +1,7 @@
 import { ifEmptyThrowError, isExisted, isSameId } from '$lib/utils/db-utils';
 import { db } from '@db/index';
 import { camp, insertCampSchema, selectCampSchema } from '@db/schema/camps';
-import { and } from 'drizzle-orm';
+import { and, desc } from 'drizzle-orm';
 import type { z } from 'zod';
 
 type CreateCampBody = z.infer<typeof insertCampSchema>;
@@ -13,7 +13,7 @@ const isExist = isExisted(camp.deletedAt);
 const hasSameId = isSameId(camp.id);
 
 export async function getCamps() {
-	const allCamps = await db.select().from(camp).where(isExist);
+	const allCamps = await db.select().from(camp).where(isExist).orderBy(desc(camp.createdAt));
 	return campList.parse(allCamps);
 }
 

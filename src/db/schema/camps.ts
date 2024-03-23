@@ -20,8 +20,8 @@ export const camp = pgTable(
 	{
 		id: serial('id').primaryKey(),
 		name: varchar('name', { length: 256 }).unique().notNull(),
-		fromDate: date('from_date').notNull(),
-		toDate: date('to_date').notNull(),
+		fromDate: date('from_date', { mode: 'date' }).notNull(),
+		toDate: date('to_date', { mode: 'date' }).notNull(),
 		description: text('text').notNull(),
 		hasLaundry: boolean('hasLaundry').notNull().default(true),
 		laundryPrice: numeric('laundry_price', { precision: 10, scale: 2 }),

@@ -17,6 +17,8 @@ const config = {
 			'@repository/*': './src/lib/repositories/*',
 			'@controller/*': './src/lib/controllers/*',
 			'@service/*': './src/lib/services/*'
+		csrf: {
+			checkOrigin: false
 		}
 	}
 };
