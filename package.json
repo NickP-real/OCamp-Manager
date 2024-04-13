@@ -52,6 +52,7 @@
 		"drizzle-zod": "^0.5.1",
 		"lucide-svelte": "^0.363.0",
 		"pg": "^8.11.3",
+		"tailwind-variants": "^0.2.1",
 		"zod": "^3.22.4"
 	}
 }

@@ -16,7 +16,9 @@ const config = {
 			'@db/*': './src/db/*',
 			'@repository/*': './src/lib/repositories/*',
 			'@controller/*': './src/lib/controllers/*',
-			'@service/*': './src/lib/services/*'
+			'@service/*': './src/lib/services/*',
+			'@components/*': './src/components/*'
+		},
 		csrf: {
 			checkOrigin: false
 		}
