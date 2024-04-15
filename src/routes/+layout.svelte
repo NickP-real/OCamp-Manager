@@ -8,7 +8,7 @@
 		<NavigationBar />
 	</div>
 
-	<main class="p-4 mx-auto max-w-screen-lg">
+	<main>
 		<slot />
 	</main>
 </div>
