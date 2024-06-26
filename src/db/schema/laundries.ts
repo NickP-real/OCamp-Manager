@@ -21,6 +21,8 @@ export const laundryItem = pgTable(
 
 export const selectLaundryItemSchema = createSelectSchema(laundryItem);
 export const insertLaundryItemSchema = createInsertSchema(laundryItem);
+export type LaundryItem = typeof laundryItem.$inferSelect;
+export type NewLaundryItem = typeof laundryItem.$inferInsert;
 
 export const roomLaundryItem = pgTable(
 	'room_laundry_item',
@@ -47,3 +49,5 @@ export const roomLaundryItem = pgTable(
 
 export const selectRoomLaundryItemSchema = createSelectSchema(roomLaundryItem);
 export const insertRoomLaundryItemSchema = createInsertSchema(roomLaundryItem);
+export type RoomLaundryItem = typeof roomLaundryItem.$inferSelect;
+export type NewRoomLaundryItem = typeof roomLaundryItem.$inferInsert;

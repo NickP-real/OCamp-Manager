@@ -37,6 +37,8 @@ export const participant = pgTable(
 
 export const selectParticipantSchema = createSelectSchema(participant);
 export const insertParticipantSchema = createInsertSchema(participant);
+export type Participant = typeof participant.$inferSelect;
+export type NewParticipant = typeof participant.$inferInsert;
 
 export const staff = pgTable(
 	'staff',
@@ -62,6 +64,8 @@ export const staff = pgTable(
 
 export const selectStaffSchema = createSelectSchema(staff);
 export const insertStaffSchema = createInsertSchema(staff);
+export type Staff = typeof staff.$inferSelect;
+export type NewStaff = typeof staff.$inferInsert;
 
 export const staffAccount = pgTable(
 	'staff_account',
@@ -86,3 +90,5 @@ export const staffAccount = pgTable(
 
 export const selectStaffAccountSchema = createSelectSchema(staffAccount);
 export const insertStaffAccountSchema = createInsertSchema(staffAccount);
+export type StaffAccount = typeof staffAccount.$inferSelect;
+export type NewStaffAccount = typeof staffAccount.$inferInsert;

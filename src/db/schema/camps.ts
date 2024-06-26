@@ -40,6 +40,8 @@ export const camp = pgTable(
 
 export const selectCampSchema = createSelectSchema(camp);
 export const insertCampSchema = createInsertSchema(camp);
+export type Camp = typeof camp.$inferSelect;
+export type NewCamp = typeof camp.$inferInsert;
 
 export const major = pgTable(
 	'major',
@@ -58,6 +60,8 @@ export const major = pgTable(
 
 export const selectMajorSchema = createSelectSchema(major);
 export const insertMajorSchema = createInsertSchema(major);
+export type Major = typeof major.$inferSelect;
+export type NewMajor = typeof major.$inferInsert;
 
 export const campMajor = pgTable(
 	'camp_major',
@@ -82,6 +86,8 @@ export const campMajor = pgTable(
 
 export const selectCampMajorSchema = createSelectSchema(campMajor);
 export const insertCampMajorSchema = createInsertSchema(campMajor);
+export type CampMajor = typeof campMajor.$inferSelect;
+export type NewCampMajor = typeof campMajor.$inferInsert;
 
 export const campStaff = pgTable(
 	'camp_staff',
@@ -107,6 +113,8 @@ export const campStaff = pgTable(
 
 export const selectCampStaffSchema = createSelectSchema(campStaff);
 export const insertCampStaffSchema = createInsertSchema(campStaff);
+export type CampStaff = typeof campStaff.$inferSelect;
+export type NewCampStaff = typeof campStaff.$inferInsert;
 
 export const campParticipant = pgTable(
 	'camp_participant',
@@ -135,3 +143,5 @@ export const campParticipant = pgTable(
 
 export const selectCampParticipantSchema = createSelectSchema(campParticipant);
 export const insertCampParticipantSchema = createInsertSchema(campParticipant);
+export type CampParticipant = typeof campParticipant.$inferSelect;
+export type NewCampParticipant = typeof campParticipant.$inferInsert;
