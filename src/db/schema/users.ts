@@ -20,7 +20,7 @@ export const participant = pgTable(
 		lastName: varchar('last_name', { length: 256 }).notNull(),
 		nickname: varchar('nickname', { length: 256 }),
 		phone: varchar('phone', { length: 191 }),
-		birthday: date('birthday').notNull(),
+		birthday: date('birthday', { mode: 'date' }).notNull(),
 		sex: sexEnum('sex').notNull(),
 		additionalInfo: text('additional_info'),
 		...softDeleteColumns
@@ -36,9 +36,12 @@ export const participant = pgTable(
 );
 
 export const selectParticipantSchema = createSelectSchema(participant);
-export const insertParticipantSchema = createInsertSchema(participant);
+export const insertParticipantSchema = createInsertSchema(participant, {
+	firstName: ({ firstName }) => firstName.trim().min(1),
+	lastName: ({ lastName }) => lastName.trim().min(1)
+});
 export type Participant = typeof participant.$inferSelect;
-export type NewParticipant = typeof participant.$inferInsert;
+export type CreateParticipant = typeof participant.$inferInsert;
 
 export const staff = pgTable(
 	'staff',
@@ -48,7 +51,7 @@ export const staff = pgTable(
 		lastName: varchar('last_name', { length: 256 }).notNull(),
 		nickname: varchar('nickname', { length: 256 }),
 		phone: varchar('phone', { length: 191 }),
-		birthday: date('deleted_at').notNull(),
+		birthday: date('birthday', { mode: 'date' }).notNull(),
 		additionalInfo: text('additional_info'),
 		...softDeleteColumns
 	},
@@ -63,9 +66,12 @@ export const staff = pgTable(
 );
 
 export const selectStaffSchema = createSelectSchema(staff);
-export const insertStaffSchema = createInsertSchema(staff);
+export const insertStaffSchema = createInsertSchema(staff, {
+	firstName: ({ firstName }) => firstName.trim().min(1),
+	lastName: ({ lastName }) => lastName.trim().min(1)
+});
 export type Staff = typeof staff.$inferSelect;
-export type NewStaff = typeof staff.$inferInsert;
+export type CreateStaff = typeof staff.$inferInsert;
 
 export const staffAccount = pgTable(
 	'staff_account',
@@ -89,6 +95,9 @@ export const staffAccount = pgTable(
 );
 
 export const selectStaffAccountSchema = createSelectSchema(staffAccount);
-export const insertStaffAccountSchema = createInsertSchema(staffAccount);
+export const insertStaffAccountSchema = createInsertSchema(staffAccount, {
+	email: ({ email }) => email.email(),
+	password: ({ password }) => password.trim().min(8)
+});
 export type StaffAccount = typeof staffAccount.$inferSelect;
-export type NewStaffAccount = typeof staffAccount.$inferInsert;
+export type CreateStaffAccount = typeof staffAccount.$inferInsert;

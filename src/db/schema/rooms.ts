@@ -34,9 +34,11 @@ export const room = pgTable(
 );
 
 export const selectRoomSchema = createSelectSchema(room);
-export const insertRoomSchema = createInsertSchema(room);
+export const insertRoomSchema = createInsertSchema(room, {
+	name: ({ name }) => name.trim().min(1)
+});
 export type Room = typeof room.$inferSelect;
-export type NewRoom = typeof room.$inferInsert;
+export type CreateRoom = typeof room.$inferInsert;
 
 export const roomParticipant = pgTable(
 	'room_participant',
@@ -68,7 +70,7 @@ export const roomParticipant = pgTable(
 export const selectRoomParticipantSchema = createSelectSchema(roomParticipant);
 export const insertRoomParticipantSchema = createInsertSchema(roomParticipant);
 export type RoomParticipant = typeof roomParticipant.$inferSelect;
-export type NewRoomParticipant = typeof roomParticipant.$inferInsert;
+export type CreateRoomParticipant = typeof roomParticipant.$inferInsert;
 
 export const roomStaff = pgTable(
 	'room_staff',
@@ -95,4 +97,4 @@ export const roomStaff = pgTable(
 export const selectRoomStaffSchema = createSelectSchema(roomStaff);
 export const insertRoomStaffSchema = createInsertSchema(roomStaff);
 export type RoomStaff = typeof roomStaff.$inferSelect;
-export type NewRoomStaff = typeof roomStaff.$inferInsert;
+export type CreateRoomStaff = typeof roomStaff.$inferInsert;

@@ -23,7 +23,7 @@ export const camp = pgTable(
 		fromDate: date('from_date', { mode: 'date' }).notNull(),
 		toDate: date('to_date', { mode: 'date' }).notNull(),
 		description: text('text').notNull(),
-		hasLaundry: boolean('hasLaundry').notNull().default(true),
+		hasLaundry: boolean('hasLaundry').notNull().default(false),
 		laundryPrice: numeric('laundry_price', { precision: 10, scale: 2 }),
 		...softDeleteColumns
 	},
@@ -39,9 +39,12 @@ export const camp = pgTable(
 );
 
 export const selectCampSchema = createSelectSchema(camp);
-export const insertCampSchema = createInsertSchema(camp);
+export const insertCampSchema = createInsertSchema(camp, {
+	name: ({ name }) => name.trim().min(1),
+	description: ({ description }) => description.trim().min(1)
+});
 export type Camp = typeof camp.$inferSelect;
-export type NewCamp = typeof camp.$inferInsert;
+export type CreateCamp = typeof camp.$inferInsert;
 
 export const major = pgTable(
 	'major',
@@ -59,9 +62,11 @@ export const major = pgTable(
 );
 
 export const selectMajorSchema = createSelectSchema(major);
-export const insertMajorSchema = createInsertSchema(major);
+export const insertMajorSchema = createInsertSchema(major, {
+	name: ({ name }) => name.trim().min(1)
+});
 export type Major = typeof major.$inferSelect;
-export type NewMajor = typeof major.$inferInsert;
+export type CreateMajor = typeof major.$inferInsert;
 
 export const campMajor = pgTable(
 	'camp_major',
@@ -72,22 +77,18 @@ export const campMajor = pgTable(
 			.references(() => camp.id),
 		majorId: integer('major_id')
 			.notNull()
-			.references(() => major.id),
-		...softDeleteColumns
+			.references(() => major.id)
 	},
 	(campMajor) => ({
 		campMajorIdx1: index('camp_major_idx_1').on(campMajor.campId),
-		campMajorIdx2: index('camp_major_idx_2').on(campMajor.majorId),
-		campMajorIdx3: index('camp_major_idx_3').on(campMajor.deletedAt),
-		campMajorIdx4: index('camp_major_idx_4').on(campMajor.createdAt),
-		campMajorIdx5: index('camp_major_idx_5').on(campMajor.updatedAt)
+		campMajorIdx2: index('camp_major_idx_2').on(campMajor.majorId)
 	})
 );
 
 export const selectCampMajorSchema = createSelectSchema(campMajor);
 export const insertCampMajorSchema = createInsertSchema(campMajor);
 export type CampMajor = typeof campMajor.$inferSelect;
-export type NewCampMajor = typeof campMajor.$inferInsert;
+export type CreateCampMajor = typeof campMajor.$inferInsert;
 
 export const campStaff = pgTable(
 	'camp_staff',
@@ -114,7 +115,7 @@ export const campStaff = pgTable(
 export const selectCampStaffSchema = createSelectSchema(campStaff);
 export const insertCampStaffSchema = createInsertSchema(campStaff);
 export type CampStaff = typeof campStaff.$inferSelect;
-export type NewCampStaff = typeof campStaff.$inferInsert;
+export type CreateCampStaff = typeof campStaff.$inferInsert;
 
 export const campParticipant = pgTable(
 	'camp_participant',
@@ -144,4 +145,4 @@ export const campParticipant = pgTable(
 export const selectCampParticipantSchema = createSelectSchema(campParticipant);
 export const insertCampParticipantSchema = createInsertSchema(campParticipant);
 export type CampParticipant = typeof campParticipant.$inferSelect;
-export type NewCampParticipant = typeof campParticipant.$inferInsert;
+export type CreateCampParticipant = typeof campParticipant.$inferInsert;
