@@ -1,48 +1,64 @@
-import { ifEmptyThrowError, isExisted, isSameId } from '$lib/utils/db-utils';
+import { ifEmptyThrowError, isExisted } from '$lib/utils/db-utils';
 import { db } from '@db/index';
-import { camp, insertCampSchema, selectCampSchema } from '@db/schema/camps';
-import { and, desc } from 'drizzle-orm';
-import type { z } from 'zod';
-
-type CreateCampBody = z.infer<typeof insertCampSchema>;
-type UpdateCampBody = Partial<CreateCampBody>;
+import { camp, campMajor, selectCampSchema, type CreateCamp } from '@db/schema/camps';
+import { and, desc, eq } from 'drizzle-orm';
+import { type PgSelect } from 'drizzle-orm/pg-core';
 
 const campList = selectCampSchema.array();
 
 const isExist = isExisted(camp.deletedAt);
-const hasSameId = isSameId(camp.id);
 
 export async function getCamps() {
 	const allCamps = await db.select().from(camp).where(isExist).orderBy(desc(camp.createdAt));
 	return campList.parse(allCamps);
 }
 
-export async function getCampById(id: number) {
-	const campData = await db
+// query builder
+function makeCampByIdDynamicQuery(id: number) {
+	return db
 		.select()
 		.from(camp)
-		.where(and(isExist, hasSameId(id)))
-		.limit(1);
-
-	ifEmptyThrowError(campData, 'Camp data not found');
-
-	return selectCampSchema.parse(campData.at(0));
+		.where(and(isExist, eq(camp.id, id)))
+		.$dynamic();
 }
 
-export async function createCamp(data: CreateCampBody) {
+function withCampMajors<T extends PgSelect>(qb: T) {
+	return qb.leftJoin(campMajor, eq(campMajor.campId, camp.id));
+}
+
+export async function getCampById(id: number) {
+	const campData = await makeCampByIdDynamicQuery(id).limit(1);
+	ifEmptyThrowError(campData, 'Camp data not found');
+
+	// return selectCampSchema.parse(campData.at(0));
+	return campData[0];
+}
+
+export async function getCampWithCampMajorsById(id: number) {
+	const campData = await withCampMajors(makeCampByIdDynamicQuery(id));
+	ifEmptyThrowError(campData, 'Camp data not found');
+
+	// return selectCampSchema.parse(campData.at(0));
+	return campData;
+}
+
+export async function createCamp(data: CreateCamp) {
 	await db.insert(camp).values(data);
 }
 
-export async function updateCampById(id: number, data: UpdateCampBody) {
-	await db
-		.update(camp)
-		.set({ ...data, updatedAt: new Date() })
-		.where(and(isExist, hasSameId(id)));
+export async function updateCampById(id: number, data: CreateCamp, tx = db) {
+	return (
+		await tx
+			.update(camp)
+			.set({ ...data, updatedAt: new Date() })
+			.where(and(isExist, eq(camp.id, id)))
+			.returning()
+	)[0];
 }
 
 export async function deleteCampById(id: number) {
 	await db
 		.update(camp)
 		.set({ deletedAt: new Date() })
-		.where(and(isExist, hasSameId(id)));
+		.where(and(isExist, eq(camp.id, id)));
 }

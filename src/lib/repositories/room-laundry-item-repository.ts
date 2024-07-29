@@ -1,19 +1,15 @@
-import { ifEmptyThrowError, isExisted, isSameId } from '$lib/utils/db-utils';
+import { ifEmptyThrowError, isExisted } from '$lib/utils/db-utils';
 import { db } from '@db/index';
 import {
 	roomLaundryItem,
 	selectRoomLaundryItemSchema,
-	type insertRoomLaundryItemSchema
+	type CreateRoomLaundryItem
 } from '@db/schema/laundries';
-import { and } from 'drizzle-orm';
-import type { z } from 'zod';
+import { and, eq } from 'drizzle-orm';
 
-type CreateRoomLaundryItemBody = z.infer<typeof insertRoomLaundryItemSchema>;
-type UpdateRoomLaundryItemBody = Partial<CreateRoomLaundryItemBody>;
+type UpdateRoomLaundryItemBody = Partial<CreateRoomLaundryItem>;
 
 const isExist = isExisted(roomLaundryItem.deletedAt);
-const hasSameId = isSameId(roomLaundryItem.id);
-const hasSameRoomId = isSameId(roomLaundryItem.roomId);
 
 const roomLaundryItemList = selectRoomLaundryItemSchema.array();
 
@@ -26,7 +22,7 @@ export async function getRoomLaundryItemById(id: number) {
 	const roomLaundryItemData = await db
 		.select()
 		.from(roomLaundryItem)
-		.where(and(isExist, hasSameId(id)))
+		.where(and(isExist, eq(roomLaundryItem.id, id)))
 		.limit(1);
 
 	ifEmptyThrowError(roomLaundryItemData, 'Room laundry item data is not found');
@@ -38,15 +34,15 @@ export async function getRoomLaundryItemsByRoomId(roomId: number) {
 	const allRoomLaundryItems = await db
 		.select()
 		.from(roomLaundryItem)
-		.where(and(isExist, hasSameRoomId(roomId)));
+		.where(and(isExist, eq(roomLaundryItem.roomId, roomId)));
 	return roomLaundryItemList.parse(allRoomLaundryItems);
 }
 
-export async function createRoomLaundryItem(data: CreateRoomLaundryItemBody) {
+export async function createRoomLaundryItem(data: CreateRoomLaundryItem) {
 	await db.insert(roomLaundryItem).values(data);
 }
 
-export async function createRoomLaundryItems(data: CreateRoomLaundryItemBody[]) {
+export async function createRoomLaundryItems(data: CreateRoomLaundryItem[]) {
 	await db.insert(roomLaundryItem).values(data);
 }
 
@@ -54,15 +50,12 @@ export async function updateRoomLaundryItemById(id: number, data: UpdateRoomLaun
 	await db
 		.update(roomLaundryItem)
 		.set({ ...data, updatedAt: new Date() })
-		.where(and(isExist, hasSameId(id)));
+		.where(and(isExist, eq(roomLaundryItem.id, id)));
 }
 
-export async function updateRoomLaundryItemsByRoomId(
-	roomId: number,
-	data: CreateRoomLaundryItemBody[]
-) {
+export async function updateRoomLaundryItemsByRoomId(roomId: number, data: CreateRoomLaundryItem[]) {
 	await db.transaction(async (tx) => {
-		await tx.delete(roomLaundryItem).where(and(isExist, hasSameRoomId(roomId)));
+		await tx.delete(roomLaundryItem).where(and(isExist, eq(roomLaundryItem.roomId, roomId)));
 		await tx.insert(roomLaundryItem).values(data);
 	});
 }
@@ -71,12 +64,12 @@ export async function deleteRoomLaundryItemById(id: number) {
 	await db
 		.update(roomLaundryItem)
 		.set({ deletedAt: new Date() })
-		.where(and(isExist, hasSameId(id)));
+		.where(and(isExist, eq(roomLaundryItem.id, id)));
 }
 
 export async function deleteRoomLaundryItemsByRoomId(roomId: number) {
 	await db
 		.update(roomLaundryItem)
 		.set({ deletedAt: new Date() })
-		.where(and(isExist, hasSameRoomId(roomId)));
+		.where(and(isExist, eq(roomLaundryItem.roomId, roomId)));
 }

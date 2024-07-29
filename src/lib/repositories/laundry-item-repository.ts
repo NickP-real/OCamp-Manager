@@ -1,18 +1,11 @@
-import { ifEmptyThrowError, isExisted, isSameId } from '$lib/utils/db-utils';
+import { ifEmptyThrowError, isExisted } from '$lib/utils/db-utils';
 import { db } from '@db/index';
-import {
-	insertLaundryItemSchema,
-	laundryItem,
-	selectLaundryItemSchema
-} from '@db/schema/laundries';
-import { and, like } from 'drizzle-orm';
-import { z } from 'zod';
+import { laundryItem, selectLaundryItemSchema, type CreateLaundryItem } from '@db/schema/laundries';
+import { and, eq, like } from 'drizzle-orm';
 
-type CreateLaundryItemBody = z.infer<typeof insertLaundryItemSchema>;
-type UpdateLaundryItemBody = Partial<CreateLaundryItemBody>;
+type UpdateLaundryItemBody = Partial<CreateLaundryItem>;
 
 const isExist = isExisted(laundryItem.deletedAt);
-const hasSameId = isSameId(laundryItem.id);
 
 const laundryItemList = selectLaundryItemSchema.array();
 
@@ -25,7 +18,7 @@ export async function getLaundryItemById(id: number) {
 	const laundryItemData = await db
 		.select()
 		.from(laundryItem)
-		.where(and(isExist, hasSameId(id)))
+		.where(and(isExist, eq(laundryItem.id, id)))
 		.limit(1);
 
 	ifEmptyThrowError(laundryItemData, 'Laundry item data is not found');
@@ -42,7 +35,7 @@ export async function getLaundryItemByName(name: string) {
 	return laundryItemData.at(0) ? selectLaundryItemSchema.parse(laundryItemData.at(0)) : null;
 }
 
-export async function createLaundryItem(data: CreateLaundryItemBody) {
+export async function createLaundryItem(data: CreateLaundryItem) {
 	await db.insert(laundryItem).values(data);
 }
 
@@ -50,12 +43,12 @@ export async function updateLaundryItemById(id: number, data: UpdateLaundryItemB
 	await db
 		.update(laundryItem)
 		.set({ ...data, updatedAt: new Date() })
-		.where(and(isExist, hasSameId(id)));
+		.where(and(isExist, eq(laundryItem.id, id)));
 }
 
 export async function deleteLaundryItemById(id: number) {
 	await db
 		.update(laundryItem)
 		.set({ deletedAt: new Date() })
-		.where(and(isExist, hasSameId(id)));
+		.where(and(isExist, eq(laundryItem.id, id)));
 }

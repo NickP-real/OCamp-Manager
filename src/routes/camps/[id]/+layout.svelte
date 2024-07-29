@@ -1,34 +1,40 @@
 <script lang="ts">
+	import type { Route } from '$lib/components/navigation-bar/navbar.types';
+	import SideNavbar from '$lib/components/navigation-bar/SideNavbar.svelte';
 	import type { LayoutServerData } from './$types';
 
 	export let data: LayoutServerData;
 	const { id, hasLaundry } = data.camp;
 	const route = `/camps/${id}`;
+
+	const routes: Route[] = [
+		{
+			href: `${route}`,
+			title: 'Info'
+		},
+		{
+			href: `${route}/staffs`,
+			title: 'staffs'
+		},
+		{
+			href: `${route}/participants`,
+			title: 'Participants'
+		},
+		{
+			href: `${route}/rooms`,
+			title: 'Rooms'
+		},
+		{
+			href: `${route}/laundry`,
+			title: 'Laundry',
+			disabled: !hasLaundry
+		}
+	];
 </script>
 
 <div class="flex">
-	<nav>
-		<ul>
-			<li>
-				<a href={route}>Info</a>
-			</li>
-			<li>
-				<a href="{route}/staffs">Staffs</a>
-			</li>
-			<li>
-				<a href="{route}/participants">Participants</a>
-			</li>
-			<li>
-				<a href="{route}/rooms">Rooms</a>
-			</li>
-			{#if hasLaundry}
-				<li>
-					<a href="{route}/laundry">Laundry</a>
-				</li>
-			{/if}
-		</ul>
-	</nav>
-	<section>
+	<SideNavbar {routes} />
+	<section class="container mx-auto">
 		<slot />
 	</section>
 </div>

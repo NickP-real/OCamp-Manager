@@ -1,9 +1,13 @@
 <script>
+	import NavigationBar from '$lib/components/navigation-bar/NavigationBar.svelte';
 	import '../app.css';
-	import NavigationBar from '../components/NavigationBar.svelte';
 </script>
 
-<div class="text-white bg-black min-h-dvh">
+<svelte:head>
+	<title>O-Camp Manager</title>
+</svelte:head>
+
+<div class="min-h-dvh bg-black text-white">
 	<div class="border-b border-b-white">
 		<NavigationBar />
 	</div>

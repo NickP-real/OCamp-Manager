@@ -1,8 +1,7 @@
 <script lang="ts">
-	import type { PageData } from './$types';
 	import { formatDate } from '$lib/client/utils/date-util';
 
-	export let data: PageData;
+	export let data;
 	const { id, name, fromDate, toDate, description, hasLaundry, laundryPrice } = data.camp;
 </script>
 
