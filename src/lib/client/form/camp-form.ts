@@ -4,14 +4,12 @@ import { z } from 'zod';
 export const campFormSchema = z
 	.object({
 		name: z.string().trim().min(1),
-		fromDate: z.coerce.date(),
-		toDate: z.coerce.date(),
-		description: z.string().trim(),
-		hasLaundry: z
-			.enum(['on'])
-			.transform(() => true)
-			.optional(),
-		laundryPrice: z.coerce.number().min(1).optional().default(DEFAULT_LAUNDRY_PRICE)
+		fromDate: z.date(),
+		toDate: z.date(),
+		description: z.string().trim().min(1),
+		hasLaundry: z.boolean().optional().default(false),
+		laundryPrice: z.coerce.number().min(1).optional().default(DEFAULT_LAUNDRY_PRICE),
+		campMajors: z.object({ majorId: z.number() }).array()
 	})
 	.superRefine(({ fromDate, toDate }, ctx) => {
 		if (fromDate > toDate) {
@@ -34,5 +32,5 @@ export const campFormSchema = z
 		};
 	});
 
+export type CampFormSchema = typeof campFormSchema;
 export type CampFormBody = z.input<typeof campFormSchema>;
-export type CampFormResponse = z.infer<typeof campFormSchema>;
