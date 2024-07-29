@@ -1,10 +1,8 @@
 {
-  "id": "eca950ad-1c33-4c3b-93a1-2d2a990d627a",
-  "prevId": "00000000-0000-0000-0000-000000000000",
-  "version": "5",
-  "dialect": "pg",
+  "version": "6",
+  "dialect": "postgresql",
   "tables": {
-    "camp": {
+    "public.camp": {
       "name": "camp",
       "schema": "",
       "columns": {
@@ -128,7 +126,7 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "camp_major": {
+    "public.camp_major": {
       "name": "camp_major",
       "schema": "",
       "columns": {
@@ -213,34 +211,34 @@
         "camp_major_camp_id_camp_id_fk": {
           "name": "camp_major_camp_id_camp_id_fk",
           "tableFrom": "camp_major",
-          "tableTo": "camp",
           "columnsFrom": [
             "camp_id"
           ],
+          "tableTo": "camp",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "no action"
         },
         "camp_major_major_id_major_id_fk": {
           "name": "camp_major_major_id_major_id_fk",
           "tableFrom": "camp_major",
-          "tableTo": "major",
           "columnsFrom": [
             "major_id"
           ],
+          "tableTo": "major",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "no action"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "camp_participant": {
+    "public.camp_participant": {
       "name": "camp_participant",
       "schema": "",
       "columns": {
@@ -325,43 +323,43 @@
         "camp_participant_camp_id_camp_id_fk": {
           "name": "camp_participant_camp_id_camp_id_fk",
           "tableFrom": "camp_participant",
-          "tableTo": "camp",
           "columnsFrom": [
             "camp_id"
           ],
+          "tableTo": "camp",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "no action"
         },
         "camp_participant_participant_id_participant_id_fk": {
           "name": "camp_participant_participant_id_participant_id_fk",
           "tableFrom": "camp_participant",
-          "tableTo": "participant",
           "columnsFrom": [
             "participant_id"
           ],
+          "tableTo": "participant",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "no action"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
         "camp_participant_unq_1": {
           "name": "camp_participant_unq_1",
-          "nullsNotDistinct": false,
           "columns": [
             "camp_id",
             "participant_id"
-          ]
+          ],
+          "nullsNotDistinct": false
         }
       }
     },
-    "camp_staff": {
+    "public.camp_staff": {
       "name": "camp_staff",
       "schema": "",
       "columns": {
@@ -446,43 +444,43 @@
         "camp_staff_camp_id_camp_id_fk": {
           "name": "camp_staff_camp_id_camp_id_fk",
           "tableFrom": "camp_staff",
-          "tableTo": "camp",
           "columnsFrom": [
             "camp_id"
           ],
+          "tableTo": "camp",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "no action"
         },
         "camp_staff_staff_id_staff_id_fk": {
           "name": "camp_staff_staff_id_staff_id_fk",
           "tableFrom": "camp_staff",
-          "tableTo": "staff",
           "columnsFrom": [
             "staff_id"
           ],
+          "tableTo": "staff",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "no action"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
         "camp_staff_unq_1": {
           "name": "camp_staff_unq_1",
-          "nullsNotDistinct": false,
           "columns": [
             "camp_id",
             "staff_id"
-          ]
+          ],
+          "nullsNotDistinct": false
         }
       }
     },
-    "major": {
+    "public.major": {
       "name": "major",
       "schema": "",
       "columns": {
@@ -554,7 +552,7 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "laundry_item": {
+    "public.laundry_item": {
       "name": "laundry_item",
       "schema": "",
       "columns": {
@@ -626,7 +624,7 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "room_laundry_item": {
+    "public.room_laundry_item": {
       "name": "room_laundry_item",
       "schema": "",
       "columns": {
@@ -717,34 +715,34 @@
         "room_laundry_item_room_id_room_id_fk": {
           "name": "room_laundry_item_room_id_room_id_fk",
           "tableFrom": "room_laundry_item",
-          "tableTo": "room",
           "columnsFrom": [
             "room_id"
           ],
+          "tableTo": "room",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "no action"
         },
         "room_laundry_item_item_id_laundry_item_id_fk": {
           "name": "room_laundry_item_item_id_laundry_item_id_fk",
           "tableFrom": "room_laundry_item",
-          "tableTo": "laundry_item",
           "columnsFrom": [
             "item_id"
           ],
+          "tableTo": "laundry_item",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "no action"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "room": {
+    "public.room": {
       "name": "room",
       "schema": "",
       "columns": {
@@ -835,30 +833,30 @@
         "room_camp_id_camp_id_fk": {
           "name": "room_camp_id_camp_id_fk",
           "tableFrom": "room",
-          "tableTo": "camp",
           "columnsFrom": [
             "camp_id"
           ],
+          "tableTo": "camp",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "no action"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
         "room_unq_1": {
           "name": "room_unq_1",
-          "nullsNotDistinct": false,
           "columns": [
             "name",
             "camp_id"
-          ]
+          ],
+          "nullsNotDistinct": false
         }
       }
     },
-    "room_participant": {
+    "public.room_participant": {
       "name": "room_participant",
       "schema": "",
       "columns": {
@@ -943,43 +941,43 @@
         "room_participant_room_id_room_id_fk": {
           "name": "room_participant_room_id_room_id_fk",
           "tableFrom": "room_participant",
-          "tableTo": "room",
           "columnsFrom": [
             "room_id"
           ],
+          "tableTo": "room",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "no action"
         },
         "room_participant_camp_participant_id_camp_participant_id_fk": {
           "name": "room_participant_camp_participant_id_camp_participant_id_fk",
           "tableFrom": "room_participant",
-          "tableTo": "camp_participant",
           "columnsFrom": [
             "camp_participant_id"
           ],
+          "tableTo": "camp_participant",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "no action"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
         "room_participant_unq_1": {
           "name": "room_participant_unq_1",
-          "nullsNotDistinct": false,
           "columns": [
             "camp_participant_id",
             "room_id"
-          ]
+          ],
+          "nullsNotDistinct": false
         }
       }
     },
-    "room_staff": {
+    "public.room_staff": {
       "name": "room_staff",
       "schema": "",
       "columns": {
@@ -1064,43 +1062,43 @@
         "room_staff_room_id_room_id_fk": {
           "name": "room_staff_room_id_room_id_fk",
           "tableFrom": "room_staff",
-          "tableTo": "room",
           "columnsFrom": [
             "room_id"
           ],
+          "tableTo": "room",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "no action"
         },
         "room_staff_camp_staff_id_camp_staff_id_fk": {
           "name": "room_staff_camp_staff_id_camp_staff_id_fk",
           "tableFrom": "room_staff",
-          "tableTo": "camp_staff",
           "columnsFrom": [
             "camp_staff_id"
           ],
+          "tableTo": "camp_staff",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "no action"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
         "room_staff_unq_1": {
           "name": "room_staff_unq_1",
-          "nullsNotDistinct": false,
           "columns": [
             "camp_staff_id",
             "room_id"
-          ]
+          ],
+          "nullsNotDistinct": false
         }
       }
     },
-    "participant": {
+    "public.participant": {
       "name": "participant",
       "schema": "",
       "columns": {
@@ -1222,7 +1220,7 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "staff": {
+    "public.staff": {
       "name": "staff",
       "schema": "",
       "columns": {
@@ -1332,7 +1330,7 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "staff_account": {
+    "public.staff_account": {
       "name": "staff_account",
       "schema": "",
       "columns": {
@@ -1423,49 +1421,53 @@
         "staff_account_staff_id_staff_id_fk": {
           "name": "staff_account_staff_id_staff_id_fk",
           "tableFrom": "staff_account",
-          "tableTo": "staff",
           "columnsFrom": [
             "staff_id"
           ],
+          "tableTo": "staff",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "no action"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
         "staff_account_staff_id_unique": {
           "name": "staff_account_staff_id_unique",
-          "nullsNotDistinct": false,
           "columns": [
             "staff_id"
-          ]
+          ],
+          "nullsNotDistinct": false
         }
       }
     }
   },
   "enums": {
-    "payment_method": {
+    "public.payment_method": {
       "name": "payment_method",
-      "values": {
-        "cash": "cash",
-        "prompt_pay": "prompt_pay"
-      }
+      "schema": "public",
+      "values": [
+        "cash",
+        "prompt_pay"
+      ]
     },
-    "sex": {
+    "public.sex": {
       "name": "sex",
-      "values": {
-        "male": "male",
-        "female": "female"
-      }
+      "schema": "public",
+      "values": [
+        "male",
+        "female"
+      ]
     }
   },
   "schemas": {},
   "_meta": {
-    "columns": {},
     "schemas": {},
-    "tables": {}
-  }
+    "tables": {},
+    "columns": {}
+  },
+  "id": "eca950ad-1c33-4c3b-93a1-2d2a990d627a",
+  "prevId": "00000000-0000-0000-0000-000000000000"
 }
