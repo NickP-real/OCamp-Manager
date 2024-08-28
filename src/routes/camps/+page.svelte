@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { toast } from "$lib/components/toast/toast";
+
 	export let data;
 	const { camps } = data;
 </script>
@@ -22,4 +24,6 @@
 			{/each}
 		{/await}
 	</section>
+
+	<button on:click={() => toast({ message: "test" })}>test toast</button>
 </div>

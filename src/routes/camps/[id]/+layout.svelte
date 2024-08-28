@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { Route } from '$lib/components/navigation-bar/navbar.types';
-	import SideNavbar from '$lib/components/navigation-bar/SideNavbar.svelte';
-	import type { LayoutServerData } from './$types';
+	import type { Route } from "$lib/components/navigation-bar/navbar.types";
+	import SideNavbar from "$lib/components/navigation-bar/SideNavbar.svelte";
+	import type { LayoutServerData } from "./$types";
 
 	export let data: LayoutServerData;
 	const { id, hasLaundry } = data.camp;
@@ -10,23 +10,23 @@
 	const routes: Route[] = [
 		{
 			href: `${route}`,
-			title: 'Info'
-		},
-		{
-			href: `${route}/staffs`,
-			title: 'staffs'
+			title: "Info"
 		},
 		{
 			href: `${route}/participants`,
-			title: 'Participants'
+			title: "Participants"
+		},
+		{
+			href: `${route}/staffs`,
+			title: "staffs"
 		},
 		{
 			href: `${route}/rooms`,
-			title: 'Rooms'
+			title: "Rooms"
 		},
 		{
 			href: `${route}/laundry`,
-			title: 'Laundry',
+			title: "Laundry",
 			disabled: !hasLaundry
 		}
 	];

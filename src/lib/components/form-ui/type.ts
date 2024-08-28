@@ -1,8 +1,8 @@
-import type { FormPathLeaves, FormPathType, SuperForm } from 'sveltekit-superforms';
+import type { FormPathLeaves, FormPathType, SuperForm } from "sveltekit-superforms";
 
 type FormFieldHtmlAttributes<HtmlAttributes extends object> = Omit<
 	HtmlAttributes,
-	'value' | 'form' | 'name' | 'checked' | 'type'
+	"value" | "form" | "name" | "checked" | "type"
 >;
 
 type FormFieldAttributes = {

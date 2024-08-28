@@ -1,5 +1,5 @@
-import { phoneSchema } from './utils-form';
-import { z } from 'zod';
+import { phoneSchema } from "./utils-form";
+import { z } from "zod";
 
 export const staffFormSchema = z.object({
 	firstName: z.string().trim().min(1),

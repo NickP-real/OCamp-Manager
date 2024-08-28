@@ -1,11 +1,11 @@
-import { ifEmptyThrowError, isExisted } from '$lib/utils/db-utils';
-import { db } from '@db/index';
+import { ifEmptyThrowError, isExisted } from "$lib/utils/db-utils";
+import { db } from "@db/index";
 import {
 	roomLaundryItem,
 	selectRoomLaundryItemSchema,
 	type CreateRoomLaundryItem
-} from '@db/schema/laundries';
-import { and, eq } from 'drizzle-orm';
+} from "@db/schema/laundries";
+import { and, eq } from "drizzle-orm";
 
 type UpdateRoomLaundryItemBody = Partial<CreateRoomLaundryItem>;
 
@@ -25,7 +25,7 @@ export async function getRoomLaundryItemById(id: number) {
 		.where(and(isExist, eq(roomLaundryItem.id, id)))
 		.limit(1);
 
-	ifEmptyThrowError(roomLaundryItemData, 'Room laundry item data is not found');
+	ifEmptyThrowError(roomLaundryItemData, "Room laundry item data is not found");
 
 	return selectRoomLaundryItemSchema.parse(roomLaundryItemData.at(0));
 }
@@ -53,7 +53,10 @@ export async function updateRoomLaundryItemById(id: number, data: UpdateRoomLaun
 		.where(and(isExist, eq(roomLaundryItem.id, id)));
 }
 
-export async function updateRoomLaundryItemsByRoomId(roomId: number, data: CreateRoomLaundryItem[]) {
+export async function updateRoomLaundryItemsByRoomId(
+	roomId: number,
+	data: CreateRoomLaundryItem[]
+) {
 	await db.transaction(async (tx) => {
 		await tx.delete(roomLaundryItem).where(and(isExist, eq(roomLaundryItem.roomId, roomId)));
 		await tx.insert(roomLaundryItem).values(data);

@@ -1,5 +1,5 @@
-import { insertRoomLaundryItemSchema } from '@db/schema/laundries';
-import { z } from 'zod';
+import { insertRoomLaundryItemSchema } from "@db/schema/laundries";
+import { z } from "zod";
 
 export const roomLaundryItemSchema = insertRoomLaundryItemSchema
 	.pick({ roomId: true, paymentMethod: true })

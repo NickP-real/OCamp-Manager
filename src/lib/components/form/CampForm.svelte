@@ -1,22 +1,28 @@
 <script lang="ts">
-	import { superForm, type Infer, type SuperValidated } from 'sveltekit-superforms';
-	import { campFormSchema, type CampFormSchema } from '$lib/client/form/camp-form';
-	import * as Form from '$lib/components/form-ui';
-	import { type Major } from '@db/schema/camps';
-	import { zodClient } from 'sveltekit-superforms/adapters';
-	import type { FormMode } from './type';
-	import { goto } from '$app/navigation';
+	import { superForm, type Infer, type SuperValidated } from "sveltekit-superforms";
+	import { campFormSchema, type CampFormSchema } from "$lib/client/form/camp-form";
+	import * as Form from "$lib/components/form-ui";
+	import { type Major } from "@db/schema/camps";
+	import { zodClient } from "sveltekit-superforms/adapters";
+	import type { FormMode } from "./type";
+	import { goto } from "$app/navigation";
+	import Chip from "../ui/Chip.svelte";
+	import { XCircleIcon } from "lucide-svelte";
+	import { toastSuccess } from "../toast/toast";
 
-	export let mode: FormMode = 'create';
+	export let mode: FormMode = "create";
 	export let formData: SuperValidated<Infer<CampFormSchema>>;
 	export let majors: Promise<Major[]>;
 
 	const form = superForm(formData, {
 		validators: zodClient(campFormSchema),
-		dataType: 'json',
+		dataType: "json",
 		resetForm: false,
 		onResult: async ({ result }) => {
-			if (mode === 'create' && result.type === 'success') await goto('/camps');
+			if (result.type === "success") {
+				toastSuccess(`${mode} camp successful.`);
+				if (mode === "create") await goto("/camps");
+			}
 		}
 	});
 
@@ -27,11 +33,17 @@
 			return;
 		$formFieldData.campMajors = [...$formFieldData.campMajors, { majorId: major.detail.id }];
 	}
+
+	function removeMajor(major: Infer<CampFormSchema>["campMajors"][number]) {
+		$formFieldData.campMajors = $formFieldData.campMajors.filter(
+			(campMajor) => campMajor.majorId !== major.majorId
+		);
+	}
 </script>
 
 <form method="post" use:enhance class="space-y-4">
 	<Form.Title>
-		{#if mode === 'create'}
+		{#if mode === "create"}
 			Create camp
 		{:else}
 			Update camp
@@ -75,10 +87,17 @@
 					on:itemselect={addMajor}
 				/>
 
-				{#each $formFieldData.campMajors as major}
-					{@const majorName = majors.find(({ id }) => id === major.majorId)?.name}
-					<span>{majorName}</span>
-				{/each}
+				<div class="flex gap-2">
+					{#each $formFieldData.campMajors as major}
+						{@const majorName = majors.find(({ id }) => id === major.majorId)?.name}
+						<Chip>
+							<span>{majorName}</span>
+							<button slot="end-content" type="button" on:click={() => removeMajor(major)}>
+								<XCircleIcon class="size-5" />
+							</button>
+						</Chip>
+					{/each}
+				</div>
 			{/if}
 		{/await}
 	</Form.Div>

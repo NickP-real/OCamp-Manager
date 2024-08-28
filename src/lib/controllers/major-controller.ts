@@ -1,6 +1,6 @@
-import { insertMajorSchema, selectMajorSchema } from '@db/schema/camps';
-import * as majorRepostiory from '@repository/major-repository';
-import type { z } from 'zod';
+import { insertMajorSchema, selectMajorSchema } from "@db/schema/camps";
+import * as majorRepostiory from "@repository/major-repository";
+import type { z } from "zod";
 
 const createMajorSchema = insertMajorSchema.omit({
 	id: true,
@@ -27,7 +27,7 @@ export async function createMajor(data: CreateMajorBody) {
 		const body = createMajorSchema.parse(data);
 		await majorRepostiory.createMajor(body);
 	} catch (err) {
-		console.log('create major failed');
+		console.log("create major failed");
 	}
 }
 
@@ -36,6 +36,6 @@ export async function updateMajor(id: number, data: UpdateMajorBody) {
 		const body = updateMajorSchema.parse(data);
 		await majorRepostiory.updateMajorById(id, body);
 	} catch (err) {
-		console.log('update major failed');
+		console.log("update major failed");
 	}
 }

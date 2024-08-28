@@ -1,5 +1,5 @@
-import { DEFAULT_LAUNDRY_PRICE } from '$lib/utils/constant';
-import { z } from 'zod';
+import { DEFAULT_LAUNDRY_PRICE } from "$lib/utils/constant";
+import { z } from "zod";
 
 export const campFormSchema = z
 	.object({
@@ -14,14 +14,14 @@ export const campFormSchema = z
 	.superRefine(({ fromDate, toDate }, ctx) => {
 		if (fromDate > toDate) {
 			ctx.addIssue({
-				code: 'custom',
-				message: 'Start date must come before end date',
-				path: ['fromDate']
+				code: "custom",
+				message: "Start date must come before end date",
+				path: ["fromDate"]
 			});
 			ctx.addIssue({
-				code: 'custom',
-				message: 'End date must come before start date',
-				path: ['toDate']
+				code: "custom",
+				message: "End date must come before start date",
+				path: ["toDate"]
 			});
 		}
 	})

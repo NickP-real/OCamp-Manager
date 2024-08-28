@@ -1,7 +1,7 @@
-import { ifEmptyThrowError } from '$lib/utils/db-utils';
-import { db } from '@db/index';
-import { campMajor, selectCampMajorSchema, type CreateCampMajor } from '@db/schema/camps';
-import { eq } from 'drizzle-orm';
+import { ifEmptyThrowError } from "$lib/utils/db-utils";
+import { db } from "@db/index";
+import { campMajor, selectCampMajorSchema, type CreateCampMajor } from "@db/schema/camps";
+import { eq } from "drizzle-orm";
 
 type UpdateCampMajorBody = Partial<CreateCampMajor>;
 
@@ -12,7 +12,7 @@ export async function getCampMajors() {
 export async function getCampMajorById(id: number) {
 	const campMajorData = await db.select().from(campMajor).where(eq(campMajor.id, id)).limit(1);
 
-	ifEmptyThrowError(campMajorData, 'Camp major data is not found');
+	ifEmptyThrowError(campMajorData, "Camp major data is not found");
 
 	return selectCampMajorSchema.parse(campMajorData.at(0));
 }
@@ -22,7 +22,7 @@ export async function getCampMajorsByCampId(campId: number, tx = db) {
 }
 
 export async function createCampMajor(data: CreateCampMajor[], tx = db) {
-	await tx.insert(campMajor).values(data);
+	return await tx.insert(campMajor).values(data).returning();
 }
 
 export async function createCampMajorByCampId() {}
@@ -35,9 +35,10 @@ export async function updateCampMajorById(id: number, data: UpdateCampMajorBody)
 }
 
 export async function updateCampMajorByCampId(campId: number, data: CreateCampMajor[], tx = db) {
-	await tx.transaction(async (tx) => {
+	return await tx.transaction(async (tx) => {
 		await deleteCampMajorByCampId(campId, tx);
-		if (data.length > 0) await createCampMajor(data, tx);
+		if (data.length > 0) return await createCampMajor(data, tx);
+		return [];
 	});
 }
 

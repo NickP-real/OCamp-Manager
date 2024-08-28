@@ -1,9 +1,9 @@
-import { campFormSchema } from '$lib/client/form/camp-form';
-import { createCamp } from '@controller/camp-controller';
-import { getAllMajors } from '@controller/major-controller';
-import { fail, type Actions } from '@sveltejs/kit';
-import { message, superValidate } from 'sveltekit-superforms';
-import { zod } from 'sveltekit-superforms/adapters';
+import { campFormSchema } from "$lib/client/form/camp-form";
+import { createCamp } from "@controller/camp-controller";
+import { getAllMajors } from "@controller/major-controller";
+import { fail, type Actions } from "@sveltejs/kit";
+import { message, superValidate } from "sveltekit-superforms";
+import { zod } from "sveltekit-superforms/adapters";
 
 export async function load() {
 	const form = await superValidate(zod(campFormSchema));
@@ -20,8 +20,8 @@ export const actions: Actions = {
 		if (!form.valid) return fail(400, { form });
 
 		await createCamp(form.data);
-		console.log('Create camp success');
+		console.log("Create camp success");
 
-		return message(form, 'Create camp success');
+		return message(form, "Create camp success");
 	}
 };

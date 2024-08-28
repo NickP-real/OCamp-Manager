@@ -1,7 +1,7 @@
-import { ifEmptyThrowError, isExisted } from '$lib/utils/db-utils';
-import { db } from '@db/index';
-import { campStaff, selectCampStaffSchema, type CreateCampStaff } from '@db/schema/camps';
-import { and, eq } from 'drizzle-orm';
+import { ifEmptyThrowError, isExisted } from "$lib/utils/db-utils";
+import { db } from "@db/index";
+import { campStaff, selectCampStaffSchema, type CreateCampStaff } from "@db/schema/camps";
+import { and, eq } from "drizzle-orm";
 
 type UpdateCampStaffBody = Partial<CreateCampStaff>;
 
@@ -21,7 +21,7 @@ export async function getCampStaffById(id: number) {
 		.where(and(isExist, eq(campStaff.id, id)))
 		.limit(1);
 
-	ifEmptyThrowError(campStaffData, 'Camp staff data is not found');
+	ifEmptyThrowError(campStaffData, "Camp staff data is not found");
 
 	return selectCampStaffSchema.parse(campStaffData.at(0));
 }
@@ -41,7 +41,7 @@ export async function createCampStaff(data: CreateCampStaff) {
 export async function updateCampStaffById(id: number, data: UpdateCampStaffBody) {
 	await db
 		.update(campStaff)
-		.set({ ...data, updatedAt: new Date() })
+		.set(data)
 		.where(and(isExist, eq(campStaff.id, id)));
 }
 

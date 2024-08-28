@@ -1,7 +1,7 @@
-import { ifEmptyThrowError, isExisted } from '$lib/utils/db-utils';
-import { db } from '@db/index';
-import { major, selectMajorSchema, type CreateMajor } from '@db/schema/camps';
-import { and, eq, like } from 'drizzle-orm';
+import { ifEmptyThrowError, isExisted } from "$lib/utils/db-utils";
+import { db } from "@db/index";
+import { major, selectMajorSchema, type CreateMajor } from "@db/schema/camps";
+import { and, eq, like } from "drizzle-orm";
 
 type UpdateMajorBody = Partial<CreateMajor>;
 
@@ -18,7 +18,7 @@ export async function getMajorById(id: number) {
 		.where(and(isExist, eq(major.id, id)))
 		.limit(1);
 
-	ifEmptyThrowError(majorData, 'Major data not found');
+	ifEmptyThrowError(majorData, "Major data not found");
 
 	return selectMajorSchema.parse(majorData.at(0));
 }

@@ -1,7 +1,8 @@
-import { isExisted } from '$lib/utils/db-utils';
-import { db } from '@db/index';
-import { participant, selectParticipantSchema, type CreateParticipant } from '@db/schema/users';
-import { and, eq } from 'drizzle-orm';
+import { isExisted } from "$lib/utils/db-utils";
+import { db } from "@db/index";
+import { campParticipant } from "@db/schema/camps";
+import { participant, selectParticipantSchema, type CreateParticipant } from "@db/schema/users";
+import { and, eq } from "drizzle-orm";
 
 type UpdateParticipantBody = Partial<CreateParticipant>;
 
@@ -24,8 +25,16 @@ export async function getParticipantById(id: number) {
 	return participantData[0];
 }
 
-export async function createParticipant(data: CreateParticipant) {
-	await db.insert(participant).values(data);
+export async function getParticipantsByCampId(campId: number, tx = db) {
+	return await tx
+		.select({ participant })
+		.from(participant)
+		.leftJoin(campParticipant, eq(participant.id, campParticipant.participantId))
+		.where(and(eq(campParticipant.campId, campId), isExist));
+}
+
+export async function createParticipant(data: CreateParticipant, tx = db) {
+	return await tx.insert(participant).values(data).returning();
 }
 
 export async function updateParticipantById(id: number, data: UpdateParticipantBody) {

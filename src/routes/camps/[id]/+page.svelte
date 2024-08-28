@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { formatDate } from '$lib/client/utils/date-util';
+	import { formatDate } from "$lib/client/utils/date-util";
 
 	export let data;
 	const { id, name, fromDate, toDate, description, hasLaundry, laundryPrice } = data.camp;

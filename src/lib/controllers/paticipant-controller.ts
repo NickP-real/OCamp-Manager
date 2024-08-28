@@ -2,9 +2,9 @@ import {
 	insertParticipantSchema,
 	selectParticipantSchema,
 	type CreateParticipant
-} from '@db/schema/users';
-import * as participantRepository from '../repositories/participant-repository';
-import type { z } from 'zod';
+} from "@db/schema/users";
+import * as participantRepository from "../repositories/participant-repository";
+import type { z } from "zod";
 
 const createParticipantSchema = insertParticipantSchema.omit({
 	id: true,

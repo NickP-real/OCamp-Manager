@@ -1,5 +1,5 @@
 <script lang="ts">
-	import LaundryItemForm from '$lib/components/form/LaundryItemForm.svelte';
+	import LaundryItemForm from "$lib/components/form/LaundryItemForm.svelte";
 
 	export let data;
 </script>

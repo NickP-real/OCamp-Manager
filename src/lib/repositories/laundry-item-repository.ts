@@ -1,7 +1,7 @@
-import { ifEmptyThrowError, isExisted } from '$lib/utils/db-utils';
-import { db } from '@db/index';
-import { laundryItem, selectLaundryItemSchema, type CreateLaundryItem } from '@db/schema/laundries';
-import { and, eq, like } from 'drizzle-orm';
+import { ifEmptyThrowError, isExisted } from "$lib/utils/db-utils";
+import { db } from "@db/index";
+import { laundryItem, selectLaundryItemSchema, type CreateLaundryItem } from "@db/schema/laundries";
+import { and, eq, like } from "drizzle-orm";
 
 type UpdateLaundryItemBody = Partial<CreateLaundryItem>;
 
@@ -21,7 +21,7 @@ export async function getLaundryItemById(id: number) {
 		.where(and(isExist, eq(laundryItem.id, id)))
 		.limit(1);
 
-	ifEmptyThrowError(laundryItemData, 'Laundry item data is not found');
+	ifEmptyThrowError(laundryItemData, "Laundry item data is not found");
 
 	return selectLaundryItemSchema.parse(laundryItemData.at(0));
 }

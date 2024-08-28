@@ -1,1504 +1,1284 @@
 {
-  "version": "6",
-  "dialect": "postgresql",
-  "tables": {
-    "public.camp": {
-      "name": "camp",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "name": {
-          "name": "name",
-          "type": "varchar(256)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "from_date": {
-          "name": "from_date",
-          "type": "date",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "to_date": {
-          "name": "to_date",
-          "type": "date",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "text": {
-          "name": "text",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "hasLaundry": {
-          "name": "hasLaundry",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": true,
-          "default": true
-        },
-        "laundry_price": {
-          "name": "laundry_price",
-          "type": "numeric(10, 2)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "deleted_at": {
-          "name": "deleted_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "'1970-01-01 00:00:00.001'"
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {
-        "camp_idx_1": {
-          "name": "camp_idx_1",
-          "columns": [
-            "name"
-          ],
-          "isUnique": true
-        },
-        "camp_idx_2": {
-          "name": "camp_idx_2",
-          "columns": [
-            "from_date"
-          ],
-          "isUnique": false
-        },
-        "camp_idx_3": {
-          "name": "camp_idx_3",
-          "columns": [
-            "to_date"
-          ],
-          "isUnique": false
-        },
-        "camp_idx_4": {
-          "name": "camp_idx_4",
-          "columns": [
-            "hasLaundry"
-          ],
-          "isUnique": false
-        },
-        "camp_idx_5": {
-          "name": "camp_idx_5",
-          "columns": [
-            "deleted_at"
-          ],
-          "isUnique": false
-        },
-        "camp_idx_6": {
-          "name": "camp_idx_6",
-          "columns": [
-            "created_at"
-          ],
-          "isUnique": false
-        },
-        "camp_idx_7": {
-          "name": "camp_idx_7",
-          "columns": [
-            "updated_at"
-          ],
-          "isUnique": false
-        }
-      },
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {
-        "camp_name_unique": {
-          "name": "camp_name_unique",
-          "columns": [
-            "name"
-          ],
-          "nullsNotDistinct": false
-        }
-      }
-    },
-    "public.camp_major": {
-      "name": "camp_major",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "camp_id": {
-          "name": "camp_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "major_id": {
-          "name": "major_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "deleted_at": {
-          "name": "deleted_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "'1970-01-01 00:00:00.001'"
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {
-        "camp_major_idx_1": {
-          "name": "camp_major_idx_1",
-          "columns": [
-            "camp_id"
-          ],
-          "isUnique": false
-        },
-        "camp_major_idx_2": {
-          "name": "camp_major_idx_2",
-          "columns": [
-            "major_id"
-          ],
-          "isUnique": false
-        },
-        "camp_major_idx_3": {
-          "name": "camp_major_idx_3",
-          "columns": [
-            "deleted_at"
-          ],
-          "isUnique": false
-        },
-        "camp_major_idx_4": {
-          "name": "camp_major_idx_4",
-          "columns": [
-            "created_at"
-          ],
-          "isUnique": false
-        },
-        "camp_major_idx_5": {
-          "name": "camp_major_idx_5",
-          "columns": [
-            "updated_at"
-          ],
-          "isUnique": false
-        }
-      },
-      "foreignKeys": {
-        "camp_major_camp_id_camp_id_fk": {
-          "name": "camp_major_camp_id_camp_id_fk",
-          "tableFrom": "camp_major",
-          "columnsFrom": [
-            "camp_id"
-          ],
-          "tableTo": "camp",
-          "columnsTo": [
-            "id"
-          ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
-        },
-        "camp_major_major_id_major_id_fk": {
-          "name": "camp_major_major_id_major_id_fk",
-          "tableFrom": "camp_major",
-          "columnsFrom": [
-            "major_id"
-          ],
-          "tableTo": "major",
-          "columnsTo": [
-            "id"
-          ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
-    },
-    "public.camp_participant": {
-      "name": "camp_participant",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "camp_id": {
-          "name": "camp_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "participant_id": {
-          "name": "participant_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "deleted_at": {
-          "name": "deleted_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "'1970-01-01 00:00:00.001'"
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {
-        "camp_participant_idx_1": {
-          "name": "camp_participant_idx_1",
-          "columns": [
-            "camp_id"
-          ],
-          "isUnique": false
-        },
-        "camp_participant_idx_2": {
-          "name": "camp_participant_idx_2",
-          "columns": [
-            "participant_id"
-          ],
-          "isUnique": false
-        },
-        "camp_participant_idx_3": {
-          "name": "camp_participant_idx_3",
-          "columns": [
-            "deleted_at"
-          ],
-          "isUnique": false
-        },
-        "camp_participant_idx_4": {
-          "name": "camp_participant_idx_4",
-          "columns": [
-            "created_at"
-          ],
-          "isUnique": false
-        },
-        "camp_participant_idx_5": {
-          "name": "camp_participant_idx_5",
-          "columns": [
-            "updated_at"
-          ],
-          "isUnique": false
-        }
-      },
-      "foreignKeys": {
-        "camp_participant_camp_id_camp_id_fk": {
-          "name": "camp_participant_camp_id_camp_id_fk",
-          "tableFrom": "camp_participant",
-          "columnsFrom": [
-            "camp_id"
-          ],
-          "tableTo": "camp",
-          "columnsTo": [
-            "id"
-          ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
-        },
-        "camp_participant_participant_id_participant_id_fk": {
-          "name": "camp_participant_participant_id_participant_id_fk",
-          "tableFrom": "camp_participant",
-          "columnsFrom": [
-            "participant_id"
-          ],
-          "tableTo": "participant",
-          "columnsTo": [
-            "id"
-          ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {
-        "camp_participant_unq_1": {
-          "name": "camp_participant_unq_1",
-          "columns": [
-            "camp_id",
-            "participant_id"
-          ],
-          "nullsNotDistinct": false
-        }
-      }
-    },
-    "public.camp_staff": {
-      "name": "camp_staff",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "camp_id": {
-          "name": "camp_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "staff_id": {
-          "name": "staff_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "deleted_at": {
-          "name": "deleted_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "'1970-01-01 00:00:00.001'"
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {
-        "camp_staff_idx_1": {
-          "name": "camp_staff_idx_1",
-          "columns": [
-            "camp_id"
-          ],
-          "isUnique": false
-        },
-        "camp_staff_idx_2": {
-          "name": "camp_staff_idx_2",
-          "columns": [
-            "staff_id"
-          ],
-          "isUnique": false
-        },
-        "camp_staff_idx_3": {
-          "name": "camp_staff_idx_3",
-          "columns": [
-            "deleted_at"
-          ],
-          "isUnique": false
-        },
-        "camp_staff_idx_4": {
-          "name": "camp_staff_idx_4",
-          "columns": [
-            "created_at"
-          ],
-          "isUnique": false
-        },
-        "camp_staff_idx_5": {
-          "name": "camp_staff_idx_5",
-          "columns": [
-            "updated_at"
-          ],
-          "isUnique": false
-        }
-      },
-      "foreignKeys": {
-        "camp_staff_camp_id_camp_id_fk": {
-          "name": "camp_staff_camp_id_camp_id_fk",
-          "tableFrom": "camp_staff",
-          "columnsFrom": [
-            "camp_id"
-          ],
-          "tableTo": "camp",
-          "columnsTo": [
-            "id"
-          ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
-        },
-        "camp_staff_staff_id_staff_id_fk": {
-          "name": "camp_staff_staff_id_staff_id_fk",
-          "tableFrom": "camp_staff",
-          "columnsFrom": [
-            "staff_id"
-          ],
-          "tableTo": "staff",
-          "columnsTo": [
-            "id"
-          ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {
-        "camp_staff_unq_1": {
-          "name": "camp_staff_unq_1",
-          "columns": [
-            "camp_id",
-            "staff_id"
-          ],
-          "nullsNotDistinct": false
-        }
-      }
-    },
-    "public.major": {
-      "name": "major",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "name": {
-          "name": "name",
-          "type": "varchar(256)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "deleted_at": {
-          "name": "deleted_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "'1970-01-01 00:00:00.001'"
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {
-        "major_idx_1": {
-          "name": "major_idx_1",
-          "columns": [
-            "name"
-          ],
-          "isUnique": true
-        },
-        "major_idx_2": {
-          "name": "major_idx_2",
-          "columns": [
-            "deleted_at"
-          ],
-          "isUnique": false
-        },
-        "major_idx_3": {
-          "name": "major_idx_3",
-          "columns": [
-            "created_at"
-          ],
-          "isUnique": false
-        },
-        "major_idx_4": {
-          "name": "major_idx_4",
-          "columns": [
-            "updated_at"
-          ],
-          "isUnique": false
-        }
-      },
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {
-        "major_name_unique": {
-          "name": "major_name_unique",
-          "columns": [
-            "name"
-          ],
-          "nullsNotDistinct": false
-        }
-      }
-    },
-    "public.laundry_item": {
-      "name": "laundry_item",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "name": {
-          "name": "name",
-          "type": "varchar(256)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "deleted_at": {
-          "name": "deleted_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "'1970-01-01 00:00:00.001'"
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {
-        "laundry_item_idx_1": {
-          "name": "laundry_item_idx_1",
-          "columns": [
-            "name"
-          ],
-          "isUnique": true
-        },
-        "laundry_item_idx_2": {
-          "name": "laundry_item_idx_2",
-          "columns": [
-            "deleted_at"
-          ],
-          "isUnique": false
-        },
-        "laundry_item_idx_3": {
-          "name": "laundry_item_idx_3",
-          "columns": [
-            "created_at"
-          ],
-          "isUnique": false
-        },
-        "laundry_item_idx_4": {
-          "name": "laundry_item_idx_4",
-          "columns": [
-            "updated_at"
-          ],
-          "isUnique": false
-        }
-      },
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {
-        "laundry_item_name_unique": {
-          "name": "laundry_item_name_unique",
-          "columns": [
-            "name"
-          ],
-          "nullsNotDistinct": false
-        }
-      }
-    },
-    "public.room_laundry_item": {
-      "name": "room_laundry_item",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "room_id": {
-          "name": "room_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "item_id": {
-          "name": "item_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "quantity": {
-          "name": "quantity",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "payment_method": {
-          "name": "payment_method",
-          "type": "payment_method",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "deleted_at": {
-          "name": "deleted_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "'1970-01-01 00:00:00.001'"
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {
-        "room_laundry_item_idx_1": {
-          "name": "room_laundry_item_idx_1",
-          "columns": [
-            "room_id"
-          ],
-          "isUnique": false
-        },
-        "room_laundry_item_idx_2": {
-          "name": "room_laundry_item_idx_2",
-          "columns": [
-            "item_id"
-          ],
-          "isUnique": false
-        },
-        "room_laundry_item_idx_3": {
-          "name": "room_laundry_item_idx_3",
-          "columns": [
-            "deleted_at"
-          ],
-          "isUnique": false
-        },
-        "room_laundry_item_idx_4": {
-          "name": "room_laundry_item_idx_4",
-          "columns": [
-            "created_at"
-          ],
-          "isUnique": false
-        },
-        "room_laundry_item_idx_5": {
-          "name": "room_laundry_item_idx_5",
-          "columns": [
-            "updated_at"
-          ],
-          "isUnique": false
-        }
-      },
-      "foreignKeys": {
-        "room_laundry_item_room_id_room_id_fk": {
-          "name": "room_laundry_item_room_id_room_id_fk",
-          "tableFrom": "room_laundry_item",
-          "columnsFrom": [
-            "room_id"
-          ],
-          "tableTo": "room",
-          "columnsTo": [
-            "id"
-          ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
-        },
-        "room_laundry_item_item_id_laundry_item_id_fk": {
-          "name": "room_laundry_item_item_id_laundry_item_id_fk",
-          "tableFrom": "room_laundry_item",
-          "columnsFrom": [
-            "item_id"
-          ],
-          "tableTo": "laundry_item",
-          "columnsTo": [
-            "id"
-          ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
-    },
-    "public.room": {
-      "name": "room",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "name": {
-          "name": "name",
-          "type": "varchar(256)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "description": {
-          "name": "description",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "camp_id": {
-          "name": "camp_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "deleted_at": {
-          "name": "deleted_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "'1970-01-01 00:00:00.001'"
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {
-        "room_idx_1": {
-          "name": "room_idx_1",
-          "columns": [
-            "name"
-          ],
-          "isUnique": true
-        },
-        "room_idx_2": {
-          "name": "room_idx_2",
-          "columns": [
-            "camp_id"
-          ],
-          "isUnique": false
-        },
-        "room_idx_3": {
-          "name": "room_idx_3",
-          "columns": [
-            "deleted_at"
-          ],
-          "isUnique": false
-        },
-        "room_idx_4": {
-          "name": "room_idx_4",
-          "columns": [
-            "updated_at"
-          ],
-          "isUnique": false
-        },
-        "room_idx_5": {
-          "name": "room_idx_5",
-          "columns": [
-            "created_at"
-          ],
-          "isUnique": false
-        }
-      },
-      "foreignKeys": {
-        "room_camp_id_camp_id_fk": {
-          "name": "room_camp_id_camp_id_fk",
-          "tableFrom": "room",
-          "columnsFrom": [
-            "camp_id"
-          ],
-          "tableTo": "camp",
-          "columnsTo": [
-            "id"
-          ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {
-        "room_unq_1": {
-          "name": "room_unq_1",
-          "columns": [
-            "name",
-            "camp_id"
-          ],
-          "nullsNotDistinct": false
-        }
-      }
-    },
-    "public.room_participant": {
-      "name": "room_participant",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "room_id": {
-          "name": "room_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "camp_participant_id": {
-          "name": "camp_participant_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "deleted_at": {
-          "name": "deleted_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "'1970-01-01 00:00:00.001'"
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {
-        "room_participant_idx_1": {
-          "name": "room_participant_idx_1",
-          "columns": [
-            "room_id"
-          ],
-          "isUnique": true
-        },
-        "room_participant_idx_2": {
-          "name": "room_participant_idx_2",
-          "columns": [
-            "camp_participant_id"
-          ],
-          "isUnique": true
-        },
-        "room_participant_idx_3": {
-          "name": "room_participant_idx_3",
-          "columns": [
-            "deleted_at"
-          ],
-          "isUnique": false
-        },
-        "room_participant_idx_4": {
-          "name": "room_participant_idx_4",
-          "columns": [
-            "created_at"
-          ],
-          "isUnique": false
-        },
-        "room_participant_idx_5": {
-          "name": "room_participant_idx_5",
-          "columns": [
-            "updated_at"
-          ],
-          "isUnique": false
-        }
-      },
-      "foreignKeys": {
-        "room_participant_room_id_room_id_fk": {
-          "name": "room_participant_room_id_room_id_fk",
-          "tableFrom": "room_participant",
-          "columnsFrom": [
-            "room_id"
-          ],
-          "tableTo": "room",
-          "columnsTo": [
-            "id"
-          ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
-        },
-        "room_participant_camp_participant_id_camp_participant_id_fk": {
-          "name": "room_participant_camp_participant_id_camp_participant_id_fk",
-          "tableFrom": "room_participant",
-          "columnsFrom": [
-            "camp_participant_id"
-          ],
-          "tableTo": "camp_participant",
-          "columnsTo": [
-            "id"
-          ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {
-        "room_participant_unq_1": {
-          "name": "room_participant_unq_1",
-          "columns": [
-            "camp_participant_id",
-            "room_id"
-          ],
-          "nullsNotDistinct": false
-        }
-      }
-    },
-    "public.room_staff": {
-      "name": "room_staff",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "room_id": {
-          "name": "room_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "camp_staff_id": {
-          "name": "camp_staff_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "deleted_at": {
-          "name": "deleted_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "'1970-01-01 00:00:00.001'"
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {
-        "room_staff_idx_1": {
-          "name": "room_staff_idx_1",
-          "columns": [
-            "room_id"
-          ],
-          "isUnique": true
-        },
-        "room_staff_idx_2": {
-          "name": "room_staff_idx_2",
-          "columns": [
-            "camp_staff_id"
-          ],
-          "isUnique": true
-        },
-        "room_staff_idx_3": {
-          "name": "room_staff_idx_3",
-          "columns": [
-            "deleted_at"
-          ],
-          "isUnique": false
-        },
-        "room_staff_idx_4": {
-          "name": "room_staff_idx_4",
-          "columns": [
-            "created_at"
-          ],
-          "isUnique": false
-        },
-        "room_staff_idx_5": {
-          "name": "room_staff_idx_5",
-          "columns": [
-            "updated_at"
-          ],
-          "isUnique": false
-        }
-      },
-      "foreignKeys": {
-        "room_staff_room_id_room_id_fk": {
-          "name": "room_staff_room_id_room_id_fk",
-          "tableFrom": "room_staff",
-          "columnsFrom": [
-            "room_id"
-          ],
-          "tableTo": "room",
-          "columnsTo": [
-            "id"
-          ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
-        },
-        "room_staff_camp_staff_id_camp_staff_id_fk": {
-          "name": "room_staff_camp_staff_id_camp_staff_id_fk",
-          "tableFrom": "room_staff",
-          "columnsFrom": [
-            "camp_staff_id"
-          ],
-          "tableTo": "camp_staff",
-          "columnsTo": [
-            "id"
-          ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {
-        "room_staff_unq_1": {
-          "name": "room_staff_unq_1",
-          "columns": [
-            "camp_staff_id",
-            "room_id"
-          ],
-          "nullsNotDistinct": false
-        }
-      }
-    },
-    "public.participant": {
-      "name": "participant",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "first_name": {
-          "name": "first_name",
-          "type": "varchar(256)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "last_name": {
-          "name": "last_name",
-          "type": "varchar(256)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "nickname": {
-          "name": "nickname",
-          "type": "varchar(256)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "phone": {
-          "name": "phone",
-          "type": "varchar(191)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "birthday": {
-          "name": "birthday",
-          "type": "date",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "sex": {
-          "name": "sex",
-          "type": "sex",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "additional_info": {
-          "name": "additional_info",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "deleted_at": {
-          "name": "deleted_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "'1970-01-01 00:00:00.001'"
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {
-        "participant_idx_1": {
-          "name": "participant_idx_1",
-          "columns": [
-            "first_name"
-          ],
-          "isUnique": false
-        },
-        "participant_idx_2": {
-          "name": "participant_idx_2",
-          "columns": [
-            "last_name"
-          ],
-          "isUnique": false
-        },
-        "participant_idx_3": {
-          "name": "participant_idx_3",
-          "columns": [
-            "phone"
-          ],
-          "isUnique": false
-        },
-        "participant_idx_4": {
-          "name": "participant_idx_4",
-          "columns": [
-            "deleted_at"
-          ],
-          "isUnique": false
-        },
-        "participant_idx_5": {
-          "name": "participant_idx_5",
-          "columns": [
-            "created_at"
-          ],
-          "isUnique": false
-        },
-        "participant_idx_6": {
-          "name": "participant_idx_6",
-          "columns": [
-            "updated_at"
-          ],
-          "isUnique": false
-        }
-      },
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
-    },
-    "public.staff": {
-      "name": "staff",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "first_name": {
-          "name": "first_name",
-          "type": "varchar(256)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "last_name": {
-          "name": "last_name",
-          "type": "varchar(256)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "nickname": {
-          "name": "nickname",
-          "type": "varchar(256)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "phone": {
-          "name": "phone",
-          "type": "varchar(191)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "deleted_at": {
-          "name": "deleted_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "'1970-01-01 00:00:00.001'"
-        },
-        "additional_info": {
-          "name": "additional_info",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {
-        "staff_idx_1": {
-          "name": "staff_idx_1",
-          "columns": [
-            "first_name"
-          ],
-          "isUnique": false
-        },
-        "staff_idx_2": {
-          "name": "staff_idx_2",
-          "columns": [
-            "last_name"
-          ],
-          "isUnique": false
-        },
-        "staff_idx_3": {
-          "name": "staff_idx_3",
-          "columns": [
-            "phone"
-          ],
-          "isUnique": false
-        },
-        "staff_idx_4": {
-          "name": "staff_idx_4",
-          "columns": [
-            "deleted_at"
-          ],
-          "isUnique": false
-        },
-        "staff_idx_5": {
-          "name": "staff_idx_5",
-          "columns": [
-            "created_at"
-          ],
-          "isUnique": false
-        },
-        "staff_idx_6": {
-          "name": "staff_idx_6",
-          "columns": [
-            "updated_at"
-          ],
-          "isUnique": false
-        }
-      },
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
-    },
-    "public.staff_account": {
-      "name": "staff_account",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "staff_id": {
-          "name": "staff_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "email": {
-          "name": "email",
-          "type": "varchar(256)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "password": {
-          "name": "password",
-          "type": "varchar(256)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "deleted_at": {
-          "name": "deleted_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "'1970-01-01 00:00:00.001'"
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {
-        "staff_account_idx_1": {
-          "name": "staff_account_idx_1",
-          "columns": [
-            "staff_id"
-          ],
-          "isUnique": true
-        },
-        "staff_account_idx_2": {
-          "name": "staff_account_idx_2",
-          "columns": [
-            "email"
-          ],
-          "isUnique": true
-        },
-        "staff_account_idx_3": {
-          "name": "staff_account_idx_3",
-          "columns": [
-            "deleted_at"
-          ],
-          "isUnique": false
-        },
-        "staff_account_idx_4": {
-          "name": "staff_account_idx_4",
-          "columns": [
-            "created_at"
-          ],
-          "isUnique": false
-        },
-        "staff_account_idx_5": {
-          "name": "staff_account_idx_5",
-          "columns": [
-            "updated_at"
-          ],
-          "isUnique": false
-        }
-      },
-      "foreignKeys": {
-        "staff_account_staff_id_staff_id_fk": {
-          "name": "staff_account_staff_id_staff_id_fk",
-          "tableFrom": "staff_account",
-          "columnsFrom": [
-            "staff_id"
-          ],
-          "tableTo": "staff",
-          "columnsTo": [
-            "id"
-          ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {
-        "staff_account_staff_id_unique": {
-          "name": "staff_account_staff_id_unique",
-          "columns": [
-            "staff_id"
-          ],
-          "nullsNotDistinct": false
-        }
-      }
-    }
-  },
-  "enums": {
-    "public.payment_method": {
-      "name": "payment_method",
-      "schema": "public",
-      "values": [
-        "cash",
-        "prompt_pay",
-        "true_wallet"
-      ]
-    },
-    "public.sex": {
-      "name": "sex",
-      "schema": "public",
-      "values": [
-        "male",
-        "female"
-      ]
-    }
-  },
-  "schemas": {},
-  "_meta": {
-    "schemas": {},
-    "tables": {},
-    "columns": {}
-  },
-  "id": "5d30919e-6dca-4f52-a4d4-9d12292ccf41",
-  "prevId": "545855a4-ec57-431e-aff3-8a4f2e39c701"
+	"version": "6",
+	"dialect": "postgresql",
+	"tables": {
+		"public.camp": {
+			"name": "camp",
+			"schema": "",
+			"columns": {
+				"id": {
+					"name": "id",
+					"type": "serial",
+					"primaryKey": true,
+					"notNull": true
+				},
+				"name": {
+					"name": "name",
+					"type": "varchar(256)",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"from_date": {
+					"name": "from_date",
+					"type": "date",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"to_date": {
+					"name": "to_date",
+					"type": "date",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"text": {
+					"name": "text",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"hasLaundry": {
+					"name": "hasLaundry",
+					"type": "boolean",
+					"primaryKey": false,
+					"notNull": true,
+					"default": true
+				},
+				"laundry_price": {
+					"name": "laundry_price",
+					"type": "numeric(10, 2)",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"deleted_at": {
+					"name": "deleted_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "'1970-01-01 00:00:00.001'"
+				},
+				"created_at": {
+					"name": "created_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "now()"
+				},
+				"updated_at": {
+					"name": "updated_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "now()"
+				}
+			},
+			"indexes": {
+				"camp_idx_1": {
+					"name": "camp_idx_1",
+					"columns": ["name"],
+					"isUnique": true
+				},
+				"camp_idx_2": {
+					"name": "camp_idx_2",
+					"columns": ["from_date"],
+					"isUnique": false
+				},
+				"camp_idx_3": {
+					"name": "camp_idx_3",
+					"columns": ["to_date"],
+					"isUnique": false
+				},
+				"camp_idx_4": {
+					"name": "camp_idx_4",
+					"columns": ["hasLaundry"],
+					"isUnique": false
+				},
+				"camp_idx_5": {
+					"name": "camp_idx_5",
+					"columns": ["deleted_at"],
+					"isUnique": false
+				},
+				"camp_idx_6": {
+					"name": "camp_idx_6",
+					"columns": ["created_at"],
+					"isUnique": false
+				},
+				"camp_idx_7": {
+					"name": "camp_idx_7",
+					"columns": ["updated_at"],
+					"isUnique": false
+				}
+			},
+			"foreignKeys": {},
+			"compositePrimaryKeys": {},
+			"uniqueConstraints": {
+				"camp_name_unique": {
+					"name": "camp_name_unique",
+					"columns": ["name"],
+					"nullsNotDistinct": false
+				}
+			}
+		},
+		"public.camp_major": {
+			"name": "camp_major",
+			"schema": "",
+			"columns": {
+				"id": {
+					"name": "id",
+					"type": "serial",
+					"primaryKey": true,
+					"notNull": true
+				},
+				"camp_id": {
+					"name": "camp_id",
+					"type": "integer",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"major_id": {
+					"name": "major_id",
+					"type": "integer",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"deleted_at": {
+					"name": "deleted_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "'1970-01-01 00:00:00.001'"
+				},
+				"created_at": {
+					"name": "created_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "now()"
+				},
+				"updated_at": {
+					"name": "updated_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "now()"
+				}
+			},
+			"indexes": {
+				"camp_major_idx_1": {
+					"name": "camp_major_idx_1",
+					"columns": ["camp_id"],
+					"isUnique": false
+				},
+				"camp_major_idx_2": {
+					"name": "camp_major_idx_2",
+					"columns": ["major_id"],
+					"isUnique": false
+				},
+				"camp_major_idx_3": {
+					"name": "camp_major_idx_3",
+					"columns": ["deleted_at"],
+					"isUnique": false
+				},
+				"camp_major_idx_4": {
+					"name": "camp_major_idx_4",
+					"columns": ["created_at"],
+					"isUnique": false
+				},
+				"camp_major_idx_5": {
+					"name": "camp_major_idx_5",
+					"columns": ["updated_at"],
+					"isUnique": false
+				}
+			},
+			"foreignKeys": {
+				"camp_major_camp_id_camp_id_fk": {
+					"name": "camp_major_camp_id_camp_id_fk",
+					"tableFrom": "camp_major",
+					"columnsFrom": ["camp_id"],
+					"tableTo": "camp",
+					"columnsTo": ["id"],
+					"onUpdate": "no action",
+					"onDelete": "no action"
+				},
+				"camp_major_major_id_major_id_fk": {
+					"name": "camp_major_major_id_major_id_fk",
+					"tableFrom": "camp_major",
+					"columnsFrom": ["major_id"],
+					"tableTo": "major",
+					"columnsTo": ["id"],
+					"onUpdate": "no action",
+					"onDelete": "no action"
+				}
+			},
+			"compositePrimaryKeys": {},
+			"uniqueConstraints": {}
+		},
+		"public.camp_participant": {
+			"name": "camp_participant",
+			"schema": "",
+			"columns": {
+				"id": {
+					"name": "id",
+					"type": "serial",
+					"primaryKey": true,
+					"notNull": true
+				},
+				"camp_id": {
+					"name": "camp_id",
+					"type": "integer",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"participant_id": {
+					"name": "participant_id",
+					"type": "integer",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"deleted_at": {
+					"name": "deleted_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "'1970-01-01 00:00:00.001'"
+				},
+				"created_at": {
+					"name": "created_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "now()"
+				},
+				"updated_at": {
+					"name": "updated_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "now()"
+				}
+			},
+			"indexes": {
+				"camp_participant_idx_1": {
+					"name": "camp_participant_idx_1",
+					"columns": ["camp_id"],
+					"isUnique": false
+				},
+				"camp_participant_idx_2": {
+					"name": "camp_participant_idx_2",
+					"columns": ["participant_id"],
+					"isUnique": false
+				},
+				"camp_participant_idx_3": {
+					"name": "camp_participant_idx_3",
+					"columns": ["deleted_at"],
+					"isUnique": false
+				},
+				"camp_participant_idx_4": {
+					"name": "camp_participant_idx_4",
+					"columns": ["created_at"],
+					"isUnique": false
+				},
+				"camp_participant_idx_5": {
+					"name": "camp_participant_idx_5",
+					"columns": ["updated_at"],
+					"isUnique": false
+				}
+			},
+			"foreignKeys": {
+				"camp_participant_camp_id_camp_id_fk": {
+					"name": "camp_participant_camp_id_camp_id_fk",
+					"tableFrom": "camp_participant",
+					"columnsFrom": ["camp_id"],
+					"tableTo": "camp",
+					"columnsTo": ["id"],
+					"onUpdate": "no action",
+					"onDelete": "no action"
+				},
+				"camp_participant_participant_id_participant_id_fk": {
+					"name": "camp_participant_participant_id_participant_id_fk",
+					"tableFrom": "camp_participant",
+					"columnsFrom": ["participant_id"],
+					"tableTo": "participant",
+					"columnsTo": ["id"],
+					"onUpdate": "no action",
+					"onDelete": "no action"
+				}
+			},
+			"compositePrimaryKeys": {},
+			"uniqueConstraints": {
+				"camp_participant_unq_1": {
+					"name": "camp_participant_unq_1",
+					"columns": ["camp_id", "participant_id"],
+					"nullsNotDistinct": false
+				}
+			}
+		},
+		"public.camp_staff": {
+			"name": "camp_staff",
+			"schema": "",
+			"columns": {
+				"id": {
+					"name": "id",
+					"type": "serial",
+					"primaryKey": true,
+					"notNull": true
+				},
+				"camp_id": {
+					"name": "camp_id",
+					"type": "integer",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"staff_id": {
+					"name": "staff_id",
+					"type": "integer",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"deleted_at": {
+					"name": "deleted_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "'1970-01-01 00:00:00.001'"
+				},
+				"created_at": {
+					"name": "created_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "now()"
+				},
+				"updated_at": {
+					"name": "updated_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "now()"
+				}
+			},
+			"indexes": {
+				"camp_staff_idx_1": {
+					"name": "camp_staff_idx_1",
+					"columns": ["camp_id"],
+					"isUnique": false
+				},
+				"camp_staff_idx_2": {
+					"name": "camp_staff_idx_2",
+					"columns": ["staff_id"],
+					"isUnique": false
+				},
+				"camp_staff_idx_3": {
+					"name": "camp_staff_idx_3",
+					"columns": ["deleted_at"],
+					"isUnique": false
+				},
+				"camp_staff_idx_4": {
+					"name": "camp_staff_idx_4",
+					"columns": ["created_at"],
+					"isUnique": false
+				},
+				"camp_staff_idx_5": {
+					"name": "camp_staff_idx_5",
+					"columns": ["updated_at"],
+					"isUnique": false
+				}
+			},
+			"foreignKeys": {
+				"camp_staff_camp_id_camp_id_fk": {
+					"name": "camp_staff_camp_id_camp_id_fk",
+					"tableFrom": "camp_staff",
+					"columnsFrom": ["camp_id"],
+					"tableTo": "camp",
+					"columnsTo": ["id"],
+					"onUpdate": "no action",
+					"onDelete": "no action"
+				},
+				"camp_staff_staff_id_staff_id_fk": {
+					"name": "camp_staff_staff_id_staff_id_fk",
+					"tableFrom": "camp_staff",
+					"columnsFrom": ["staff_id"],
+					"tableTo": "staff",
+					"columnsTo": ["id"],
+					"onUpdate": "no action",
+					"onDelete": "no action"
+				}
+			},
+			"compositePrimaryKeys": {},
+			"uniqueConstraints": {
+				"camp_staff_unq_1": {
+					"name": "camp_staff_unq_1",
+					"columns": ["camp_id", "staff_id"],
+					"nullsNotDistinct": false
+				}
+			}
+		},
+		"public.major": {
+			"name": "major",
+			"schema": "",
+			"columns": {
+				"id": {
+					"name": "id",
+					"type": "serial",
+					"primaryKey": true,
+					"notNull": true
+				},
+				"name": {
+					"name": "name",
+					"type": "varchar(256)",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"deleted_at": {
+					"name": "deleted_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "'1970-01-01 00:00:00.001'"
+				},
+				"created_at": {
+					"name": "created_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "now()"
+				},
+				"updated_at": {
+					"name": "updated_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "now()"
+				}
+			},
+			"indexes": {
+				"major_idx_1": {
+					"name": "major_idx_1",
+					"columns": ["name"],
+					"isUnique": true
+				},
+				"major_idx_2": {
+					"name": "major_idx_2",
+					"columns": ["deleted_at"],
+					"isUnique": false
+				},
+				"major_idx_3": {
+					"name": "major_idx_3",
+					"columns": ["created_at"],
+					"isUnique": false
+				},
+				"major_idx_4": {
+					"name": "major_idx_4",
+					"columns": ["updated_at"],
+					"isUnique": false
+				}
+			},
+			"foreignKeys": {},
+			"compositePrimaryKeys": {},
+			"uniqueConstraints": {
+				"major_name_unique": {
+					"name": "major_name_unique",
+					"columns": ["name"],
+					"nullsNotDistinct": false
+				}
+			}
+		},
+		"public.laundry_item": {
+			"name": "laundry_item",
+			"schema": "",
+			"columns": {
+				"id": {
+					"name": "id",
+					"type": "serial",
+					"primaryKey": true,
+					"notNull": true
+				},
+				"name": {
+					"name": "name",
+					"type": "varchar(256)",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"deleted_at": {
+					"name": "deleted_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "'1970-01-01 00:00:00.001'"
+				},
+				"created_at": {
+					"name": "created_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "now()"
+				},
+				"updated_at": {
+					"name": "updated_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "now()"
+				}
+			},
+			"indexes": {
+				"laundry_item_idx_1": {
+					"name": "laundry_item_idx_1",
+					"columns": ["name"],
+					"isUnique": true
+				},
+				"laundry_item_idx_2": {
+					"name": "laundry_item_idx_2",
+					"columns": ["deleted_at"],
+					"isUnique": false
+				},
+				"laundry_item_idx_3": {
+					"name": "laundry_item_idx_3",
+					"columns": ["created_at"],
+					"isUnique": false
+				},
+				"laundry_item_idx_4": {
+					"name": "laundry_item_idx_4",
+					"columns": ["updated_at"],
+					"isUnique": false
+				}
+			},
+			"foreignKeys": {},
+			"compositePrimaryKeys": {},
+			"uniqueConstraints": {
+				"laundry_item_name_unique": {
+					"name": "laundry_item_name_unique",
+					"columns": ["name"],
+					"nullsNotDistinct": false
+				}
+			}
+		},
+		"public.room_laundry_item": {
+			"name": "room_laundry_item",
+			"schema": "",
+			"columns": {
+				"id": {
+					"name": "id",
+					"type": "serial",
+					"primaryKey": true,
+					"notNull": true
+				},
+				"room_id": {
+					"name": "room_id",
+					"type": "integer",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"item_id": {
+					"name": "item_id",
+					"type": "integer",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"quantity": {
+					"name": "quantity",
+					"type": "integer",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"payment_method": {
+					"name": "payment_method",
+					"type": "payment_method",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"deleted_at": {
+					"name": "deleted_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "'1970-01-01 00:00:00.001'"
+				},
+				"created_at": {
+					"name": "created_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "now()"
+				},
+				"updated_at": {
+					"name": "updated_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "now()"
+				}
+			},
+			"indexes": {
+				"room_laundry_item_idx_1": {
+					"name": "room_laundry_item_idx_1",
+					"columns": ["room_id"],
+					"isUnique": false
+				},
+				"room_laundry_item_idx_2": {
+					"name": "room_laundry_item_idx_2",
+					"columns": ["item_id"],
+					"isUnique": false
+				},
+				"room_laundry_item_idx_3": {
+					"name": "room_laundry_item_idx_3",
+					"columns": ["deleted_at"],
+					"isUnique": false
+				},
+				"room_laundry_item_idx_4": {
+					"name": "room_laundry_item_idx_4",
+					"columns": ["created_at"],
+					"isUnique": false
+				},
+				"room_laundry_item_idx_5": {
+					"name": "room_laundry_item_idx_5",
+					"columns": ["updated_at"],
+					"isUnique": false
+				}
+			},
+			"foreignKeys": {
+				"room_laundry_item_room_id_room_id_fk": {
+					"name": "room_laundry_item_room_id_room_id_fk",
+					"tableFrom": "room_laundry_item",
+					"columnsFrom": ["room_id"],
+					"tableTo": "room",
+					"columnsTo": ["id"],
+					"onUpdate": "no action",
+					"onDelete": "no action"
+				},
+				"room_laundry_item_item_id_laundry_item_id_fk": {
+					"name": "room_laundry_item_item_id_laundry_item_id_fk",
+					"tableFrom": "room_laundry_item",
+					"columnsFrom": ["item_id"],
+					"tableTo": "laundry_item",
+					"columnsTo": ["id"],
+					"onUpdate": "no action",
+					"onDelete": "no action"
+				}
+			},
+			"compositePrimaryKeys": {},
+			"uniqueConstraints": {}
+		},
+		"public.room": {
+			"name": "room",
+			"schema": "",
+			"columns": {
+				"id": {
+					"name": "id",
+					"type": "serial",
+					"primaryKey": true,
+					"notNull": true
+				},
+				"name": {
+					"name": "name",
+					"type": "varchar(256)",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"description": {
+					"name": "description",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"camp_id": {
+					"name": "camp_id",
+					"type": "integer",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"deleted_at": {
+					"name": "deleted_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "'1970-01-01 00:00:00.001'"
+				},
+				"created_at": {
+					"name": "created_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "now()"
+				},
+				"updated_at": {
+					"name": "updated_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "now()"
+				}
+			},
+			"indexes": {
+				"room_idx_1": {
+					"name": "room_idx_1",
+					"columns": ["name"],
+					"isUnique": true
+				},
+				"room_idx_2": {
+					"name": "room_idx_2",
+					"columns": ["camp_id"],
+					"isUnique": false
+				},
+				"room_idx_3": {
+					"name": "room_idx_3",
+					"columns": ["deleted_at"],
+					"isUnique": false
+				},
+				"room_idx_4": {
+					"name": "room_idx_4",
+					"columns": ["updated_at"],
+					"isUnique": false
+				},
+				"room_idx_5": {
+					"name": "room_idx_5",
+					"columns": ["created_at"],
+					"isUnique": false
+				}
+			},
+			"foreignKeys": {
+				"room_camp_id_camp_id_fk": {
+					"name": "room_camp_id_camp_id_fk",
+					"tableFrom": "room",
+					"columnsFrom": ["camp_id"],
+					"tableTo": "camp",
+					"columnsTo": ["id"],
+					"onUpdate": "no action",
+					"onDelete": "no action"
+				}
+			},
+			"compositePrimaryKeys": {},
+			"uniqueConstraints": {
+				"room_unq_1": {
+					"name": "room_unq_1",
+					"columns": ["name", "camp_id"],
+					"nullsNotDistinct": false
+				}
+			}
+		},
+		"public.room_participant": {
+			"name": "room_participant",
+			"schema": "",
+			"columns": {
+				"id": {
+					"name": "id",
+					"type": "serial",
+					"primaryKey": true,
+					"notNull": true
+				},
+				"room_id": {
+					"name": "room_id",
+					"type": "integer",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"camp_participant_id": {
+					"name": "camp_participant_id",
+					"type": "integer",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"deleted_at": {
+					"name": "deleted_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "'1970-01-01 00:00:00.001'"
+				},
+				"created_at": {
+					"name": "created_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "now()"
+				},
+				"updated_at": {
+					"name": "updated_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "now()"
+				}
+			},
+			"indexes": {
+				"room_participant_idx_1": {
+					"name": "room_participant_idx_1",
+					"columns": ["room_id"],
+					"isUnique": true
+				},
+				"room_participant_idx_2": {
+					"name": "room_participant_idx_2",
+					"columns": ["camp_participant_id"],
+					"isUnique": true
+				},
+				"room_participant_idx_3": {
+					"name": "room_participant_idx_3",
+					"columns": ["deleted_at"],
+					"isUnique": false
+				},
+				"room_participant_idx_4": {
+					"name": "room_participant_idx_4",
+					"columns": ["created_at"],
+					"isUnique": false
+				},
+				"room_participant_idx_5": {
+					"name": "room_participant_idx_5",
+					"columns": ["updated_at"],
+					"isUnique": false
+				}
+			},
+			"foreignKeys": {
+				"room_participant_room_id_room_id_fk": {
+					"name": "room_participant_room_id_room_id_fk",
+					"tableFrom": "room_participant",
+					"columnsFrom": ["room_id"],
+					"tableTo": "room",
+					"columnsTo": ["id"],
+					"onUpdate": "no action",
+					"onDelete": "no action"
+				},
+				"room_participant_camp_participant_id_camp_participant_id_fk": {
+					"name": "room_participant_camp_participant_id_camp_participant_id_fk",
+					"tableFrom": "room_participant",
+					"columnsFrom": ["camp_participant_id"],
+					"tableTo": "camp_participant",
+					"columnsTo": ["id"],
+					"onUpdate": "no action",
+					"onDelete": "no action"
+				}
+			},
+			"compositePrimaryKeys": {},
+			"uniqueConstraints": {
+				"room_participant_unq_1": {
+					"name": "room_participant_unq_1",
+					"columns": ["camp_participant_id", "room_id"],
+					"nullsNotDistinct": false
+				}
+			}
+		},
+		"public.room_staff": {
+			"name": "room_staff",
+			"schema": "",
+			"columns": {
+				"id": {
+					"name": "id",
+					"type": "serial",
+					"primaryKey": true,
+					"notNull": true
+				},
+				"room_id": {
+					"name": "room_id",
+					"type": "integer",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"camp_staff_id": {
+					"name": "camp_staff_id",
+					"type": "integer",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"deleted_at": {
+					"name": "deleted_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "'1970-01-01 00:00:00.001'"
+				},
+				"created_at": {
+					"name": "created_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "now()"
+				},
+				"updated_at": {
+					"name": "updated_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "now()"
+				}
+			},
+			"indexes": {
+				"room_staff_idx_1": {
+					"name": "room_staff_idx_1",
+					"columns": ["room_id"],
+					"isUnique": true
+				},
+				"room_staff_idx_2": {
+					"name": "room_staff_idx_2",
+					"columns": ["camp_staff_id"],
+					"isUnique": true
+				},
+				"room_staff_idx_3": {
+					"name": "room_staff_idx_3",
+					"columns": ["deleted_at"],
+					"isUnique": false
+				},
+				"room_staff_idx_4": {
+					"name": "room_staff_idx_4",
+					"columns": ["created_at"],
+					"isUnique": false
+				},
+				"room_staff_idx_5": {
+					"name": "room_staff_idx_5",
+					"columns": ["updated_at"],
+					"isUnique": false
+				}
+			},
+			"foreignKeys": {
+				"room_staff_room_id_room_id_fk": {
+					"name": "room_staff_room_id_room_id_fk",
+					"tableFrom": "room_staff",
+					"columnsFrom": ["room_id"],
+					"tableTo": "room",
+					"columnsTo": ["id"],
+					"onUpdate": "no action",
+					"onDelete": "no action"
+				},
+				"room_staff_camp_staff_id_camp_staff_id_fk": {
+					"name": "room_staff_camp_staff_id_camp_staff_id_fk",
+					"tableFrom": "room_staff",
+					"columnsFrom": ["camp_staff_id"],
+					"tableTo": "camp_staff",
+					"columnsTo": ["id"],
+					"onUpdate": "no action",
+					"onDelete": "no action"
+				}
+			},
+			"compositePrimaryKeys": {},
+			"uniqueConstraints": {
+				"room_staff_unq_1": {
+					"name": "room_staff_unq_1",
+					"columns": ["camp_staff_id", "room_id"],
+					"nullsNotDistinct": false
+				}
+			}
+		},
+		"public.participant": {
+			"name": "participant",
+			"schema": "",
+			"columns": {
+				"id": {
+					"name": "id",
+					"type": "serial",
+					"primaryKey": true,
+					"notNull": true
+				},
+				"first_name": {
+					"name": "first_name",
+					"type": "varchar(256)",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"last_name": {
+					"name": "last_name",
+					"type": "varchar(256)",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"nickname": {
+					"name": "nickname",
+					"type": "varchar(256)",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"phone": {
+					"name": "phone",
+					"type": "varchar(191)",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"birthday": {
+					"name": "birthday",
+					"type": "date",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"sex": {
+					"name": "sex",
+					"type": "sex",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"additional_info": {
+					"name": "additional_info",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"deleted_at": {
+					"name": "deleted_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "'1970-01-01 00:00:00.001'"
+				},
+				"created_at": {
+					"name": "created_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "now()"
+				},
+				"updated_at": {
+					"name": "updated_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "now()"
+				}
+			},
+			"indexes": {
+				"participant_idx_1": {
+					"name": "participant_idx_1",
+					"columns": ["first_name"],
+					"isUnique": false
+				},
+				"participant_idx_2": {
+					"name": "participant_idx_2",
+					"columns": ["last_name"],
+					"isUnique": false
+				},
+				"participant_idx_3": {
+					"name": "participant_idx_3",
+					"columns": ["phone"],
+					"isUnique": false
+				},
+				"participant_idx_4": {
+					"name": "participant_idx_4",
+					"columns": ["deleted_at"],
+					"isUnique": false
+				},
+				"participant_idx_5": {
+					"name": "participant_idx_5",
+					"columns": ["created_at"],
+					"isUnique": false
+				},
+				"participant_idx_6": {
+					"name": "participant_idx_6",
+					"columns": ["updated_at"],
+					"isUnique": false
+				}
+			},
+			"foreignKeys": {},
+			"compositePrimaryKeys": {},
+			"uniqueConstraints": {}
+		},
+		"public.staff": {
+			"name": "staff",
+			"schema": "",
+			"columns": {
+				"id": {
+					"name": "id",
+					"type": "serial",
+					"primaryKey": true,
+					"notNull": true
+				},
+				"first_name": {
+					"name": "first_name",
+					"type": "varchar(256)",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"last_name": {
+					"name": "last_name",
+					"type": "varchar(256)",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"nickname": {
+					"name": "nickname",
+					"type": "varchar(256)",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"phone": {
+					"name": "phone",
+					"type": "varchar(191)",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"deleted_at": {
+					"name": "deleted_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "'1970-01-01 00:00:00.001'"
+				},
+				"additional_info": {
+					"name": "additional_info",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"created_at": {
+					"name": "created_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "now()"
+				},
+				"updated_at": {
+					"name": "updated_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "now()"
+				}
+			},
+			"indexes": {
+				"staff_idx_1": {
+					"name": "staff_idx_1",
+					"columns": ["first_name"],
+					"isUnique": false
+				},
+				"staff_idx_2": {
+					"name": "staff_idx_2",
+					"columns": ["last_name"],
+					"isUnique": false
+				},
+				"staff_idx_3": {
+					"name": "staff_idx_3",
+					"columns": ["phone"],
+					"isUnique": false
+				},
+				"staff_idx_4": {
+					"name": "staff_idx_4",
+					"columns": ["deleted_at"],
+					"isUnique": false
+				},
+				"staff_idx_5": {
+					"name": "staff_idx_5",
+					"columns": ["created_at"],
+					"isUnique": false
+				},
+				"staff_idx_6": {
+					"name": "staff_idx_6",
+					"columns": ["updated_at"],
+					"isUnique": false
+				}
+			},
+			"foreignKeys": {},
+			"compositePrimaryKeys": {},
+			"uniqueConstraints": {}
+		},
+		"public.staff_account": {
+			"name": "staff_account",
+			"schema": "",
+			"columns": {
+				"id": {
+					"name": "id",
+					"type": "serial",
+					"primaryKey": true,
+					"notNull": true
+				},
+				"staff_id": {
+					"name": "staff_id",
+					"type": "integer",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"email": {
+					"name": "email",
+					"type": "varchar(256)",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"password": {
+					"name": "password",
+					"type": "varchar(256)",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"deleted_at": {
+					"name": "deleted_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "'1970-01-01 00:00:00.001'"
+				},
+				"created_at": {
+					"name": "created_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "now()"
+				},
+				"updated_at": {
+					"name": "updated_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "now()"
+				}
+			},
+			"indexes": {
+				"staff_account_idx_1": {
+					"name": "staff_account_idx_1",
+					"columns": ["staff_id"],
+					"isUnique": true
+				},
+				"staff_account_idx_2": {
+					"name": "staff_account_idx_2",
+					"columns": ["email"],
+					"isUnique": true
+				},
+				"staff_account_idx_3": {
+					"name": "staff_account_idx_3",
+					"columns": ["deleted_at"],
+					"isUnique": false
+				},
+				"staff_account_idx_4": {
+					"name": "staff_account_idx_4",
+					"columns": ["created_at"],
+					"isUnique": false
+				},
+				"staff_account_idx_5": {
+					"name": "staff_account_idx_5",
+					"columns": ["updated_at"],
+					"isUnique": false
+				}
+			},
+			"foreignKeys": {
+				"staff_account_staff_id_staff_id_fk": {
+					"name": "staff_account_staff_id_staff_id_fk",
+					"tableFrom": "staff_account",
+					"columnsFrom": ["staff_id"],
+					"tableTo": "staff",
+					"columnsTo": ["id"],
+					"onUpdate": "no action",
+					"onDelete": "no action"
+				}
+			},
+			"compositePrimaryKeys": {},
+			"uniqueConstraints": {
+				"staff_account_staff_id_unique": {
+					"name": "staff_account_staff_id_unique",
+					"columns": ["staff_id"],
+					"nullsNotDistinct": false
+				}
+			}
+		}
+	},
+	"enums": {
+		"public.payment_method": {
+			"name": "payment_method",
+			"schema": "public",
+			"values": ["cash", "prompt_pay", "true_wallet"]
+		},
+		"public.sex": {
+			"name": "sex",
+			"schema": "public",
+			"values": ["male", "female"]
+		}
+	},
+	"schemas": {},
+	"_meta": {
+		"schemas": {},
+		"tables": {},
+		"columns": {}
+	},
+	"id": "5d30919e-6dca-4f52-a4d4-9d12292ccf41",
+	"prevId": "545855a4-ec57-431e-aff3-8a4f2e39c701"
 }

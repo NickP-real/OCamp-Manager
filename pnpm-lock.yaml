@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@tanstack/svelte-table':
+        specifier: ^8.20.1
+        version: 8.20.1(svelte@4.2.18)
       '@vercel/postgres':
         specifier: ^0.8.0
         version: 0.8.0
@@ -29,6 +32,9 @@ importers:
       lucide-svelte:
         specifier: ^0.378.0
         version: 0.378.0(svelte@4.2.18)
+      nanoid:
+        specifier: ^5.0.7
+        version: 5.0.7
       pg:
         specifier: ^8.12.0
         version: 8.12.0
@@ -800,6 +806,16 @@ packages:
     resolution: {integrity: sha512-QE7X69iQI+ZXwldE+rzasvbJiyV/ju1FGHH0Qn2W3FKbuYtqp8LKcy6iSw79fVUT5/Vvf+0XgLCeYVG+UV6hOw==}
     peerDependencies:
       tailwindcss: '>=3.0.0 || >= 3.0.0-alpha.1'
+
+  '@tanstack/svelte-table@8.20.1':
+    resolution: {integrity: sha512-8kuZSovd4jUnHCrMZ85KZ9l/UhIkaNcB/pTa7TA52noC7tyhj7Uf6RRslFbPZAPK4QJd0bApjTYYAKGb/LbhvQ==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      svelte: ^4.0.0 || ^3.49.0
+
+  '@tanstack/table-core@8.20.1':
+    resolution: {integrity: sha512-5Ly5TIRHnWH7vSDell9B/OVyV380qqIJVg7H7R7jU4fPEmOD4smqAX7VRflpYI09srWR8aj5OLD2Ccs1pI5mTg==}
+    engines: {node: '>=12'}
 
   '@types/cookie@0.6.0':
     resolution: {integrity: sha512-4Kh9a6B2bQciAhf7FSuMRRkUWecJgJu9nPnx3yzpsfXX/c50REIqpHY4C82bXP90qrLtXtkDxTZosYO3UpOwlA==}
@@ -1788,6 +1804,11 @@ packages:
   nanoid@3.3.7:
     resolution: {integrity: sha512-eSRppjcPIatRIMC1U6UngP8XFcz8MQWGQdt1MTBQ7NaAmvXDfvNxbvWV3x2y6CdEUciCSsDHDQZbhYaB8QEo2g==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
+    hasBin: true
+
+  nanoid@5.0.7:
+    resolution: {integrity: sha512-oLxFY2gd2IqnjcYyOXD8XGCftpGtZP2AbHbOkthDkvRywH5ayNtPVy9YlOPcHckXzbLTCHpkb7FB+yuxKV13pQ==}
+    engines: {node: ^18 || >=20}
     hasBin: true
 
   natural-compare@1.4.0:
@@ -3146,6 +3167,13 @@ snapshots:
       mini-svg-data-uri: 1.4.4
       tailwindcss: 3.4.6
 
+  '@tanstack/svelte-table@8.20.1(svelte@4.2.18)':
+    dependencies:
+      '@tanstack/table-core': 8.20.1
+      svelte: 4.2.18
+
+  '@tanstack/table-core@8.20.1': {}
+
   '@types/cookie@0.6.0': {}
 
   '@types/eslint@8.56.11':
@@ -4200,6 +4228,8 @@ snapshots:
       thenify-all: 1.6.0
 
   nanoid@3.3.7: {}
+
+  nanoid@5.0.7: {}
 
   natural-compare@1.4.0: {}
 

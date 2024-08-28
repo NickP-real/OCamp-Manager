@@ -1,7 +1,7 @@
-import { ifEmptyThrowError, isExisted } from '$lib/utils/db-utils';
-import { db } from '@db/index';
-import { selectStaffAccountSchema, staffAccount, type CreateStaffAccount } from '@db/schema/users';
-import { and, eq } from 'drizzle-orm';
+import { ifEmptyThrowError, isExisted } from "$lib/utils/db-utils";
+import { db } from "@db/index";
+import { selectStaffAccountSchema, staffAccount, type CreateStaffAccount } from "@db/schema/users";
+import { and, eq } from "drizzle-orm";
 
 type UpdateStaffAccountBody = Partial<CreateStaffAccount>;
 
@@ -21,7 +21,7 @@ export async function getStaffAccountById(id: number) {
 		.where(and(isExist, eq(staffAccount.id, id)))
 		.limit(1);
 
-	ifEmptyThrowError(staffAccountData, 'Staff account data is not found');
+	ifEmptyThrowError(staffAccountData, "Staff account data is not found");
 
 	return selectStaffAccountSchema.parse(staffAccountData.at(0));
 }

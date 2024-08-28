@@ -1,14 +1,20 @@
-import type { CampFormBody } from '$lib/client/form/camp-form';
+import type { CampFormBody } from "$lib/client/form/camp-form";
 import {
 	insertCampSchema,
+	insertCampStaffSchema,
 	type Camp,
 	type CampMajor,
-	type CreateCampMajor
-} from '@db/schema/camps';
-import * as campRepository from '@repository/camp-repository';
-import * as campMajorRepository from '@repository/camp-major-repository';
-import type { z } from 'zod';
-import { db } from '@db/index';
+	type CreateCampStaff
+} from "@db/schema/camps";
+import type { z } from "zod";
+
+// Repository
+import * as campRepository from "@repository/camp-repository";
+import * as campMajorRepository from "@repository/camp-major-repository";
+import * as campStaffRepository from "@repository/camp-staff-repository";
+
+// Services
+import * as campService from "@service/camp-service";
 
 const createCampSchema = insertCampSchema.omit({
 	id: true,
@@ -41,36 +47,49 @@ export async function createCamp(data: CreateCampBody) {
 		await campRepository.createCamp(body);
 	} catch (err) {
 		console.log(err);
-		throw new Error('Create camp fail');
+		throw new Error("Create camp fail");
 	}
 }
 
 export async function updateCamp(id: number, data: CampFormBody): Promise<CampFormBody> {
 	try {
-		const updatedData = await db.transaction(async (tx) => {
-			const body = {
-				...data,
-				laundryPrice: data.laundryPrice ? data.laundryPrice.toString() : null
-			};
-			const campData = await campRepository.updateCampById(id, body, tx);
-			if (data.campMajors) {
-				const campMajorData: CreateCampMajor[] = data.campMajors.map((campMajor) => ({
-					campId: id,
-					majorId: campMajor.majorId
-				}));
-				await campMajorRepository.updateCampMajorByCampId(id, campMajorData);
-			}
+		const { campMajors: majorData, ...campData } = data;
 
-			return campData;
+		const { camp, campMajors } = await campService.updateCamp({
+			campId: id,
+			campData: { ...campData, laundryPrice: campData.laundryPrice?.toString() ?? null },
+			majorData,
+			updateCampById: campRepository.updateCampById,
+			updateCampMajorByCampId: campMajorRepository.updateCampMajorByCampId
 		});
 
 		return {
-			...updatedData,
-			campMajors: data.campMajors,
-			laundryPrice: updatedData.laundryPrice ? parseFloat(updatedData.laundryPrice) : undefined
+			...camp,
+			campMajors,
+			laundryPrice: camp.laundryPrice ? parseFloat(camp.laundryPrice) : undefined
 		};
-	} catch (err) {
-		console.log(err);
-		throw new Error('Update camp fail');
+	} catch (error) {
+		console.log(error);
+		throw new Error("Update camp fail");
+	}
+}
+
+export async function createCampStaff(data: CreateCampStaff) {
+	try {
+		const body = insertCampStaffSchema.parse(data);
+		await campStaffRepository.createCampStaff(body);
+	} catch (error) {
+		console.log(error);
+		throw new Error("Create camp staff fail");
+	}
+}
+
+export async function updateCampStaff(campStaffId: number, data: CreateCampStaff) {
+	try {
+		const body = insertCampStaffSchema.parse(data);
+		await campStaffRepository.updateCampStaffById(campStaffId, body);
+	} catch (error) {
+		console.log(error);
+		throw new Error("Update camp staff fail");
 	}
 }

@@ -1,21 +1,21 @@
 <script lang="ts" generics="T extends Record<string, unknown>, K extends FormPathLeaves<T>">
-	import type { HTMLInputAttributes } from 'svelte/elements';
+	import type { HTMLInputAttributes } from "svelte/elements";
 
-	import type { FormFieldProps } from './type';
+	import type { FormFieldProps } from "./type";
 
-	import { dateProxy, formFieldProxy, type FormPathLeaves } from 'sveltekit-superforms';
-	import FormDiv from './FormDiv.svelte';
-	import FormLabel from './FormLabel.svelte';
-	import FormError from './FormError.svelte';
+	import { dateProxy, formFieldProxy, type FormPathLeaves } from "sveltekit-superforms";
+	import FormDiv from "./FormDiv.svelte";
+	import FormLabel from "./FormLabel.svelte";
+	import FormError from "./FormError.svelte";
 
 	type $$Props = FormFieldProps<T, K, HTMLInputAttributes>;
 
-	export let id: $$Props['id'] = undefined;
-	export let name: $$Props['name'];
-	export let label: $$Props['label'] = undefined;
-	export let form: $$Props['form'];
+	export let id: $$Props["id"] = undefined;
+	export let name: $$Props["name"];
+	export let label: $$Props["label"] = undefined;
+	export let form: $$Props["form"];
 
-	const date = dateProxy(form, name, { format: 'date' });
+	const date = dateProxy(form, name, { format: "date" });
 	const { errors } = formFieldProxy(form, name);
 </script>
 

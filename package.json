@@ -15,7 +15,13 @@
 		"db:generate": "drizzle-kit generate",
 		"db:push": "drizzle-kit push",
 		"db:up": "drizzle-kit up",
-		"db:migrate": "drizzle-kit migrate"
+		"db:migrate": "drizzle-kit migrate",
+		"db:check": "drizzle-kit check",
+		"db:studio": "drizzle-kit studio",
+		"db-vercel:push": "drizzle-kit push --config ./drizzle.config.vercel.ts",
+		"db-vercel:migrate": "drizzle-kit migrate --config ./drizzle.config.vercel.ts",
+		"db-vercel:check": "drizzle-kit check --config ./drizzle.config.vercel.ts",
+		"db-vercel:studio": "drizzle-kit studio --config ./drizzle.config.vercel.ts"
 	},
 	"devDependencies": {
 		"@fontsource/fira-mono": "^5.0.13",
@@ -49,6 +55,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@tanstack/svelte-table": "^8.20.1",
 		"@vercel/postgres": "^0.8.0",
 		"clsx": "^2.1.1",
 		"dayjs": "^1.11.12",
@@ -56,6 +63,7 @@
 		"drizzle-orm": "^0.30.10",
 		"drizzle-zod": "^0.5.1",
 		"lucide-svelte": "^0.378.0",
+		"nanoid": "^5.0.7",
 		"pg": "^8.12.0",
 		"tailwind-merge": "^2.4.0",
 		"tailwind-variants": "^0.2.1",

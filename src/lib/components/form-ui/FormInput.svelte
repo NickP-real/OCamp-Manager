@@ -1,26 +1,28 @@
 <script lang="ts" generics="T extends Record<string, unknown>, K extends FormPathLeaves<T>">
-	import FormError from './FormError.svelte';
+	import { generateId } from "../utils";
 
-	import { type InputEvents } from '../ui/type';
+	import FormError from "./FormError.svelte";
 
-	import type { FormFieldProps } from './type';
+	import { type InputEvents } from "../ui/type";
 
-	import { formFieldProxy, type FormPathLeaves } from 'sveltekit-superforms';
+	import type { FormFieldProps } from "./type";
 
-	import type { HTMLInputAttributes } from 'svelte/elements';
-	import FormDiv from './FormDiv.svelte';
-	import FormLabel from './FormLabel.svelte';
-	import TextInput from '../ui/TextInput.svelte';
+	import { formFieldProxy, type FormPathLeaves } from "sveltekit-superforms";
+
+	import type { HTMLInputAttributes } from "svelte/elements";
+	import FormDiv from "./FormDiv.svelte";
+	import FormLabel from "./FormLabel.svelte";
+	import TextInput from "../ui/TextInput.svelte";
 
 	type $$Props = FormFieldProps<T, K, HTMLInputAttributes> & { inputRef?: HTMLInputElement };
 	type $$Events = InputEvents;
 
-	export let inputRef: $$Props['inputRef'] = undefined;
+	export let inputRef: $$Props["inputRef"] = undefined;
 
-	export let id: $$Props['id'] = undefined;
-	export let label: $$Props['label'] = undefined;
-	export let form: $$Props['form'];
-	export let name: $$Props['name'];
+	export let id: $$Props["id"] = generateId();
+	export let label: $$Props["label"] = undefined;
+	export let form: $$Props["form"];
+	export let name: $$Props["name"];
 
 	const { value, errors } = formFieldProxy(form, name);
 </script>

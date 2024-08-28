@@ -1,5 +1,5 @@
 <script lang="ts">
-	import CampForm from '$lib/components/form/CampForm.svelte';
+	import CampForm from "$lib/components/form/CampForm.svelte";
 
 	export let data;
 </script>

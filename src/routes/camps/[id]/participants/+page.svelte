@@ -1,6 +1,21 @@
 <script lang="ts">
+	import Table from "$lib/components/table/Table.svelte";
+	import { type Participant } from "@db/schema/users.js";
+	import { createColumnHelper } from "@tanstack/svelte-table";
+
 	export let data;
 	const { participants, camp } = data;
+
+	const columnHelper = createColumnHelper<Participant>();
+
+	const columns = [
+		columnHelper.accessor("firstName", { cell: (info) => info.getValue(), header: "First name" }),
+		columnHelper.accessor("lastName", { cell: (info) => info.getValue(), header: "Last name" }),
+		columnHelper.accessor("nickname", {
+			cell: (info) => info.getValue() ?? "-",
+			header: "Nickname"
+		})
+	];
 </script>
 
 <a href="/camps/{camp.id}/participants/create"> Add participant </a>
@@ -8,12 +23,5 @@
 {#await participants}
 	loading...
 {:then participants}
-	{#each participants as participant}
-		<p>{participant.nickname}</p>
-	{/each}
-	<!-- <table> -->
-	<!--   <thead> -->
-	<!--   </thead> -->
-	<!--   <tbody></tbody> -->
-	<!-- </table> -->
+	<Table data={participants} {columns} />
 {/await}

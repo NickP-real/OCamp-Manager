@@ -2,14 +2,14 @@
 	import {
 		participantFormSchema,
 		type ParticipantFormSchema
-	} from '$lib/client/form/participant-form';
-	import { superForm, type Infer, type SuperValidated } from 'sveltekit-superforms';
-	import { zodClient } from 'sveltekit-superforms/adapters';
-	import * as Form from '$lib/components/form-ui';
-	import { sexEnum } from '@db/schema/enums';
-	import type { FormMode } from './type';
+	} from "$lib/client/form/participant-form";
+	import { superForm, type Infer, type SuperValidated } from "sveltekit-superforms";
+	import { zodClient } from "sveltekit-superforms/adapters";
+	import * as Form from "$lib/components/form-ui";
+	import { sexEnum } from "@db/schema/enums";
+	import type { FormMode } from "./type";
 
-	export let mode: FormMode = 'create';
+	export let mode: FormMode = "create";
 	export let formData: SuperValidated<Infer<ParticipantFormSchema>>;
 
 	const form = superForm(formData, { validators: zodClient(participantFormSchema) });
@@ -18,7 +18,7 @@
 
 <form method="post" use:enhance class="space-y-4">
 	<Form.Title>
-		{#if mode === 'create'}
+		{#if mode === "create"}
 			Create Participant
 		{:else}
 			Update Participant

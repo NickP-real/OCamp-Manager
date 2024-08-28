@@ -1,6 +1,6 @@
-import { insertParticipantSchema } from '@db/schema/users';
-import { z } from 'zod';
-import { phoneSchema } from './utils-form';
+import { insertParticipantSchema } from "@db/schema/users";
+import { z } from "zod";
+import { phoneSchema } from "./utils-form";
 
 export const participantFormSchema = insertParticipantSchema
 	.omit({ id: true, createdAt: true, updatedAt: true, deletedAt: true })

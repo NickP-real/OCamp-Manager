@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Route } from './navbar.types';
+	import type { Route } from "./navbar.types";
 
 	export let routes: Route[];
 </script>

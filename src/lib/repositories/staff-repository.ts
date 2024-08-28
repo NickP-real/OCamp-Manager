@@ -1,7 +1,8 @@
-import { ifEmptyThrowError, isExisted } from '$lib/utils/db-utils';
-import { db } from '@db/index';
-import { selectStaffSchema, staff, type CreateStaff } from '@db/schema/users';
-import { and, eq } from 'drizzle-orm';
+import { ifEmptyThrowError, isExisted } from "$lib/utils/db-utils";
+import { db } from "@db/index";
+import { campStaff } from "@db/schema/camps";
+import { selectStaffSchema, staff, type CreateStaff } from "@db/schema/users";
+import { and, eq } from "drizzle-orm";
 
 const isExist = isExisted(staff.deletedAt);
 
@@ -16,9 +17,17 @@ export async function getStaffById(id: number) {
 		.where(and(isExist, eq(staff.id, id)))
 		.limit(1);
 
-	ifEmptyThrowError(staffData, 'Staff data is not found');
+	ifEmptyThrowError(staffData, "Staff data is not found");
 
 	return selectStaffSchema.parse(staffData.at(0));
+}
+
+export async function getStaffsByCampId(campId: number, tx = db) {
+	return await tx
+		.select({ staff })
+		.from(staff)
+		.rightJoin(campStaff, eq(staff.id, campStaff.staffId))
+		.where(and(isExist, eq(campStaff.campId, campId)));
 }
 
 export async function createStaff(data: CreateStaff) {

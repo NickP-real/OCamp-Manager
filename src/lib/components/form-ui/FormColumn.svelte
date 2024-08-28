@@ -1,1 +1,1 @@
-<div class="flex flex-col gap-2 w-full"><slot /></div>
+<div class="flex w-full flex-col gap-2"><slot /></div>

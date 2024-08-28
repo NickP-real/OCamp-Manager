@@ -1,8 +1,8 @@
-import { ifEmptyThrowError, isExisted } from '$lib/utils/db-utils';
-import { db } from '@db/index';
-import { camp, campMajor, selectCampSchema, type CreateCamp } from '@db/schema/camps';
-import { and, desc, eq } from 'drizzle-orm';
-import { type PgSelect } from 'drizzle-orm/pg-core';
+import { ifEmptyThrowError, isExisted } from "$lib/utils/db-utils";
+import { db } from "@db/index";
+import { camp, campMajor, selectCampSchema, type CreateCamp } from "@db/schema/camps";
+import { and, desc, eq } from "drizzle-orm";
+import { type PgSelect } from "drizzle-orm/pg-core";
 
 const campList = selectCampSchema.array();
 
@@ -28,7 +28,7 @@ function withCampMajors<T extends PgSelect>(qb: T) {
 
 export async function getCampById(id: number) {
 	const campData = await makeCampByIdDynamicQuery(id).limit(1);
-	ifEmptyThrowError(campData, 'Camp data not found');
+	ifEmptyThrowError(campData, "Camp data not found");
 
 	// return selectCampSchema.parse(campData.at(0));
 	return campData[0];
@@ -36,7 +36,7 @@ export async function getCampById(id: number) {
 
 export async function getCampWithCampMajorsById(id: number) {
 	const campData = await withCampMajors(makeCampByIdDynamicQuery(id));
-	ifEmptyThrowError(campData, 'Camp data not found');
+	ifEmptyThrowError(campData, "Camp data not found");
 
 	// return selectCampSchema.parse(campData.at(0));
 	return campData;
