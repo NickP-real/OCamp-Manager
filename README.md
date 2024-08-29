@@ -21,6 +21,16 @@ DATABASE_URL=""
 
 ## Developing
 
+### Local DB
+
+You can simply run `docker compose up` and connect to the database with these configurations
+
+- host: `localhost`
+- port: `5432`
+- username: `admin`
+- password: `password`
+- db name: `ocamp`
+
 Once you've created a project and installed dependencies with `bun install` start a development server:
 
 ```bash
