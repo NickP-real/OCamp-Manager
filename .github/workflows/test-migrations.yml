@@ -9,23 +9,24 @@ on:
 jobs:
   test-migrations:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: admin
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: ocamp
+        options: >-
+          --health-cmd="pg_isready -U admin"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
-      - name: Set up PostgreSQL
-        uses: docker://postgres:15
-        with:
-          ports: 5432:5432
-        env:
-          POSTGRES_HOST_AUTH_METHOD: trust
-
-      - name: Wait for PostgreSQL to start
-        run: |
-          until pg_isready -h localhost -p 5432; do
-            echo "Waiting for PostgreSQL..."
-            sleep 1
-          done
 
       - name: Set up environment
         run: |
@@ -33,17 +34,13 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm install -g bun
           bun install
-          # or yarn install, depending on your package manager
 
       - name: Run Drizzle migrations
         run: |
-          bun db:check
-          bun db:migrate
+          npx drizzle-kit migrate:latest
           # Adjust the command based on how you run Drizzle migrations
 
       # - name: Run tests
       #   run: |
       #     bun test
-      #     # or yarn test, depending on your package manager
