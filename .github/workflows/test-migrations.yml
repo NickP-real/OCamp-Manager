@@ -30,7 +30,7 @@ jobs:
 
       - name: Set up environment
         run: |
-          cp .env.test .env
+          mv .env.test .env
 
       - name: Install dependencies
         run: |
