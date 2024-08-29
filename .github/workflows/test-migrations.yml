@@ -30,7 +30,7 @@ jobs:
 
       - name: Set up environment
         run: |
-          echo "DATABASE_URL=postgres://admin:password@localhost:5432/ocamp" >> $GITHUB_ENV
+          cp .env.test .env
 
       - name: Install dependencies
         run: |
