@@ -77,10 +77,7 @@ export const staffAccount = pgTable(
 	"staff_account",
 	{
 		id: serial("id").primaryKey(),
-		staffId: integer("staff_id")
-			.unique()
-			.notNull()
-			.references(() => staff.id),
+		staffId: integer("staff_id").unique().notNull(),
 		email: varchar("email", { length: 256 }).notNull(),
 		password: varchar("password", { length: 256 }).notNull(),
 		...softDeleteColumns

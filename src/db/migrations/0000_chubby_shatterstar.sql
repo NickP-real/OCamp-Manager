@@ -1,11 +1,11 @@
 DO $$ BEGIN
- CREATE TYPE "payment_method" AS ENUM('cash', 'prompt_pay');
+ CREATE TYPE "public"."payment_method" AS ENUM('cash', 'prompt_pay', 'true_wallet');
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- CREATE TYPE "sex" AS ENUM('male', 'female');
+ CREATE TYPE "public"."sex" AS ENUM('male', 'female');
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
@@ -16,27 +16,25 @@ CREATE TABLE IF NOT EXISTS "camp" (
 	"from_date" date NOT NULL,
 	"to_date" date NOT NULL,
 	"text" text NOT NULL,
-	"hasLaundry" boolean DEFAULT true NOT NULL,
+	"hasLaundry" boolean DEFAULT false NOT NULL,
 	"laundry_price" numeric(10, 2),
-	"deleted_at" timestamp DEFAULT '1970-01-01 00:00:00.001' NOT NULL,
+	"deleted_at" timestamp,
 	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp DEFAULT now() NOT NULL
+	"updated_at" timestamp DEFAULT now() NOT NULL,
+	CONSTRAINT "camp_name_unique" UNIQUE("name")
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "camp_major" (
 	"id" serial PRIMARY KEY NOT NULL,
-	"camp_id" integer,
-	"major_id" integer,
-	"deleted_at" timestamp DEFAULT '1970-01-01 00:00:00.001' NOT NULL,
-	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp DEFAULT now() NOT NULL
+	"camp_id" integer NOT NULL,
+	"major_id" integer NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "camp_participant" (
 	"id" serial PRIMARY KEY NOT NULL,
-	"camp_id" integer,
-	"participant_id" integer,
-	"deleted_at" timestamp DEFAULT '1970-01-01 00:00:00.001' NOT NULL,
+	"camp_id" integer NOT NULL,
+	"participant_id" integer NOT NULL,
+	"deleted_at" timestamp,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
 	CONSTRAINT "camp_participant_unq_1" UNIQUE("camp_id","participant_id")
@@ -44,9 +42,9 @@ CREATE TABLE IF NOT EXISTS "camp_participant" (
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "camp_staff" (
 	"id" serial PRIMARY KEY NOT NULL,
-	"camp_id" integer,
-	"staff_id" integer,
-	"deleted_at" timestamp DEFAULT '1970-01-01 00:00:00.001' NOT NULL,
+	"camp_id" integer NOT NULL,
+	"staff_id" integer NOT NULL,
+	"deleted_at" timestamp,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
 	CONSTRAINT "camp_staff_unq_1" UNIQUE("camp_id","staff_id")
@@ -55,7 +53,7 @@ CREATE TABLE IF NOT EXISTS "camp_staff" (
 CREATE TABLE IF NOT EXISTS "major" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"name" varchar(256) NOT NULL,
-	"deleted_at" timestamp DEFAULT '1970-01-01 00:00:00.001' NOT NULL,
+	"deleted_at" timestamp,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );
@@ -63,17 +61,18 @@ CREATE TABLE IF NOT EXISTS "major" (
 CREATE TABLE IF NOT EXISTS "laundry_item" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"name" varchar(256) NOT NULL,
-	"deleted_at" timestamp DEFAULT '1970-01-01 00:00:00.001' NOT NULL,
+	"deleted_at" timestamp,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "room_laundry_item" (
 	"id" serial PRIMARY KEY NOT NULL,
-	"room_id" integer,
-	"item_id" integer,
+	"room_id" integer NOT NULL,
+	"item_id" integer NOT NULL,
 	"quantity" integer NOT NULL,
-	"deleted_at" timestamp DEFAULT '1970-01-01 00:00:00.001' NOT NULL,
+	"payment_method" "payment_method" NOT NULL,
+	"deleted_at" timestamp,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );
@@ -82,8 +81,8 @@ CREATE TABLE IF NOT EXISTS "room" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"name" varchar(256) NOT NULL,
 	"description" text,
-	"camp_id" integer,
-	"deleted_at" timestamp DEFAULT '1970-01-01 00:00:00.001' NOT NULL,
+	"camp_id" integer NOT NULL,
+	"deleted_at" timestamp,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
 	CONSTRAINT "room_unq_1" UNIQUE("name","camp_id")
@@ -91,9 +90,9 @@ CREATE TABLE IF NOT EXISTS "room" (
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "room_participant" (
 	"id" serial PRIMARY KEY NOT NULL,
-	"room_id" integer,
-	"camp_participant_id" integer,
-	"deleted_at" timestamp DEFAULT '1970-01-01 00:00:00.001' NOT NULL,
+	"room_id" integer NOT NULL,
+	"camp_participant_id" integer NOT NULL,
+	"deleted_at" timestamp,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
 	CONSTRAINT "room_participant_unq_1" UNIQUE("camp_participant_id","room_id")
@@ -101,9 +100,9 @@ CREATE TABLE IF NOT EXISTS "room_participant" (
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "room_staff" (
 	"id" serial PRIMARY KEY NOT NULL,
-	"room_id" integer,
-	"camp_staff_id" integer,
-	"deleted_at" timestamp DEFAULT '1970-01-01 00:00:00.001' NOT NULL,
+	"room_id" integer NOT NULL,
+	"camp_staff_id" integer NOT NULL,
+	"deleted_at" timestamp,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
 	CONSTRAINT "room_staff_unq_1" UNIQUE("camp_staff_id","room_id")
@@ -118,7 +117,7 @@ CREATE TABLE IF NOT EXISTS "participant" (
 	"birthday" date NOT NULL,
 	"sex" "sex" NOT NULL,
 	"additional_info" text,
-	"deleted_at" timestamp DEFAULT '1970-01-01 00:00:00.001' NOT NULL,
+	"deleted_at" timestamp,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );
@@ -129,18 +128,19 @@ CREATE TABLE IF NOT EXISTS "staff" (
 	"last_name" varchar(256) NOT NULL,
 	"nickname" varchar(256),
 	"phone" varchar(191),
-	"deleted_at" timestamp DEFAULT '1970-01-01 00:00:00.001' NOT NULL,
+	"birthday" date NOT NULL,
 	"additional_info" text,
+	"deleted_at" timestamp,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "staff_account" (
 	"id" serial PRIMARY KEY NOT NULL,
-	"staff_id" integer,
+	"staff_id" integer NOT NULL,
 	"email" varchar(256) NOT NULL,
 	"password" varchar(256) NOT NULL,
-	"deleted_at" timestamp DEFAULT '1970-01-01 00:00:00.001' NOT NULL,
+	"deleted_at" timestamp,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
 	CONSTRAINT "staff_account_staff_id_unique" UNIQUE("staff_id")
@@ -155,9 +155,6 @@ CREATE INDEX IF NOT EXISTS "camp_idx_6" ON "camp" ("created_at");--> statement-b
 CREATE INDEX IF NOT EXISTS "camp_idx_7" ON "camp" ("updated_at");--> statement-breakpoint
 CREATE INDEX IF NOT EXISTS "camp_major_idx_1" ON "camp_major" ("camp_id");--> statement-breakpoint
 CREATE INDEX IF NOT EXISTS "camp_major_idx_2" ON "camp_major" ("major_id");--> statement-breakpoint
-CREATE INDEX IF NOT EXISTS "camp_major_idx_3" ON "camp_major" ("deleted_at");--> statement-breakpoint
-CREATE INDEX IF NOT EXISTS "camp_major_idx_4" ON "camp_major" ("created_at");--> statement-breakpoint
-CREATE INDEX IF NOT EXISTS "camp_major_idx_5" ON "camp_major" ("updated_at");--> statement-breakpoint
 CREATE INDEX IF NOT EXISTS "camp_participant_idx_1" ON "camp_participant" ("camp_id");--> statement-breakpoint
 CREATE INDEX IF NOT EXISTS "camp_participant_idx_2" ON "camp_participant" ("participant_id");--> statement-breakpoint
 CREATE INDEX IF NOT EXISTS "camp_participant_idx_3" ON "camp_participant" ("deleted_at");--> statement-breakpoint
@@ -212,87 +209,4 @@ CREATE UNIQUE INDEX IF NOT EXISTS "staff_account_idx_1" ON "staff_account" ("sta
 CREATE UNIQUE INDEX IF NOT EXISTS "staff_account_idx_2" ON "staff_account" ("email");--> statement-breakpoint
 CREATE INDEX IF NOT EXISTS "staff_account_idx_3" ON "staff_account" ("deleted_at");--> statement-breakpoint
 CREATE INDEX IF NOT EXISTS "staff_account_idx_4" ON "staff_account" ("created_at");--> statement-breakpoint
-CREATE INDEX IF NOT EXISTS "staff_account_idx_5" ON "staff_account" ("updated_at");--> statement-breakpoint
-DO $$ BEGIN
- ALTER TABLE "camp_major" ADD CONSTRAINT "camp_major_camp_id_camp_id_fk" FOREIGN KEY ("camp_id") REFERENCES "camp"("id") ON DELETE no action ON UPDATE no action;
-EXCEPTION
- WHEN duplicate_object THEN null;
-END $$;
---> statement-breakpoint
-DO $$ BEGIN
- ALTER TABLE "camp_major" ADD CONSTRAINT "camp_major_major_id_major_id_fk" FOREIGN KEY ("major_id") REFERENCES "major"("id") ON DELETE no action ON UPDATE no action;
-EXCEPTION
- WHEN duplicate_object THEN null;
-END $$;
---> statement-breakpoint
-DO $$ BEGIN
- ALTER TABLE "camp_participant" ADD CONSTRAINT "camp_participant_camp_id_camp_id_fk" FOREIGN KEY ("camp_id") REFERENCES "camp"("id") ON DELETE no action ON UPDATE no action;
-EXCEPTION
- WHEN duplicate_object THEN null;
-END $$;
---> statement-breakpoint
-DO $$ BEGIN
- ALTER TABLE "camp_participant" ADD CONSTRAINT "camp_participant_participant_id_participant_id_fk" FOREIGN KEY ("participant_id") REFERENCES "participant"("id") ON DELETE no action ON UPDATE no action;
-EXCEPTION
- WHEN duplicate_object THEN null;
-END $$;
---> statement-breakpoint
-DO $$ BEGIN
- ALTER TABLE "camp_staff" ADD CONSTRAINT "camp_staff_camp_id_camp_id_fk" FOREIGN KEY ("camp_id") REFERENCES "camp"("id") ON DELETE no action ON UPDATE no action;
-EXCEPTION
- WHEN duplicate_object THEN null;
-END $$;
---> statement-breakpoint
-DO $$ BEGIN
- ALTER TABLE "camp_staff" ADD CONSTRAINT "camp_staff_staff_id_staff_id_fk" FOREIGN KEY ("staff_id") REFERENCES "staff"("id") ON DELETE no action ON UPDATE no action;
-EXCEPTION
- WHEN duplicate_object THEN null;
-END $$;
---> statement-breakpoint
-DO $$ BEGIN
- ALTER TABLE "room_laundry_item" ADD CONSTRAINT "room_laundry_item_room_id_room_id_fk" FOREIGN KEY ("room_id") REFERENCES "room"("id") ON DELETE no action ON UPDATE no action;
-EXCEPTION
- WHEN duplicate_object THEN null;
-END $$;
---> statement-breakpoint
-DO $$ BEGIN
- ALTER TABLE "room_laundry_item" ADD CONSTRAINT "room_laundry_item_item_id_laundry_item_id_fk" FOREIGN KEY ("item_id") REFERENCES "laundry_item"("id") ON DELETE no action ON UPDATE no action;
-EXCEPTION
- WHEN duplicate_object THEN null;
-END $$;
---> statement-breakpoint
-DO $$ BEGIN
- ALTER TABLE "room" ADD CONSTRAINT "room_camp_id_camp_id_fk" FOREIGN KEY ("camp_id") REFERENCES "camp"("id") ON DELETE no action ON UPDATE no action;
-EXCEPTION
- WHEN duplicate_object THEN null;
-END $$;
---> statement-breakpoint
-DO $$ BEGIN
- ALTER TABLE "room_participant" ADD CONSTRAINT "room_participant_room_id_room_id_fk" FOREIGN KEY ("room_id") REFERENCES "room"("id") ON DELETE no action ON UPDATE no action;
-EXCEPTION
- WHEN duplicate_object THEN null;
-END $$;
---> statement-breakpoint
-DO $$ BEGIN
- ALTER TABLE "room_participant" ADD CONSTRAINT "room_participant_camp_participant_id_camp_participant_id_fk" FOREIGN KEY ("camp_participant_id") REFERENCES "camp_participant"("id") ON DELETE no action ON UPDATE no action;
-EXCEPTION
- WHEN duplicate_object THEN null;
-END $$;
---> statement-breakpoint
-DO $$ BEGIN
- ALTER TABLE "room_staff" ADD CONSTRAINT "room_staff_room_id_room_id_fk" FOREIGN KEY ("room_id") REFERENCES "room"("id") ON DELETE no action ON UPDATE no action;
-EXCEPTION
- WHEN duplicate_object THEN null;
-END $$;
---> statement-breakpoint
-DO $$ BEGIN
- ALTER TABLE "room_staff" ADD CONSTRAINT "room_staff_camp_staff_id_camp_staff_id_fk" FOREIGN KEY ("camp_staff_id") REFERENCES "camp_staff"("id") ON DELETE no action ON UPDATE no action;
-EXCEPTION
- WHEN duplicate_object THEN null;
-END $$;
---> statement-breakpoint
-DO $$ BEGIN
- ALTER TABLE "staff_account" ADD CONSTRAINT "staff_account_staff_id_staff_id_fk" FOREIGN KEY ("staff_id") REFERENCES "staff"("id") ON DELETE no action ON UPDATE no action;
-EXCEPTION
- WHEN duplicate_object THEN null;
-END $$;
+CREATE INDEX IF NOT EXISTS "staff_account_idx_5" ON "staff_account" ("updated_at");

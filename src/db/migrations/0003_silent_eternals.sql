@@ -1,1 +1,0 @@
-ALTER TABLE "major" DROP CONSTRAINT "major_name_unique";

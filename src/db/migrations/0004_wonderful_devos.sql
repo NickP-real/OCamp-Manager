@@ -1,1 +1,0 @@
-ALTER TABLE "laundry_item" DROP CONSTRAINT "laundry_item_name_unique";
