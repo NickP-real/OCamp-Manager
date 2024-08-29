@@ -1,0 +1,47 @@
+name: Test Drizzle Migrations
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  test-migrations:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up PostgreSQL
+        uses: docker://postgres:15
+        with:
+          ports: 5432:5432
+
+      - name: Wait for PostgreSQL to start
+        run: |
+          until pg_isready -h localhost -p 5432; do
+            echo "Waiting for PostgreSQL..."
+            sleep 1
+          done
+
+      - name: Set up environment
+        run: |
+          echo "DATABASE_URL=postgres://admin:password@localhost:5432/ocamp" >> $GITHUB_ENV
+
+      - name: Install dependencies
+        run: |
+          npm install -g bun
+          bun install
+          # or yarn install, depending on your package manager
+
+      - name: Run Drizzle migrations
+        run: |
+          bun db:check
+          bun db:migrate
+          # Adjust the command based on how you run Drizzle migrations
+
+      # - name: Run tests
+      #   run: |
+      #     bun test
+      #     # or yarn test, depending on your package manager
