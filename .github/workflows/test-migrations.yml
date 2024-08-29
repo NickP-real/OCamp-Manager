@@ -28,8 +28,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-    - name: Set up environment
-      run: |
+      - name: Set up environment
+        run: |
           echo "DATABASE_URL=postgres://admin:password@localhost:5432/ocamp" >> $GITHUB_ENV
 
       - name: Install dependencies
