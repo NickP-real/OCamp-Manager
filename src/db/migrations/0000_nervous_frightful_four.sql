@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS "camp" (
 	"text" text NOT NULL,
 	"hasLaundry" boolean DEFAULT false NOT NULL,
 	"laundry_price" numeric(10, 2),
-	"deleted_at" timestamp,
+	"deleted_at" timestamp DEFAULT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
 	CONSTRAINT "camp_name_unique" UNIQUE("name")
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS "camp_participant" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"camp_id" integer NOT NULL,
 	"participant_id" integer NOT NULL,
-	"deleted_at" timestamp,
+	"deleted_at" timestamp DEFAULT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
 	CONSTRAINT "camp_participant_unq_1" UNIQUE("camp_id","participant_id")
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS "camp_staff" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"camp_id" integer NOT NULL,
 	"staff_id" integer NOT NULL,
-	"deleted_at" timestamp,
+	"deleted_at" timestamp DEFAULT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
 	CONSTRAINT "camp_staff_unq_1" UNIQUE("camp_id","staff_id")
@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS "camp_staff" (
 CREATE TABLE IF NOT EXISTS "major" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"name" varchar(256) NOT NULL,
-	"deleted_at" timestamp,
+	"deleted_at" timestamp DEFAULT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS "major" (
 CREATE TABLE IF NOT EXISTS "laundry_item" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"name" varchar(256) NOT NULL,
-	"deleted_at" timestamp,
+	"deleted_at" timestamp DEFAULT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );
@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS "room_laundry_item" (
 	"item_id" integer NOT NULL,
 	"quantity" integer NOT NULL,
 	"payment_method" "payment_method" NOT NULL,
-	"deleted_at" timestamp,
+	"deleted_at" timestamp DEFAULT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );
@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS "room" (
 	"name" varchar(256) NOT NULL,
 	"description" text,
 	"camp_id" integer NOT NULL,
-	"deleted_at" timestamp,
+	"deleted_at" timestamp DEFAULT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
 	CONSTRAINT "room_unq_1" UNIQUE("name","camp_id")
@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS "room_participant" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"room_id" integer NOT NULL,
 	"camp_participant_id" integer NOT NULL,
-	"deleted_at" timestamp,
+	"deleted_at" timestamp DEFAULT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
 	CONSTRAINT "room_participant_unq_1" UNIQUE("camp_participant_id","room_id")
@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS "room_staff" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"room_id" integer NOT NULL,
 	"camp_staff_id" integer NOT NULL,
-	"deleted_at" timestamp,
+	"deleted_at" timestamp DEFAULT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
 	CONSTRAINT "room_staff_unq_1" UNIQUE("camp_staff_id","room_id")
@@ -117,7 +117,7 @@ CREATE TABLE IF NOT EXISTS "participant" (
 	"birthday" date NOT NULL,
 	"sex" "sex" NOT NULL,
 	"additional_info" text,
-	"deleted_at" timestamp,
+	"deleted_at" timestamp DEFAULT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );
@@ -130,7 +130,7 @@ CREATE TABLE IF NOT EXISTS "staff" (
 	"phone" varchar(191),
 	"birthday" date NOT NULL,
 	"additional_info" text,
-	"deleted_at" timestamp,
+	"deleted_at" timestamp DEFAULT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );
@@ -140,7 +140,7 @@ CREATE TABLE IF NOT EXISTS "staff_account" (
 	"staff_id" integer NOT NULL,
 	"email" varchar(256) NOT NULL,
 	"password" varchar(256) NOT NULL,
-	"deleted_at" timestamp,
+	"deleted_at" timestamp DEFAULT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
 	CONSTRAINT "staff_account_staff_id_unique" UNIQUE("staff_id")

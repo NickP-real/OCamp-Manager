@@ -1,5 +1,5 @@
 {
-  "id": "37b8b662-b967-46e2-8ac8-eb598a808993",
+  "id": "4c88ca99-0329-4beb-82d3-6635ccaf6333",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "6",
   "dialect": "postgresql",
@@ -55,7 +55,8 @@
           "name": "deleted_at",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "default": "NULL"
         },
         "created_at": {
           "name": "created_at",
@@ -204,7 +205,8 @@
           "name": "deleted_at",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "default": "NULL"
         },
         "created_at": {
           "name": "created_at",
@@ -297,7 +299,8 @@
           "name": "deleted_at",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "default": "NULL"
         },
         "created_at": {
           "name": "created_at",
@@ -384,7 +387,8 @@
           "name": "deleted_at",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "default": "NULL"
         },
         "created_at": {
           "name": "created_at",
@@ -455,7 +459,8 @@
           "name": "deleted_at",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "default": "NULL"
         },
         "created_at": {
           "name": "created_at",
@@ -545,7 +550,8 @@
           "name": "deleted_at",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "default": "NULL"
         },
         "created_at": {
           "name": "created_at",
@@ -635,7 +641,8 @@
           "name": "deleted_at",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "default": "NULL"
         },
         "created_at": {
           "name": "created_at",
@@ -728,7 +735,8 @@
           "name": "deleted_at",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "default": "NULL"
         },
         "created_at": {
           "name": "created_at",
@@ -821,7 +829,8 @@
           "name": "deleted_at",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "default": "NULL"
         },
         "created_at": {
           "name": "created_at",
@@ -945,7 +954,8 @@
           "name": "deleted_at",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "default": "NULL"
         },
         "created_at": {
           "name": "created_at",
@@ -1060,7 +1070,8 @@
           "name": "deleted_at",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "default": "NULL"
         },
         "created_at": {
           "name": "created_at",
@@ -1157,7 +1168,8 @@
           "name": "deleted_at",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "default": "NULL"
         },
         "created_at": {
           "name": "created_at",
