@@ -8,7 +8,7 @@ import {
 	uniqueIndex,
 	varchar
 } from "drizzle-orm/pg-core";
-import { camp, campParticipant, campStaff } from "./camps";
+
 import { softDeleteColumns } from "../utils/columns-util";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 
@@ -18,9 +18,7 @@ export const room = pgTable(
 		id: serial("id").primaryKey(),
 		name: varchar("name", { length: 256 }).notNull(),
 		description: text("description"),
-		campId: integer("camp_id")
-			.notNull()
-			.references(() => camp.id),
+		campId: integer("camp_id").notNull(),
 		...softDeleteColumns
 	},
 	(room) => ({
@@ -44,12 +42,8 @@ export const roomParticipant = pgTable(
 	"room_participant",
 	{
 		id: serial("id").primaryKey(),
-		roomId: integer("room_id")
-			.notNull()
-			.references(() => room.id),
-		campParticipantId: integer("camp_participant_id")
-			.notNull()
-			.references(() => campParticipant.id),
+		roomId: integer("room_id").notNull(),
+		campParticipantId: integer("camp_participant_id").notNull(),
 		...softDeleteColumns
 	},
 	(roomParticipant) => ({
@@ -76,12 +70,8 @@ export const roomStaff = pgTable(
 	"room_staff",
 	{
 		id: serial("id").primaryKey(),
-		roomId: integer("room_id")
-			.notNull()
-			.references(() => room.id),
-		campStaffId: integer("camp_staff_id")
-			.notNull()
-			.references(() => campStaff.id),
+		roomId: integer("room_id").notNull(),
+		campStaffId: integer("camp_staff_id").notNull(),
 		...softDeleteColumns
 	},
 	(roomStaff) => ({

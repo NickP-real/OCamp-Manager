@@ -2,33 +2,27 @@
 
 Web application for managing information in the Olympic camp
 
-## ENV
+## Local DB
 
-```sh
-# Created by Vercel CLI
-POSTGRES_DATABASE=""
-POSTGRES_HOST=""
-POSTGRES_PASSWORD=""
-POSTGRES_PRISMA_URL=""
-POSTGRES_URL=""
-POSTGRES_URL_NON_POOLING=""
-POSTGRES_URL_NO_SSL=""
-POSTGRES_USER=""
+You can simply run `docker compose up` and connect to the database with these configurations
 
-# Local
-DATABASE_URL=""
-```
+- host: `localhost`
+- port: `5432`
+- username: `admin`
+- password: `password`
+- db name: `ocamp`
+
+### DB Migration
+
+If you add new schema, first run `bun db:generate`
+
+To migrate DB: `bun db:migrate`
 
 ## Developing
 
-Once you've created a project and installed dependencies with `bun install` start a development server:
-
-```bash
-bun dev
-
-# or start the server and open the app in a new browser tab
-bun dev -- --open
-```
+1. copy `.env.example` to `.env`
+2. `bun install`
+3. `bun dev`
 
 ## Building
 

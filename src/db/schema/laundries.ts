@@ -1,5 +1,4 @@
 import { index, integer, pgTable, serial, uniqueIndex, varchar } from "drizzle-orm/pg-core";
-import { room } from "./rooms";
 import { softDeleteColumns } from "../utils/columns-util";
 import { paymentMethodEnum } from "./enums";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
@@ -30,12 +29,8 @@ export const roomLaundryItem = pgTable(
 	"room_laundry_item",
 	{
 		id: serial("id").primaryKey(),
-		roomId: integer("room_id")
-			.notNull()
-			.references(() => room.id),
-		itemId: integer("item_id")
-			.notNull()
-			.references(() => laundryItem.id),
+		roomId: integer("room_id").notNull(),
+		itemId: integer("item_id").notNull(),
 		quantity: integer("quantity").notNull(),
 		paymentMethod: paymentMethodEnum("payment_method").notNull(),
 		...softDeleteColumns
