@@ -9,7 +9,7 @@ const campList = selectCampSchema.array();
 const isExist = isExisted(camp.deletedAt);
 
 export async function getCamps() {
-	const allCamps = await db.select().from(camp).orderBy(desc(camp.createdAt));
+	const allCamps = await db.select().from(camp).where(isExist).orderBy(desc(camp.createdAt));
 	return campList.parse(allCamps);
 }
 
