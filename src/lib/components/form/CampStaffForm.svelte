@@ -4,7 +4,7 @@
 	import { campStaffSchema, type CampStaffSchema } from "$lib/client/form/camp-staff-form";
 	import { zodClient } from "sveltekit-superforms/adapters";
 	import * as Form from "$lib/components/form-ui";
-	import type { Staff } from "@db/schema/users";
+	import type { Staff } from "@db/schema/staff";
 
 	export let mode: FormMode = "create";
 	export let formData: SuperValidated<Infer<CampStaffSchema>>;

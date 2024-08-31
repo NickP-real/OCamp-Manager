@@ -9,7 +9,7 @@ export const campFormSchema = z
 		description: z.string().trim().min(1),
 		hasLaundry: z.boolean().optional().default(false),
 		laundryPrice: z.coerce.number().min(1).optional().default(DEFAULT_LAUNDRY_PRICE),
-		campMajors: z.object({ majorId: z.number() }).array()
+		campMajors: z.object({ majorId: z.string() }).array()
 	})
 	.superRefine(({ fromDate, toDate }, ctx) => {
 		if (fromDate > toDate) {
