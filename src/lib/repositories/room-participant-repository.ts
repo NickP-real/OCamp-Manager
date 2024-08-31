@@ -1,10 +1,11 @@
 import { ifEmptyThrowError, isExisted } from "$lib/utils/db-utils";
 import { db } from "@db/index";
 import {
-	roomParticipant,
+	type CreateRoomParticipant,
 	selectRoomParticipantSchema,
-	type CreateRoomParticipant
-} from "@db/schema/rooms";
+	roomParticipant
+} from "@db/schema/room-participant";
+
 import { and, eq } from "drizzle-orm";
 
 type UpdateRoomParticipantBody = Partial<CreateRoomParticipant>;
@@ -18,7 +19,7 @@ export async function getRoomParticipants() {
 	return roomParticipantList.parse(allRoomParticipants);
 }
 
-export async function getRoomParticipantById(id: number) {
+export async function getRoomParticipantById(id: string) {
 	const roomParticipantData = await db
 		.select()
 		.from(roomParticipant)
@@ -30,7 +31,7 @@ export async function getRoomParticipantById(id: number) {
 	return selectRoomParticipantSchema.parse(roomParticipantData.at(0));
 }
 
-export async function getRoomParticipantByCampParticipantId(campParticipantId: number) {
+export async function getRoomParticipantByCampParticipantId(campParticipantId: string) {
 	const roomParticipantData = await db
 		.select()
 		.from(roomParticipant)
@@ -50,7 +51,7 @@ export async function createRoomParticipants(data: CreateRoomParticipant[]) {
 	await db.insert(roomParticipant).values(data);
 }
 
-export async function updateRoomParticipantById(id: number, data: UpdateRoomParticipantBody) {
+export async function updateRoomParticipantById(id: string, data: UpdateRoomParticipantBody) {
 	await db
 		.update(roomParticipant)
 		.set({ ...data, updatedAt: new Date() })
@@ -58,7 +59,7 @@ export async function updateRoomParticipantById(id: number, data: UpdateRoomPart
 }
 
 export async function updateRoomParticipantByCampParticipantId(
-	campParticipantId: number,
+	campParticipantId: string,
 	data: UpdateRoomParticipantBody
 ) {
 	await db
@@ -67,14 +68,14 @@ export async function updateRoomParticipantByCampParticipantId(
 		.where(and(isExist, eq(roomParticipant.campParticipantId, campParticipantId)));
 }
 
-export async function deleteRoomParticipantById(id: number) {
+export async function deleteRoomParticipantById(id: string) {
 	await db
 		.update(roomParticipant)
 		.set({ deletedAt: new Date() })
 		.where(and(isExist, eq(roomParticipant.id, id)));
 }
 
-export async function deleteRoomParticipantByCampParticipantId(campParticipantId: number) {
+export async function deleteRoomParticipantByCampParticipantId(campParticipantId: string) {
 	await db
 		.update(roomParticipant)
 		.set({ deletedAt: new Date() })

@@ -1,4 +1,4 @@
-import { insertCampStaffSchema } from "@db/schema/camps";
+import { insertCampStaffSchema } from "@db/schema/camp";
 
 export const campStaffSchema = insertCampStaffSchema.omit({
 	id: true,

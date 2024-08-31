@@ -1,13 +1,19 @@
-import { entityTimestampColumns } from "@db/utils/columns-util";
-import { index, integer, pgTable, serial, unique } from "drizzle-orm/pg-core";
+import { generateEntityId, entityTimestampColumns } from "../utils/entity-utils";
+import { index, pgTable, unique, varchar } from "drizzle-orm/pg-core";
 import { createSelectSchema, createInsertSchema } from "drizzle-zod";
 
+const TABLE_NAME = "camp_participant";
+
 export const campParticipant = pgTable(
-	"camp_participant",
+	TABLE_NAME,
 	{
-		id: serial("id").primaryKey(),
-		campId: integer("camp_id").notNull(),
-		participantId: integer("participant_id").notNull(),
+		id: varchar("id", { length: 24 })
+			.primaryKey()
+			.$defaultFn(() => {
+				return generateEntityId(TABLE_NAME);
+			}),
+		campId: varchar("camp_id", { length: 24 }).notNull(),
+		participantId: varchar("participant_id", { length: 24 }).notNull(),
 		...entityTimestampColumns
 	},
 	(campParticipant) => ({

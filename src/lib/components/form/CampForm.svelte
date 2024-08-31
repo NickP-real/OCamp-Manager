@@ -2,7 +2,7 @@
 	import { superForm, type Infer, type SuperValidated } from "sveltekit-superforms";
 	import { campFormSchema, type CampFormSchema } from "$lib/client/form/camp-form";
 	import * as Form from "$lib/components/form-ui";
-	import { type Major } from "@db/schema/camps";
+	import { type Major } from "@db/schema/major";
 	import { zodClient } from "sveltekit-superforms/adapters";
 	import type { FormMode } from "./type";
 	import { goto } from "$app/navigation";

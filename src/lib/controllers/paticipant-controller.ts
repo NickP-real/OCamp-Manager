@@ -21,7 +21,7 @@ export async function getAllParticipants() {
 	return participantRepository.getParticipants();
 }
 
-export async function getParticipantById(id: number) {
+export async function getParticipantById(id: string) {
 	try {
 		const participant = await participantRepository.getParticipantById(id);
 		return selectParticipantSchema.parse(participant);
@@ -34,6 +34,6 @@ export async function createParticipant(data: CreateParticipant) {
 	await participantRepository.createParticipant(data);
 }
 
-export async function updateParticipant(id: number, data: UpdateParticipantBody) {
+export async function updateParticipant(id: string, data: UpdateParticipantBody) {
 	await participantRepository.updateParticipantById(id, data);
 }

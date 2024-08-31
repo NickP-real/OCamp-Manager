@@ -1,10 +1,11 @@
 import { db, type DB } from "@db/index";
-import type { Camp, CampMajor, CreateCamp, CreateCampMajor } from "@db/schema/camps";
+import type { Camp, CreateCamp } from "@db/schema/camp";
+import type { CampMajor, CreateCampMajor } from "@db/schema/camp-major";
 
 type UpdateCampArgs = {
 	campId: Camp["id"];
 	campData: CreateCamp;
-	majorData: { majorId: number }[];
+	majorData: { majorId: string }[];
 	updateCampById: (id: Camp["id"], body: CreateCamp, tx?: DB) => Promise<Camp>;
 	updateCampMajorByCampId: (
 		id: CampMajor["id"],

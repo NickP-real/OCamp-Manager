@@ -1,36 +1,20 @@
-import { index, integer, pgTable, serial, uniqueIndex, varchar } from "drizzle-orm/pg-core";
-import { entityTimestampColumns } from "../utils/columns-util";
+import { index, integer, pgTable, varchar } from "drizzle-orm/pg-core";
+import { entityTimestampColumns, generateEntityId } from "../utils/entity-utils";
 import { paymentMethodEnum } from "./enums";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 
-export const laundryItem = pgTable(
-	"laundry_item",
-	{
-		id: serial("id").primaryKey(),
-		name: varchar("name", { length: 256 }).notNull(),
-		...entityTimestampColumns
-	},
-	(laundryItem) => ({
-		laundryItemIdx1: uniqueIndex("laundry_item_idx_1").on(laundryItem.name),
-		laundryItemIdx2: index("laundry_item_idx_2").on(laundryItem.deletedAt),
-		laundryItemIdx3: index("laundry_item_idx_3").on(laundryItem.createdAt),
-		laundryItemIdx4: index("laundry_item_idx_4").on(laundryItem.updatedAt)
-	})
-);
-
-export const selectLaundryItemSchema = createSelectSchema(laundryItem);
-export const insertLaundryItemSchema = createInsertSchema(laundryItem, {
-	name: ({ name }) => name.trim().min(1)
-});
-export type LaundryItem = typeof laundryItem.$inferSelect;
-export type CreateLaundryItem = typeof laundryItem.$inferInsert;
+const TABLE_NAME = "room_laundry_item";
 
 export const roomLaundryItem = pgTable(
-	"room_laundry_item",
+	TABLE_NAME,
 	{
-		id: serial("id").primaryKey(),
-		roomId: integer("room_id").notNull(),
-		itemId: integer("item_id").notNull(),
+		id: varchar("id", { length: 24 })
+			.primaryKey()
+			.$defaultFn(() => {
+				return generateEntityId(TABLE_NAME);
+			}),
+		roomId: varchar("room_id", { length: 24 }).notNull(),
+		itemId: varchar("item_id", { length: 24 }).notNull(),
 		quantity: integer("quantity").notNull(),
 		paymentMethod: paymentMethodEnum("payment_method").notNull(),
 		...entityTimestampColumns

@@ -11,7 +11,7 @@ export async function getAllStaffs() {
 	}
 }
 
-export async function getStaffById(id: number) {
+export async function getStaffById(id: string) {
 	try {
 		const data = await staffRepository.getStaffById(id);
 		return selectStaffSchema.parse(data);
@@ -29,7 +29,7 @@ export async function createStaff(data: CreateStaff) {
 	}
 }
 
-export async function updateStaffById(id: number, data: CreateStaff) {
+export async function updateStaffById(id: string, data: CreateStaff) {
 	try {
 		const body = insertStaffSchema.parse(data);
 		await staffRepository.updateStaffById(id, body);

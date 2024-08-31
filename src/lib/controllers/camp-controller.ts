@@ -1,20 +1,15 @@
 import type { CampFormBody } from "$lib/client/form/camp-form";
-import {
-	insertCampSchema,
-	insertCampStaffSchema,
-	type Camp,
-	type CampMajor,
-	type CreateCampStaff
-} from "@db/schema/camps";
+
 import type { z } from "zod";
 
-// Repository
 import * as campRepository from "@repository/camp-repository";
 import * as campMajorRepository from "@repository/camp-major-repository";
 import * as campStaffRepository from "@repository/camp-staff-repository";
 
-// Services
 import * as campService from "@service/camp-service";
+import { insertCampSchema, type Camp } from "@db/schema/camp";
+import type { CampMajor } from "@db/schema/camp-major";
+import { type CreateCampStaff, insertCampStaffSchema } from "@db/schema/camp-staff";
 
 const createCampSchema = insertCampSchema.omit({
 	id: true,
@@ -31,7 +26,7 @@ export async function getAllCamps() {
 	return campRepository.getCamps();
 }
 
-export async function getCampById(id: number) {
+export async function getCampById(id: string) {
 	const data = await campRepository.getCampWithCampMajorsById(id);
 
 	return data.reduce((prev, { camp, camp_major }) => {
@@ -51,7 +46,7 @@ export async function createCamp(data: CreateCampBody) {
 	}
 }
 
-export async function updateCamp(id: number, data: CampFormBody): Promise<CampFormBody> {
+export async function updateCamp(id: string, data: CampFormBody): Promise<CampFormBody> {
 	try {
 		const { campMajors: majorData, ...campData } = data;
 
@@ -84,7 +79,7 @@ export async function createCampStaff(data: CreateCampStaff) {
 	}
 }
 
-export async function updateCampStaff(campStaffId: number, data: CreateCampStaff) {
+export async function updateCampStaff(campStaffId: string, data: CreateCampStaff) {
 	try {
 		const body = insertCampStaffSchema.parse(data);
 		await campStaffRepository.updateCampStaffById(campStaffId, body);

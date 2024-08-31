@@ -1,12 +1,17 @@
-import { date, index, pgTable, serial, text, varchar } from "drizzle-orm/pg-core";
-import { entityTimestampColumns } from "../utils/columns-util";
+import { date, index, pgTable, text, varchar } from "drizzle-orm/pg-core";
+import { entityTimestampColumns, generateEntityId } from "../utils/entity-utils";
 import { sexEnum } from "./enums";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 
+const TABLE_NAME = "participant";
 export const participant = pgTable(
-	"participant",
+	TABLE_NAME,
 	{
-		id: serial("id").primaryKey(),
+		id: varchar("id", { length: 24 })
+			.primaryKey()
+			.$defaultFn(() => {
+				return generateEntityId(TABLE_NAME);
+			}),
 		firstName: varchar("first_name", { length: 256 }).notNull(),
 		lastName: varchar("last_name", { length: 256 }).notNull(),
 		nickname: varchar("nickname", { length: 256 }),

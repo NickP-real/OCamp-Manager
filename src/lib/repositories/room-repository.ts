@@ -1,6 +1,6 @@
 import { ifEmptyThrowError, isExisted } from "$lib/utils/db-utils";
 import { db } from "@db/index";
-import { room, selectRoomSchema, type CreateRoom } from "@db/schema/rooms";
+import { room, selectRoomSchema, type CreateRoom } from "@db/schema/room";
 import { and, eq } from "drizzle-orm";
 
 type UpdateRoomBody = Partial<CreateRoom>;
@@ -14,7 +14,7 @@ export async function getRooms() {
 	return roomList.parse(allRooms);
 }
 
-export async function getRoomById(id: number) {
+export async function getRoomById(id: string) {
 	const roomData = await db
 		.select()
 		.from(room)
@@ -30,14 +30,14 @@ export async function createRoom(data: CreateRoom) {
 	await db.insert(room).values(data);
 }
 
-export async function updateRoomById(id: number, data: UpdateRoomBody) {
+export async function updateRoomById(id: string, data: UpdateRoomBody) {
 	await db
 		.update(room)
 		.set({ ...data, updatedAt: new Date() })
 		.where(and(isExist, eq(room.id, id)));
 }
 
-export async function deleteRoomById(id: number) {
+export async function deleteRoomById(id: string) {
 	await db
 		.update(room)
 		.set({ deletedAt: new Date() })

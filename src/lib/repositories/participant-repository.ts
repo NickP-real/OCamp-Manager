@@ -1,6 +1,7 @@
 import { isExisted } from "$lib/utils/db-utils";
 import { db } from "@db/index";
-import { campParticipant } from "@db/schema/camps";
+import { campParticipant } from "@db/schema/camp-participant";
+
 import {
 	participant,
 	selectParticipantSchema,
@@ -19,7 +20,7 @@ export async function getParticipants() {
 	return participantList.parse(allParticipants);
 }
 
-export async function getParticipantById(id: number) {
+export async function getParticipantById(id: string) {
 	const participantData = await db
 		.select()
 		.from(participant)
@@ -29,7 +30,7 @@ export async function getParticipantById(id: number) {
 	return participantData[0];
 }
 
-export async function getParticipantsByCampId(campId: number, tx = db) {
+export async function getParticipantsByCampId(campId: string, tx = db) {
 	return await tx
 		.select({ participant })
 		.from(participant)
@@ -41,14 +42,14 @@ export async function createParticipant(data: CreateParticipant, tx = db) {
 	return await tx.insert(participant).values(data).returning();
 }
 
-export async function updateParticipantById(id: number, data: UpdateParticipantBody) {
+export async function updateParticipantById(id: string, data: UpdateParticipantBody) {
 	await db
 		.update(participant)
 		.set({ ...data, updatedAt: new Date() })
 		.where(and(isExist, eq(participant.id, id)));
 }
 
-export async function deleteParticipantById(id: number) {
+export async function deleteParticipantById(id: string) {
 	await db
 		.update(participant)
 		.set({ deletedAt: new Date() })

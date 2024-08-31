@@ -1,6 +1,7 @@
 import { ifEmptyThrowError, isExisted } from "$lib/utils/db-utils";
 import { db } from "@db/index";
-import { campStaff, selectCampStaffSchema, type CreateCampStaff } from "@db/schema/camps";
+import { type CreateCampStaff, selectCampStaffSchema, campStaff } from "@db/schema/camp-staff";
+
 import { and, eq } from "drizzle-orm";
 
 type UpdateCampStaffBody = Partial<CreateCampStaff>;
@@ -14,7 +15,7 @@ export async function getCampStaffs() {
 	return campStaffList.parse(allCampStaffs);
 }
 
-export async function getCampStaffById(id: number) {
+export async function getCampStaffById(id: string) {
 	const campStaffData = await db
 		.select()
 		.from(campStaff)
@@ -26,7 +27,7 @@ export async function getCampStaffById(id: number) {
 	return selectCampStaffSchema.parse(campStaffData.at(0));
 }
 
-export async function getCampStaffsByCampId(campId: number) {
+export async function getCampStaffsByCampId(campId: string) {
 	const allCampStaffs = await db
 		.select()
 		.from(campStaff)
@@ -38,14 +39,14 @@ export async function createCampStaff(data: CreateCampStaff) {
 	await db.insert(campStaff).values(data);
 }
 
-export async function updateCampStaffById(id: number, data: UpdateCampStaffBody) {
+export async function updateCampStaffById(id: string, data: UpdateCampStaffBody) {
 	await db
 		.update(campStaff)
 		.set(data)
 		.where(and(isExist, eq(campStaff.id, id)));
 }
 
-export async function deleteCampStaffById(id: number) {
+export async function deleteCampStaffById(id: string) {
 	await db
 		.update(campStaff)
 		.set({ deletedAt: new Date() })

@@ -1,11 +1,17 @@
-import { entityTimestampColumns } from "@db/utils/columns-util";
-import { index, pgTable, serial, uniqueIndex, varchar } from "drizzle-orm/pg-core";
+import { generateEntityId, entityTimestampColumns } from "../utils/entity-utils";
+import { index, pgTable, uniqueIndex, varchar } from "drizzle-orm/pg-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 
+const TABLE_NAME = "major";
+
 export const major = pgTable(
-	"major",
+	TABLE_NAME,
 	{
-		id: serial("id").primaryKey(),
+		id: varchar("id", { length: 24 })
+			.primaryKey()
+			.$defaultFn(() => {
+				return generateEntityId(TABLE_NAME);
+			}),
 		name: varchar("name", { length: 256 }).notNull(),
 		...entityTimestampColumns
 	},

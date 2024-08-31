@@ -1,10 +1,11 @@
 import { ifEmptyThrowError, isExisted } from "$lib/utils/db-utils";
 import { db } from "@db/index";
 import {
+	type CreateStaffAccount,
 	selectStaffAccountSchema,
-	staffAccount,
-	type CreateStaffAccount
-} from "@db/schema/participant";
+	staffAccount
+} from "@db/schema/staff-account";
+
 import { and, eq } from "drizzle-orm";
 
 type UpdateStaffAccountBody = Partial<CreateStaffAccount>;
@@ -18,7 +19,7 @@ export async function getStaffAccounts() {
 	return staffAccountList.parse(allStaffAccount);
 }
 
-export async function getStaffAccountById(id: number) {
+export async function getStaffAccountById(id: string) {
 	const staffAccountData = await db
 		.select()
 		.from(staffAccount)
@@ -30,7 +31,7 @@ export async function getStaffAccountById(id: number) {
 	return selectStaffAccountSchema.parse(staffAccountData.at(0));
 }
 
-export async function getStaffAccountByStaffId(staffId: number) {
+export async function getStaffAccountByStaffId(staffId: string) {
 	const staffAccountData = await db
 		.select()
 		.from(staffAccount)
@@ -43,26 +44,26 @@ export async function createStaffAccount(data: CreateStaffAccount) {
 	await db.insert(staffAccount).values(data);
 }
 
-export async function updateStaffAccountById(id: number, data: UpdateStaffAccountBody) {
+export async function updateStaffAccountById(id: string, data: UpdateStaffAccountBody) {
 	await db
 		.update(staffAccount)
 		.set({ ...data, updatedAt: new Date() })
 		.where(and(isExist, eq(staffAccount.id, id)));
 }
-export async function updateStaffAccountByStaffId(staffId: number, data: UpdateStaffAccountBody) {
+export async function updateStaffAccountByStaffId(staffId: string, data: UpdateStaffAccountBody) {
 	await db
 		.update(staffAccount)
 		.set({ ...data, updatedAt: new Date() })
 		.where(and(isExist, eq(staffAccount.staffId, staffId)));
 }
 
-export async function deleteStaffAccountById(id: number) {
+export async function deleteStaffAccountById(id: string) {
 	await db
 		.update(staffAccount)
 		.set({ deletedAt: new Date() })
 		.where(and(isExist, eq(staffAccount.id, id)));
 }
-export async function deleteStaffAccountByStaffId(staffId: number) {
+export async function deleteStaffAccountByStaffId(staffId: string) {
 	await db
 		.update(staffAccount)
 		.set({ deletedAt: new Date() })

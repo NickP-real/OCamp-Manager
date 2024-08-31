@@ -1,10 +1,11 @@
 import { ifEmptyThrowError, isExisted } from "$lib/utils/db-utils";
 import { db } from "@db/index";
 import {
+	type CreateRoomLaundryItem,
 	roomLaundryItem,
-	selectRoomLaundryItemSchema,
-	type CreateRoomLaundryItem
-} from "@db/schema/laundries";
+	selectRoomLaundryItemSchema
+} from "@db/schema/room-laundry-item";
+
 import { and, eq } from "drizzle-orm";
 
 type UpdateRoomLaundryItemBody = Partial<CreateRoomLaundryItem>;
@@ -18,7 +19,7 @@ export async function getRoomLaundryItems() {
 	return roomLaundryItemList.parse(allRoomLaundryItems);
 }
 
-export async function getRoomLaundryItemById(id: number) {
+export async function getRoomLaundryItemById(id: string) {
 	const roomLaundryItemData = await db
 		.select()
 		.from(roomLaundryItem)
@@ -30,7 +31,7 @@ export async function getRoomLaundryItemById(id: number) {
 	return selectRoomLaundryItemSchema.parse(roomLaundryItemData.at(0));
 }
 
-export async function getRoomLaundryItemsByRoomId(roomId: number) {
+export async function getRoomLaundryItemsByRoomId(roomId: string) {
 	const allRoomLaundryItems = await db
 		.select()
 		.from(roomLaundryItem)
@@ -46,7 +47,7 @@ export async function createRoomLaundryItems(data: CreateRoomLaundryItem[]) {
 	await db.insert(roomLaundryItem).values(data);
 }
 
-export async function updateRoomLaundryItemById(id: number, data: UpdateRoomLaundryItemBody) {
+export async function updateRoomLaundryItemById(id: string, data: UpdateRoomLaundryItemBody) {
 	await db
 		.update(roomLaundryItem)
 		.set({ ...data, updatedAt: new Date() })
@@ -54,7 +55,7 @@ export async function updateRoomLaundryItemById(id: number, data: UpdateRoomLaun
 }
 
 export async function updateRoomLaundryItemsByRoomId(
-	roomId: number,
+	roomId: string,
 	data: CreateRoomLaundryItem[]
 ) {
 	await db.transaction(async (tx) => {
@@ -63,14 +64,14 @@ export async function updateRoomLaundryItemsByRoomId(
 	});
 }
 
-export async function deleteRoomLaundryItemById(id: number) {
+export async function deleteRoomLaundryItemById(id: string) {
 	await db
 		.update(roomLaundryItem)
 		.set({ deletedAt: new Date() })
 		.where(and(isExist, eq(roomLaundryItem.id, id)));
 }
 
-export async function deleteRoomLaundryItemsByRoomId(roomId: number) {
+export async function deleteRoomLaundryItemsByRoomId(roomId: string) {
 	await db
 		.update(roomLaundryItem)
 		.set({ deletedAt: new Date() })

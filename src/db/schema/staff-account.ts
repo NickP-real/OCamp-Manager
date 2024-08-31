@@ -1,12 +1,17 @@
-import { entityTimestampColumns } from "@db/utils/columns-util";
-import { index, integer, pgTable, serial, uniqueIndex, varchar } from "drizzle-orm/pg-core";
+import { generateEntityId, entityTimestampColumns } from "../utils/entity-utils";
+import { index, pgTable, uniqueIndex, varchar } from "drizzle-orm/pg-core";
 import { createSelectSchema, createInsertSchema } from "drizzle-zod";
 
+const TABLE_NAME = "staff_account";
 export const staffAccount = pgTable(
-	"staff_account",
+	TABLE_NAME,
 	{
-		id: serial("id").primaryKey(),
-		staffId: integer("staff_id").unique().notNull(),
+		id: varchar("id", { length: 24 })
+			.primaryKey()
+			.$defaultFn(() => {
+				return generateEntityId(TABLE_NAME);
+			}),
+		staffId: varchar("staff_id", { length: 24 }).unique().notNull(),
 		email: varchar("email", { length: 256 }).notNull(),
 		password: varchar("password", { length: 256 }).notNull(),
 		...entityTimestampColumns

@@ -1,4 +1,4 @@
-import { insertLaundryItemSchema } from "@db/schema/laundries";
+import { insertLaundryItemSchema } from "@db/schema/laundry-item";
 
 export const laundryItemSchema = insertLaundryItemSchema.omit({
 	id: true,

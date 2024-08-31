@@ -1,6 +1,7 @@
 import { ifEmptyThrowError, isExisted } from "$lib/utils/db-utils";
 import { db } from "@db/index";
-import { roomStaff, selectRoomStaffSchema, type CreateRoomStaff } from "@db/schema/rooms";
+import { type CreateRoomStaff, selectRoomStaffSchema, roomStaff } from "@db/schema/room-staff";
+
 import { and, eq } from "drizzle-orm";
 
 type UpdateRoomStaffBody = Partial<CreateRoomStaff>;
@@ -14,7 +15,7 @@ export async function getRoomStaffs() {
 	return roomStaffList.array().parse(allRoomStaffs);
 }
 
-export async function getRoomStaffById(id: number) {
+export async function getRoomStaffById(id: string) {
 	const roomStaffData = await db
 		.select()
 		.from(roomStaff)
@@ -25,7 +26,7 @@ export async function getRoomStaffById(id: number) {
 	return selectRoomStaffSchema.parse(roomStaffData.at(0));
 }
 
-export async function getRoomStaffByRoomId(roomId: number) {
+export async function getRoomStaffByRoomId(roomId: string) {
 	const roomStaffData = await db
 		.select()
 		.from(roomStaff)
@@ -34,7 +35,7 @@ export async function getRoomStaffByRoomId(roomId: number) {
 	return roomStaffData.at(0) ? selectRoomStaffSchema.parse(roomStaffData.at(0)) : null;
 }
 
-export async function getRoomStaffByCampStaffId(campStaffId: number) {
+export async function getRoomStaffByCampStaffId(campStaffId: string) {
 	const roomStaffData = await db
 		.select()
 		.from(roomStaff)
@@ -51,42 +52,42 @@ export async function createRoomStaffs(data: CreateRoomStaff[]) {
 	await db.insert(roomStaff).values(data);
 }
 
-export async function updateRoomStaffById(id: number, data: UpdateRoomStaffBody) {
+export async function updateRoomStaffById(id: string, data: UpdateRoomStaffBody) {
 	await db
 		.update(roomStaff)
 		.set({ ...data, updatedAt: new Date() })
 		.where(and(isExist, eq(roomStaff.id, id)));
 }
 
-export async function updateRoomStaffByRoomId(roomId: number, data: UpdateRoomStaffBody) {
+export async function updateRoomStaffByRoomId(roomId: string, data: UpdateRoomStaffBody) {
 	await db
 		.update(roomStaff)
 		.set({ ...data, updatedAt: new Date() })
 		.where(and(isExist, eq(roomStaff.roomId, roomId)));
 }
 
-export async function updateRoomStaffByCampStaffId(campStaffId: number, data: UpdateRoomStaffBody) {
+export async function updateRoomStaffByCampStaffId(campStaffId: string, data: UpdateRoomStaffBody) {
 	await db
 		.update(roomStaff)
 		.set({ ...data, updatedAt: new Date() })
 		.where(and(isExist, eq(roomStaff.campStaffId, campStaffId)));
 }
 
-export async function deleteRoomStaffById(id: number) {
+export async function deleteRoomStaffById(id: string) {
 	await db
 		.update(roomStaff)
 		.set({ deletedAt: new Date() })
 		.where(and(isExist, eq(roomStaff.id, id)));
 }
 
-export async function deleteRoomStaffByRoomId(roomId: number) {
+export async function deleteRoomStaffByRoomId(roomId: string) {
 	await db
 		.update(roomStaff)
 		.set({ deletedAt: new Date() })
 		.where(and(isExist, eq(roomStaff.roomId, roomId)));
 }
 
-export async function deleteRoomStaffByCampStaffId(campStaffId: number) {
+export async function deleteRoomStaffByCampStaffId(campStaffId: string) {
 	await db
 		.update(roomStaff)
 		.set({ deletedAt: new Date() })

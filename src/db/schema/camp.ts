@@ -4,18 +4,23 @@ import {
 	index,
 	numeric,
 	pgTable,
-	serial,
 	text,
 	uniqueIndex,
 	varchar
 } from "drizzle-orm/pg-core";
-import { entityTimestampColumns } from "../utils/columns-util";
+import { generateEntityId, entityTimestampColumns } from "../utils/entity-utils";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 
+const TABLE_NAME = "camp";
+
 export const camp = pgTable(
-	"camp",
+	TABLE_NAME,
 	{
-		id: serial("id").primaryKey(),
+		id: varchar("id", { length: 24 })
+			.primaryKey()
+			.$defaultFn(() => {
+				return generateEntityId(TABLE_NAME);
+			}),
 		name: varchar("name", { length: 256 }).unique().notNull(),
 		fromDate: date("from_date", { mode: "date" }).notNull(),
 		toDate: date("to_date", { mode: "date" }).notNull(),

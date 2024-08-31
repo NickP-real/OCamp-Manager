@@ -1,3 +1,4 @@
+import { init } from "@paralleldrive/cuid2";
 import { sql } from "drizzle-orm";
 import { timestamp } from "drizzle-orm/pg-core";
 
@@ -10,4 +11,13 @@ export const entityTimestampColumns = {
 		.$onUpdate(() => new Date())
 };
 
-export type SoftDeleteColumnKey = keyof typeof entityTimestampColumns;
+export type EntityTimestampColumnKey = keyof typeof entityTimestampColumns;
+
+export const generateEntityId = (entityName: string): string => {
+	const createId = init({
+		random: Math.random,
+		length: 24,
+		fingerprint: entityName
+	});
+	return createId();
+};

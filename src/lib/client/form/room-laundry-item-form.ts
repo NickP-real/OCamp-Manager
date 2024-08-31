@@ -1,4 +1,4 @@
-import { insertRoomLaundryItemSchema } from "@db/schema/laundries";
+import { insertRoomLaundryItemSchema } from "@db/schema/laundry-item";
 import { z } from "zod";
 
 export const roomLaundryItemSchema = insertRoomLaundryItemSchema
