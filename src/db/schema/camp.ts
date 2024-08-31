@@ -9,7 +9,7 @@ import {
 	varchar
 } from "drizzle-orm/pg-core";
 import { generateEntityId, entityTimestampColumns } from "../utils/entity-utils";
-import { createInsertSchema, createSelectSchema } from "drizzle-zod";
+import { createInsertSchema } from "drizzle-zod";
 
 const TABLE_NAME = "camp";
 
