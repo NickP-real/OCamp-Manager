@@ -13,7 +13,7 @@ const isExist = isExisted(laundryItem.deletedAt);
 
 const laundryItemList = selectLaundryItemSchema.array();
 
-export async function getLaundryItems() {
+export async function getAll() {
 	const allLaundryItems = await db.select().from(laundryItem).where(isExist);
 	return laundryItemList.parse(allLaundryItems);
 }

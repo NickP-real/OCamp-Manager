@@ -9,7 +9,7 @@ const roomList = selectRoomSchema.array();
 
 const isExist = isExisted(room.deletedAt);
 
-export async function getRooms() {
+export async function getAll() {
 	const allRooms = await db.select().from(room).where(isExist);
 	return roomList.parse(allRooms);
 }

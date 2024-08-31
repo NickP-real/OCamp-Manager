@@ -14,7 +14,7 @@ const staffAccountList = selectStaffAccountSchema.array();
 
 const isExist = isExisted(staffAccount.deletedAt);
 
-export async function getStaffAccounts() {
+export async function getAll() {
 	const allStaffAccount = await db.select().from(staffAccount).where(isExist);
 	return staffAccountList.parse(allStaffAccount);
 }

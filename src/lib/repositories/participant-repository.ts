@@ -15,7 +15,7 @@ const participantList = selectParticipantSchema.array();
 
 const isExist = isExisted(participant.deletedAt);
 
-export async function getParticipants() {
+export async function getAll() {
 	const allParticipants = await db.select().from(participant).where(isExist);
 	return participantList.parse(allParticipants);
 }

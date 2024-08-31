@@ -3,7 +3,7 @@ import { insertStaffSchema, selectStaffSchema, type CreateStaff } from "@db/sche
 
 export async function getAllStaffs() {
 	try {
-		const data = await staffRepository.getStaffs();
+		const data = await staffRepository.getAll();
 
 		return selectStaffSchema.array().parse(data);
 	} catch (error) {

@@ -14,7 +14,7 @@ const isExist = isExisted(roomLaundryItem.deletedAt);
 
 const roomLaundryItemList = selectRoomLaundryItemSchema.array();
 
-export async function getRoomLaundryItems() {
+export async function getAll() {
 	const allRoomLaundryItems = await db.select().from(roomLaundryItem).where(isExist);
 	return roomLaundryItemList.parse(allRoomLaundryItems);
 }

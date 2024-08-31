@@ -8,7 +8,7 @@ type UpdateMajorBody = Partial<CreateMajor>;
 
 const isExist = isExisted(major.deletedAt);
 
-export async function getMajors() {
+export async function getAll() {
 	return await db.select().from(major).where(isExist);
 }
 

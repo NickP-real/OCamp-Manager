@@ -6,7 +6,7 @@ import { and, eq } from "drizzle-orm";
 
 const isExist = isExisted(staff.deletedAt);
 
-export async function getStaffs() {
+export async function getAll() {
 	return await db.select().from(staff).where(isExist);
 }
 

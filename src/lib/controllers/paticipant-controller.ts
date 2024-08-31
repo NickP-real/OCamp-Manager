@@ -18,7 +18,7 @@ const updateParticipantSchema = createParticipantSchema.partial();
 type UpdateParticipantBody = z.infer<typeof updateParticipantSchema>;
 
 export async function getAllParticipants() {
-	return participantRepository.getParticipants();
+	return participantRepository.getAll();
 }
 
 export async function getParticipantById(id: string) {

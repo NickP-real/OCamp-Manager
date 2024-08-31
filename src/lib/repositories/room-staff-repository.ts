@@ -10,7 +10,7 @@ const roomStaffList = selectRoomStaffSchema.array();
 
 const isExist = isExisted(roomStaff.deletedAt);
 
-export async function getRoomStaffs() {
+export async function getAll() {
 	const allRoomStaffs = await db.select().from(roomStaff).where(isExist);
 	return roomStaffList.array().parse(allRoomStaffs);
 }

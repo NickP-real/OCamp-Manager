@@ -10,7 +10,7 @@ const campStaffList = selectCampStaffSchema.array();
 
 const isExist = isExisted(campStaff.deletedAt);
 
-export async function getCampStaffs() {
+export async function getAll() {
 	const allCampStaffs = await db.select().from(campStaff).where(isExist);
 	return campStaffList.parse(allCampStaffs);
 }

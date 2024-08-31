@@ -14,7 +14,7 @@ type CreateMajorBody = z.infer<typeof createMajorSchema>;
 type UpdateMajorBody = z.infer<typeof updateMajorSchema>;
 
 export async function getAllMajors() {
-	const data = await majorRepostiory.getMajors();
+	const data = await majorRepostiory.getAll();
 	return selectMajorSchema.array().parse(data);
 }
 

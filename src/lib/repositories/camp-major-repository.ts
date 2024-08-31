@@ -1,4 +1,4 @@
-import { ifEmptyThrowError } from "$lib/utils/db-utils";
+import { ifEmptyThrowError, isExisted } from "$lib/utils/db-utils";
 import { db } from "@db/index";
 import { type CreateCampMajor, campMajor, selectCampMajorSchema } from "@db/schema/camp-major";
 
@@ -6,8 +6,10 @@ import { eq } from "drizzle-orm";
 
 type UpdateCampMajorBody = Partial<CreateCampMajor>;
 
-export async function getCampMajors() {
-	return await db.select().from(campMajor);
+const isExist = isExisted(campMajor.deletedAt);
+
+export async function getAll() {
+	return await db.select().from(campMajor).where(isExist);
 }
 
 export async function getCampMajorById(id: string) {

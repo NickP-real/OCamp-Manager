@@ -14,7 +14,7 @@ const roomParticipantList = selectRoomParticipantSchema.array();
 
 const isExist = isExisted(roomParticipant.deletedAt);
 
-export async function getRoomParticipants() {
+export async function getAll() {
 	const allRoomParticipants = await db.select().from(roomParticipant).where(isExist);
 	return roomParticipantList.parse(allRoomParticipants);
 }

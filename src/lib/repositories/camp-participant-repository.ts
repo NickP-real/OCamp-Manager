@@ -14,7 +14,7 @@ const campParticipantList = selectCampParticipantSchema.array();
 
 const isExist = isExisted(campParticipant.deletedAt);
 
-export async function getCampParticipants() {
+export async function getAll() {
 	const allCampParticipants = await db.select().from(campParticipant).where(isExist);
 	return campParticipantList.parse(allCampParticipants);
 }
