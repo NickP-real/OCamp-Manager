@@ -1,7 +1,7 @@
-import { getAllCamps } from "@controller/camp-controller";
+import { getAll } from "@controller/camp-controller";
 
 export async function load() {
 	return {
-		camps: getAllCamps()
+		camps: getAll()
 	};
 }

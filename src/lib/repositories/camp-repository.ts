@@ -1,18 +1,16 @@
 import { ifEmptyThrowError, isExisted } from "$lib/utils/db-utils";
 import { db } from "@db/index";
-import { selectCampSchema, camp, type CreateCamp } from "@db/schema/camp";
+import { camp, type CreateCamp, type Camp } from "@db/schema/camp";
 import { campMajor } from "@db/schema/camp-major";
 
 import { and, desc, eq } from "drizzle-orm";
 import { type PgSelect } from "drizzle-orm/pg-core";
 
-const campList = selectCampSchema.array();
-
 const isExist = isExisted(camp.deletedAt);
 
-export async function getCamps() {
+export async function getAll(): Promise<Camp[]> {
 	const allCamps = await db.select().from(camp).where(isExist).orderBy(desc(camp.createdAt));
-	return campList.parse(allCamps);
+	return allCamps;
 }
 
 // query builder

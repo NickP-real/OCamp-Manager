@@ -1,29 +1,25 @@
 import type { CampFormBody } from "$lib/client/form/camp-form";
 
-import type { z } from "zod";
-
 import * as campRepository from "@repository/camp-repository";
 import * as campMajorRepository from "@repository/camp-major-repository";
 import * as campStaffRepository from "@repository/camp-staff-repository";
 
 import * as campService from "@service/camp-service";
-import { insertCampSchema, type Camp } from "@db/schema/camp";
+
 import type { CampMajor } from "@db/schema/camp-major";
 import { type CreateCampStaff, insertCampStaffSchema } from "@db/schema/camp-staff";
+import { validateCreateCampRequest } from "$lib/validators/camp-validator";
 
-const createCampSchema = insertCampSchema.omit({
-	id: true,
-	createdAt: true,
-	updatedAt: true,
-	deletedAt: true
-});
+import type { Camp } from "@db/schema/camp";
+import type { CreateCampRequestDTO } from "$lib/dtos/camp-dto";
+
 // const updateCampSchema = createCampSchema.partial();
-type CreateCampBody = z.infer<typeof createCampSchema>;
+
 // type UpdateCampBody = z.infer<typeof updateCampSchema>;
 export type CampWithMajors = Camp & { campMajor: CampMajor[] };
 
-export async function getAllCamps() {
-	return campRepository.getCamps();
+export async function getAll() {
+	return campRepository.getAll();
 }
 
 export async function getCampById(id: string) {
@@ -36,17 +32,12 @@ export async function getCampById(id: string) {
 	}, {} as CampWithMajors);
 }
 
-export async function createCamp(data: CreateCampBody) {
-	try {
-		const body = createCampSchema.parse(data);
-		await campRepository.createCamp(body);
-	} catch (err) {
-		console.log(err);
-		throw new Error("Create camp fail");
-	}
+export async function createCamp(data: CreateCampRequestDTO) {
+	const body = validateCreateCampRequest(data);
+	await campRepository.createCamp(body);
 }
 
-export async function updateCamp(id: string, data: CampFormBody): Promise<CampFormBody> {
+export async function updateCampById(id: string, data: CampFormBody): Promise<CampFormBody> {
 	try {
 		const { campMajors: majorData, ...campData } = data;
 
@@ -64,7 +55,7 @@ export async function updateCamp(id: string, data: CampFormBody): Promise<CampFo
 			laundryPrice: camp.laundryPrice ? parseFloat(camp.laundryPrice) : undefined
 		};
 	} catch (error) {
-		console.log(error);
+		console.error(error);
 		throw new Error("Update camp fail");
 	}
 }

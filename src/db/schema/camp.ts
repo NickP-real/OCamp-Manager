@@ -40,7 +40,6 @@ export const camp = pgTable(
 	})
 );
 
-export const selectCampSchema = createSelectSchema(camp);
 export const insertCampSchema = createInsertSchema(camp, {
 	name: ({ name }) => name.trim().min(1),
 	description: ({ description }) => description.trim().min(1)

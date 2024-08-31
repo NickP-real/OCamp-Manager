@@ -17,7 +17,7 @@ export const actions: Actions = {
 
 		if (!form.valid) return fail(400, { form });
 
-		await createCampParticipant(+id, form.data);
+		await createCampParticipant(id, form.data);
 		console.log("Create participant successful.");
 	}
 };

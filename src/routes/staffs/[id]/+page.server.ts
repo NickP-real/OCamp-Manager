@@ -6,7 +6,7 @@ import { staffFormSchema, type StaffFormSchema } from "$lib/client/form/staff-fo
 import { error, fail } from "@sveltejs/kit";
 
 export const load: PageServerLoad = async ({ params: { id } }) => {
-	const staff = await getStaffById(+id);
+	const staff = await getStaffById(id);
 	if (!staff) error(404, { message: "Staff not found" });
 
 	const formData: Infer<StaffFormSchema> = {
@@ -26,7 +26,7 @@ export const actions: Actions = {
 
 		if (!form.valid) return fail(400, { form });
 
-		await updateStaffById(+id, form.data);
+		await updateStaffById(id, form.data);
 		console.log("Update staff successful.");
 
 		return message(form, "Update staff successful.");
