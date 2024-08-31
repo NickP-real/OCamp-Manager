@@ -1,6 +1,10 @@
 import { ifEmptyThrowError, isExisted } from "$lib/utils/db-utils";
 import { db } from "@db/index";
-import { selectStaffAccountSchema, staffAccount, type CreateStaffAccount } from "@db/schema/users";
+import {
+	selectStaffAccountSchema,
+	staffAccount,
+	type CreateStaffAccount
+} from "@db/schema/participant";
 import { and, eq } from "drizzle-orm";
 
 type UpdateStaffAccountBody = Partial<CreateStaffAccount>;

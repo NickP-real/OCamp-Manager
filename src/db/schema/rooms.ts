@@ -9,7 +9,7 @@ import {
 	varchar
 } from "drizzle-orm/pg-core";
 
-import { softDeleteColumns } from "../utils/columns-util";
+import { entityTimestampColumns } from "../utils/columns-util";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 
 export const room = pgTable(
@@ -19,7 +19,7 @@ export const room = pgTable(
 		name: varchar("name", { length: 256 }).notNull(),
 		description: text("description"),
 		campId: integer("camp_id").notNull(),
-		...softDeleteColumns
+		...entityTimestampColumns
 	},
 	(room) => ({
 		roomUnq1: unique("room_unq_1").on(room.name, room.campId),
@@ -44,7 +44,7 @@ export const roomParticipant = pgTable(
 		id: serial("id").primaryKey(),
 		roomId: integer("room_id").notNull(),
 		campParticipantId: integer("camp_participant_id").notNull(),
-		...softDeleteColumns
+		...entityTimestampColumns
 	},
 	(roomParticipant) => ({
 		roomParticipantUnq1: unique("room_participant_unq_1").on(
@@ -72,7 +72,7 @@ export const roomStaff = pgTable(
 		id: serial("id").primaryKey(),
 		roomId: integer("room_id").notNull(),
 		campStaffId: integer("camp_staff_id").notNull(),
-		...softDeleteColumns
+		...entityTimestampColumns
 	},
 	(roomStaff) => ({
 		roomStaffUnq1: unique("room_staff_unq_1").on(roomStaff.campStaffId, roomStaff.roomId),

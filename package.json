@@ -55,6 +55,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@paralleldrive/cuid2": "^2.2.2",
 		"@tanstack/svelte-table": "^8.20.5",
 		"@vercel/postgres": "^0.8.0",
 		"clsx": "^2.1.1",

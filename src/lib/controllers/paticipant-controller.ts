@@ -2,7 +2,7 @@ import {
 	insertParticipantSchema,
 	selectParticipantSchema,
 	type CreateParticipant
-} from "@db/schema/users";
+} from "@db/schema/participant";
 import * as participantRepository from "../repositories/participant-repository";
 import type { z } from "zod";
 

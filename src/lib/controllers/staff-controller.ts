@@ -1,5 +1,5 @@
 import * as staffRepository from "$lib/repositories/staff-repository";
-import { insertStaffSchema, selectStaffSchema, type CreateStaff } from "@db/schema/users";
+import { insertStaffSchema, selectStaffSchema, type CreateStaff } from "@db/schema/staff";
 
 export async function getAllStaffs() {
 	try {

@@ -1,4 +1,4 @@
-import { insertParticipantSchema } from "@db/schema/users";
+import { insertParticipantSchema } from "@db/schema/participant";
 import { z } from "zod";
 import { phoneSchema } from "./utils-form";
 

@@ -4,7 +4,8 @@ import {
 	idSchema,
 	type CollectionParams
 } from "$lib/utils/params-utils";
-import type { Staff, Participant } from "@db/schema/users";
+import type { Participant } from "@db/schema/participant";
+import type { Staff } from "@db/schema/staff";
 
 export async function getCampParticipantsByCampIdApi(
 	campId: string | number,

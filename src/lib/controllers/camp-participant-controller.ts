@@ -1,7 +1,7 @@
 import { db } from "@db/index";
 import * as participantRepository from "$lib/repositories/participant-repository";
 import * as campParticipantRepository from "$lib/repositories/camp-participant-repository";
-import { selectParticipantSchema, type CreateParticipant } from "@db/schema/users";
+import { selectParticipantSchema, type CreateParticipant } from "@db/schema/participant";
 import type { CreateCampParticipant } from "@db/schema/camps";
 
 export async function getCampParticipantsByCampId(campId: number) {

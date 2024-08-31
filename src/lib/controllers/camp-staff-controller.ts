@@ -1,5 +1,5 @@
 import * as staffRepository from "$lib/repositories/staff-repository";
-import { selectStaffSchema } from "@db/schema/users";
+import { selectStaffSchema } from "@db/schema/participant";
 
 export async function getCampStaffsByCampId(campId: number) {
 	try {

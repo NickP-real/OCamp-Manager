@@ -1,7 +1,7 @@
 import { ifEmptyThrowError, isExisted } from "$lib/utils/db-utils";
 import { db } from "@db/index";
-import { campStaff } from "@db/schema/camps";
-import { selectStaffSchema, staff, type CreateStaff } from "@db/schema/users";
+import { campStaff } from "@db/schema/campStaff";
+import { selectStaffSchema, staff, type CreateStaff } from "@db/schema/staff";
 import { and, eq } from "drizzle-orm";
 
 const isExist = isExisted(staff.deletedAt);

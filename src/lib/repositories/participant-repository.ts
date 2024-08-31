@@ -1,7 +1,11 @@
 import { isExisted } from "$lib/utils/db-utils";
 import { db } from "@db/index";
 import { campParticipant } from "@db/schema/camps";
-import { participant, selectParticipantSchema, type CreateParticipant } from "@db/schema/users";
+import {
+	participant,
+	selectParticipantSchema,
+	type CreateParticipant
+} from "@db/schema/participant";
 import { and, eq } from "drizzle-orm";
 
 type UpdateParticipantBody = Partial<CreateParticipant>;

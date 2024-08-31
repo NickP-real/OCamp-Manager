@@ -1,4 +1,4 @@
-import { selectParticipantSchema, selectStaffSchema } from "@db/schema/users";
+import { selectParticipantSchema, selectStaffSchema } from "@db/schema/participant";
 import { z } from "zod";
 
 export const roomSchema = z.object({

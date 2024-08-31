@@ -1,5 +1,5 @@
 import { index, integer, pgTable, serial, uniqueIndex, varchar } from "drizzle-orm/pg-core";
-import { softDeleteColumns } from "../utils/columns-util";
+import { entityTimestampColumns } from "../utils/columns-util";
 import { paymentMethodEnum } from "./enums";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 
@@ -8,7 +8,7 @@ export const laundryItem = pgTable(
 	{
 		id: serial("id").primaryKey(),
 		name: varchar("name", { length: 256 }).notNull(),
-		...softDeleteColumns
+		...entityTimestampColumns
 	},
 	(laundryItem) => ({
 		laundryItemIdx1: uniqueIndex("laundry_item_idx_1").on(laundryItem.name),
@@ -33,7 +33,7 @@ export const roomLaundryItem = pgTable(
 		itemId: integer("item_id").notNull(),
 		quantity: integer("quantity").notNull(),
 		paymentMethod: paymentMethodEnum("payment_method").notNull(),
-		...softDeleteColumns
+		...entityTimestampColumns
 	},
 	(roomLaundryItem) => ({
 		roomLaundryItemIdx1: index("room_laundry_item_idx_1").on(roomLaundryItem.roomId),
