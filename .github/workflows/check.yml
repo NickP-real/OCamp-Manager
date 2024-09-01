@@ -1,0 +1,27 @@
+name: Check
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  test-migrations:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up environment
+        run: |
+          mv .env.test .env
+
+      - name: Install dependencies
+        run: |
+          npm install -g bun
+          bun install
+
+      - name: bun check
+        run: |
+          bun check
