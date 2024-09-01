@@ -1,37 +1,28 @@
 import type { CampFormBody } from "$lib/client/form/camp-form";
-import {
-	insertCampSchema,
-	insertCampStaffSchema,
-	type Camp,
-	type CampMajor,
-	type CreateCampStaff
-} from "@db/schema/camps";
-import type { z } from "zod";
 
-// Repository
 import * as campRepository from "@repository/camp-repository";
 import * as campMajorRepository from "@repository/camp-major-repository";
 import * as campStaffRepository from "@repository/camp-staff-repository";
 
-// Services
 import * as campService from "@service/camp-service";
 
-const createCampSchema = insertCampSchema.omit({
-	id: true,
-	createdAt: true,
-	updatedAt: true,
-	deletedAt: true
-});
+import type { CampMajor } from "@db/schema/camp-major";
+import { type CreateCampStaff, insertCampStaffSchema } from "@db/schema/camp-staff";
+import { validateCreateCampRequest } from "$lib/validators/camp-validator";
+
+import type { Camp } from "@db/schema/camp";
+import type { CreateCampRequestDTO } from "$lib/dtos/camp-dto";
+
 // const updateCampSchema = createCampSchema.partial();
-type CreateCampBody = z.infer<typeof createCampSchema>;
+
 // type UpdateCampBody = z.infer<typeof updateCampSchema>;
 export type CampWithMajors = Camp & { campMajor: CampMajor[] };
 
-export async function getAllCamps() {
-	return campRepository.getCamps();
+export async function getAll() {
+	return campRepository.getAll();
 }
 
-export async function getCampById(id: number) {
+export async function getCampById(id: string) {
 	const data = await campRepository.getCampWithCampMajorsById(id);
 
 	return data.reduce((prev, { camp, camp_major }) => {
@@ -41,17 +32,12 @@ export async function getCampById(id: number) {
 	}, {} as CampWithMajors);
 }
 
-export async function createCamp(data: CreateCampBody) {
-	try {
-		const body = createCampSchema.parse(data);
-		await campRepository.createCamp(body);
-	} catch (err) {
-		console.log(err);
-		throw new Error("Create camp fail");
-	}
+export async function createCamp(data: CreateCampRequestDTO) {
+	const body = validateCreateCampRequest(data);
+	await campRepository.createCamp(body);
 }
 
-export async function updateCamp(id: number, data: CampFormBody): Promise<CampFormBody> {
+export async function updateCampById(id: string, data: CampFormBody): Promise<CampFormBody> {
 	try {
 		const { campMajors: majorData, ...campData } = data;
 
@@ -69,7 +55,7 @@ export async function updateCamp(id: number, data: CampFormBody): Promise<CampFo
 			laundryPrice: camp.laundryPrice ? parseFloat(camp.laundryPrice) : undefined
 		};
 	} catch (error) {
-		console.log(error);
+		console.error(error);
 		throw new Error("Update camp fail");
 	}
 }
@@ -84,7 +70,7 @@ export async function createCampStaff(data: CreateCampStaff) {
 	}
 }
 
-export async function updateCampStaff(campStaffId: number, data: CreateCampStaff) {
+export async function updateCampStaff(campStaffId: string, data: CreateCampStaff) {
 	try {
 		const body = insertCampStaffSchema.parse(data);
 		await campStaffRepository.updateCampStaffById(campStaffId, body);

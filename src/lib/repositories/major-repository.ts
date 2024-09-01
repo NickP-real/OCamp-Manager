@@ -1,17 +1,18 @@
 import { ifEmptyThrowError, isExisted } from "$lib/utils/db-utils";
 import { db } from "@db/index";
-import { major, selectMajorSchema, type CreateMajor } from "@db/schema/camps";
+import { type CreateMajor, major, selectMajorSchema } from "@db/schema/major";
+
 import { and, eq, like } from "drizzle-orm";
 
 type UpdateMajorBody = Partial<CreateMajor>;
 
 const isExist = isExisted(major.deletedAt);
 
-export async function getMajors() {
+export async function getAll() {
 	return await db.select().from(major).where(isExist);
 }
 
-export async function getMajorById(id: number) {
+export async function getMajorById(id: string) {
 	const majorData = await db
 		.select()
 		.from(major)
@@ -36,14 +37,14 @@ export async function createMajor(data: CreateMajor) {
 	await db.insert(major).values(data);
 }
 
-export async function updateMajorById(id: number, data: UpdateMajorBody) {
+export async function updateMajorById(id: string, data: UpdateMajorBody) {
 	await db
 		.update(major)
 		.set({ ...data, updatedAt: new Date() })
 		.where(and(isExist, eq(major.id, id)));
 }
 
-export async function deleteMajorById(id: number) {
+export async function deleteMajorById(id: string) {
 	await db
 		.update(major)
 		.set({ deletedAt: new Date() })

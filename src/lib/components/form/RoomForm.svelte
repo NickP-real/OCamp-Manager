@@ -6,9 +6,11 @@
 	import { zodClient } from "sveltekit-superforms/adapters";
 	import { onMount } from "svelte";
 	import { page } from "$app/stores";
-	import type { Participant, Staff } from "@db/schema/users";
+
 	import { debounce } from "$lib/utils/fetch-utils";
 	import { getCampParticipantsByCampIdApi, getCampStaffsByCampIdApi } from "$lib/api/camp-api";
+	import type { Participant } from "@db/schema/participant";
+	import type { Staff } from "@db/schema/staff";
 
 	export let mode: FormMode = "create";
 	export let formData: SuperValidated<Infer<RoomSchema>>;

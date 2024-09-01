@@ -3,7 +3,7 @@ import type { PageServerLoadEvent, Actions } from "./$types";
 import { zod } from "sveltekit-superforms/adapters";
 import { campFormSchema, type CampFormBody } from "$lib/client/form/camp-form";
 import { fail } from "@sveltejs/kit";
-import { updateCamp } from "@controller/camp-controller";
+import { updateCampById } from "@controller/camp-controller";
 import { getAllMajors } from "@controller/major-controller";
 
 export async function load({ parent }: PageServerLoadEvent) {
@@ -23,14 +23,14 @@ export async function load({ parent }: PageServerLoadEvent) {
 
 export const actions: Actions = {
 	default: async ({ request, params }) => {
-		if (!params.id) return fail(403, { message: "Not allowed" });
+		if (!params.id) return fail(400, { message: "Invalid ID" });
 		const form = await superValidate(request, zod(campFormSchema));
 
 		if (!form.valid) return fail(400, { form });
 
 		const body = { ...form.data, laundryPrice: parseFloat(form.data.laundryPrice) };
 
-		await updateCamp(+params.id!, body);
+		await updateCampById(params.id!, body);
 		console.log("Update camp success");
 
 		return message(form, "Update camp success");

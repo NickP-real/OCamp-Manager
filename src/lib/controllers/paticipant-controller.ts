@@ -2,7 +2,7 @@ import {
 	insertParticipantSchema,
 	selectParticipantSchema,
 	type CreateParticipant
-} from "@db/schema/users";
+} from "@db/schema/participant";
 import * as participantRepository from "../repositories/participant-repository";
 import type { z } from "zod";
 
@@ -18,10 +18,10 @@ const updateParticipantSchema = createParticipantSchema.partial();
 type UpdateParticipantBody = z.infer<typeof updateParticipantSchema>;
 
 export async function getAllParticipants() {
-	return participantRepository.getParticipants();
+	return participantRepository.getAll();
 }
 
-export async function getParticipantById(id: number) {
+export async function getParticipantById(id: string) {
 	try {
 		const participant = await participantRepository.getParticipantById(id);
 		return selectParticipantSchema.parse(participant);
@@ -34,6 +34,6 @@ export async function createParticipant(data: CreateParticipant) {
 	await participantRepository.createParticipant(data);
 }
 
-export async function updateParticipant(id: number, data: UpdateParticipantBody) {
+export async function updateParticipant(id: string, data: UpdateParticipantBody) {
 	await participantRepository.updateParticipantById(id, data);
 }

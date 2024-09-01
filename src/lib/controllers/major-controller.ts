@@ -1,4 +1,4 @@
-import { insertMajorSchema, selectMajorSchema } from "@db/schema/camps";
+import { insertMajorSchema, selectMajorSchema } from "@db/schema/major";
 import * as majorRepostiory from "@repository/major-repository";
 import type { z } from "zod";
 
@@ -14,11 +14,11 @@ type CreateMajorBody = z.infer<typeof createMajorSchema>;
 type UpdateMajorBody = z.infer<typeof updateMajorSchema>;
 
 export async function getAllMajors() {
-	const data = await majorRepostiory.getMajors();
+	const data = await majorRepostiory.getAll();
 	return selectMajorSchema.array().parse(data);
 }
 
-export async function getMajorById(id: number) {
+export async function getMajorById(id: string) {
 	return majorRepostiory.getMajorById(id);
 }
 
@@ -31,7 +31,7 @@ export async function createMajor(data: CreateMajorBody) {
 	}
 }
 
-export async function updateMajor(id: number, data: UpdateMajorBody) {
+export async function updateMajor(id: string, data: UpdateMajorBody) {
 	try {
 		const body = updateMajorSchema.parse(data);
 		await majorRepostiory.updateMajorById(id, body);

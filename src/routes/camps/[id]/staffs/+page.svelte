@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from "$app/stores";
 	import Table from "$lib/components/table/Table.svelte";
-	import type { Staff } from "@db/schema/users";
+	import type { Staff } from "@db/schema/staff";
 	import { createColumnHelper } from "@tanstack/svelte-table";
 
 	export let data;

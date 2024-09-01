@@ -2,7 +2,7 @@ import { z } from "zod";
 
 const searchParamsSchema = z.union([z.string().trim().min(1), z.number()]);
 
-export const idSchema = searchParamsSchema.transform(Number);
+export const idSchema = searchParamsSchema.transform(String);
 
 const DEFAULT_PAGE = 1;
 const DEFAULT_PER_PAGE = 20;
