@@ -3,7 +3,7 @@
 	import type { HTMLInputAttributes } from "svelte/elements";
 	import { type InputEvents } from "./type";
 
-	type $$Props = HTMLInputAttributes & { onChange: HTMLInputAttributes["on:change"] };
+	type $$Props = HTMLInputAttributes & { onChange?: HTMLInputAttributes["on:change"] };
 	type $$Events = InputEvents;
 
 	let className: $$Props["class"] = undefined;
