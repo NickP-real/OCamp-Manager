@@ -7,6 +7,24 @@ on:
       - main
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up environment
+        run: |
+          mv .env.test .env
+
+      - name: Install dependencies
+        run: |
+          npm install -g bun
+          bun install
+
+      - name: lint
+        run: |
+          bun lint
   check:
     runs-on: ubuntu-latest
     steps:
@@ -22,6 +40,6 @@ jobs:
           npm install -g bun
           bun install
 
-      - name: bun check
+      - name: check
         run: |
           bun check
