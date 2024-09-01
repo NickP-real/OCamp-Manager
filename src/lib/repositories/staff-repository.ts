@@ -14,8 +14,7 @@ export async function getStaffById(id: string) {
 	const staffData = await db
 		.select()
 		.from(staff)
-		.where(and(isExist, eq(staff.id, id)))
-		.limit(1);
+		.where(and(isExist, eq(staff.id, id)));
 
 	ifEmptyThrowError(staffData, "Staff data is not found");
 
