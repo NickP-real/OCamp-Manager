@@ -19,4 +19,4 @@
 
 <a href="/staffs/create">Add staff</a>
 
-<Table data={[]} {columns} />
+<Table data={staffs ?? []} {columns} />
