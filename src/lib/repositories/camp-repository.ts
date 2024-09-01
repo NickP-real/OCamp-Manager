@@ -27,10 +27,9 @@ function withCampMajors<T extends PgSelect>(qb: T) {
 }
 
 export async function getCampById(id: string) {
-	const campData = await makeCampByIdDynamicQuery(id).limit(1);
+	const campData = await makeCampByIdDynamicQuery(id);
 	ifEmptyThrowError(campData, "Camp data not found");
 
-	// return selectCampSchema.parse(campData.at(0));
 	return campData[0];
 }
 
@@ -38,7 +37,6 @@ export async function getCampWithCampMajorsById(id: string) {
 	const campData = await withCampMajors(makeCampByIdDynamicQuery(id));
 	ifEmptyThrowError(campData, "Camp data not found");
 
-	// return selectCampSchema.parse(campData.at(0));
 	return campData;
 }
 
