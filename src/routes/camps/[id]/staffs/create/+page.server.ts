@@ -15,11 +15,11 @@ export const load: PageServerLoad = async () => {
 
 export const actions: Actions = {
 	default: async ({ request, params: { id: campId } }) => {
-		if (!campId) return fail(403, { message: "Not Allowed" });
+		if (!campId) return fail(400, { message: "Invalid Camp ID" });
 		const form = await superValidate(request, zod(campStaffSchema));
 
 		if (!form.valid) return fail(400, { form });
-		await createCampStaff({ campId: +campId, ...form.data });
+		await createCampStaff({ campId: campId, ...form.data });
 
 		return message(form, "Add staff to camp successful.");
 	}

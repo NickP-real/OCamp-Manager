@@ -23,14 +23,14 @@ export async function load({ parent }: PageServerLoadEvent) {
 
 export const actions: Actions = {
 	default: async ({ request, params }) => {
-		if (!params.id) return fail(403, { message: "Not allowed" });
+		if (!params.id) return fail(400, { message: "Invalid ID" });
 		const form = await superValidate(request, zod(campFormSchema));
 
 		if (!form.valid) return fail(400, { form });
 
 		const body = { ...form.data, laundryPrice: parseFloat(form.data.laundryPrice) };
 
-		await updateCampById(+params.id!, body);
+		await updateCampById(params.id!, body);
 		console.log("Update camp success");
 
 		return message(form, "Update camp success");

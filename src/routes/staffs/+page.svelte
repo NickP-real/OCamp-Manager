@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Table from "$lib/components/table/Table.svelte";
-	import type { Staff } from "@db/schema/users";
+	import type { Staff } from "@db/schema/staff.js";
+	
 	import { createColumnHelper } from "@tanstack/svelte-table";
 
 	export let data;
