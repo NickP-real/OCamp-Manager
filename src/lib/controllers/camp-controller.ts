@@ -7,7 +7,7 @@ import * as campStaffRepository from "@repository/camp-staff-repository";
 import * as campService from "@service/camp-service";
 
 import type { CampMajor } from "@db/schema/camp-major";
-import { type CreateCampStaff, insertCampStaffSchema } from "@db/schema/camp-staff";
+import { type CampStaff, type CreateCampStaff, insertCampStaffSchema } from "@db/schema/camp-staff";
 import { validateCreateCampRequest } from "$lib/validators/camp-validator";
 
 import type { Camp } from "@db/schema/camp";
@@ -22,7 +22,7 @@ export async function getAll() {
 	return campRepository.getAll();
 }
 
-export async function getCampById(id: string) {
+export async function getCampById(id: Camp["id"]) {
 	const data = await campRepository.getCampWithCampMajorsById(id);
 
 	return data.reduce((prev, { camp, camp_major }) => {
@@ -37,7 +37,7 @@ export async function createCamp(data: CreateCampRequestDTO) {
 	await campRepository.createCamp(body);
 }
 
-export async function updateCampById(id: string, data: CampFormBody): Promise<CampFormBody> {
+export async function updateCampById(id: Camp["id"], data: CampFormBody): Promise<CampFormBody> {
 	try {
 		const { campMajors: majorData, ...campData } = data;
 
@@ -70,7 +70,7 @@ export async function createCampStaff(data: CreateCampStaff) {
 	}
 }
 
-export async function updateCampStaff(campStaffId: string, data: CreateCampStaff) {
+export async function updateCampStaff(campStaffId: CampStaff["id"], data: CreateCampStaff) {
 	try {
 		const body = insertCampStaffSchema.parse(data);
 		await campStaffRepository.updateCampStaffById(campStaffId, body);

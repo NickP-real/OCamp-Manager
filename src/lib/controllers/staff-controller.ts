@@ -1,5 +1,10 @@
 import * as staffRepository from "$lib/repositories/staff-repository";
-import { insertStaffSchema, selectStaffSchema, type CreateStaff } from "@db/schema/staff";
+import {
+	insertStaffSchema,
+	selectStaffSchema,
+	type CreateStaff,
+	type Staff
+} from "@db/schema/staff";
 
 export async function getAllStaffs() {
 	try {
@@ -11,7 +16,7 @@ export async function getAllStaffs() {
 	}
 }
 
-export async function getStaffById(id: string) {
+export async function getStaffById(id: Staff["id"]) {
 	try {
 		const data = await staffRepository.getStaffById(id);
 		return selectStaffSchema.parse(data);
@@ -29,7 +34,7 @@ export async function createStaff(data: CreateStaff) {
 	}
 }
 
-export async function updateStaffById(id: string, data: CreateStaff) {
+export async function updateStaffById(id: Staff["id"], data: CreateStaff) {
 	try {
 		const body = insertStaffSchema.parse(data);
 		await staffRepository.updateStaffById(id, body);

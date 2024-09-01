@@ -1,7 +1,8 @@
 import {
 	insertParticipantSchema,
 	selectParticipantSchema,
-	type CreateParticipant
+	type CreateParticipant,
+	type Participant
 } from "@db/schema/participant";
 import * as participantRepository from "../repositories/participant-repository";
 import type { z } from "zod";
@@ -21,7 +22,7 @@ export async function getAllParticipants() {
 	return participantRepository.getAll();
 }
 
-export async function getParticipantById(id: string) {
+export async function getParticipantById(id: Participant["id"]) {
 	try {
 		const participant = await participantRepository.getParticipantById(id);
 		return selectParticipantSchema.parse(participant);
@@ -34,6 +35,6 @@ export async function createParticipant(data: CreateParticipant) {
 	await participantRepository.createParticipant(data);
 }
 
-export async function updateParticipant(id: string, data: UpdateParticipantBody) {
+export async function updateParticipant(id: Participant["id"], data: UpdateParticipantBody) {
 	await participantRepository.updateParticipantById(id, data);
 }

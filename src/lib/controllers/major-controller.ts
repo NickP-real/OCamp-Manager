@@ -1,4 +1,4 @@
-import { insertMajorSchema, selectMajorSchema } from "@db/schema/major";
+import { insertMajorSchema, selectMajorSchema, type Major } from "@db/schema/major";
 import * as majorRepostiory from "@repository/major-repository";
 import type { z } from "zod";
 
@@ -18,7 +18,7 @@ export async function getAllMajors() {
 	return selectMajorSchema.array().parse(data);
 }
 
-export async function getMajorById(id: string) {
+export async function getMajorById(id: Major["id"]) {
 	return majorRepostiory.getMajorById(id);
 }
 
@@ -31,7 +31,7 @@ export async function createMajor(data: CreateMajorBody) {
 	}
 }
 
-export async function updateMajor(id: string, data: UpdateMajorBody) {
+export async function updateMajor(id: Major["id"], data: UpdateMajorBody) {
 	try {
 		const body = updateMajorSchema.parse(data);
 		await majorRepostiory.updateMajorById(id, body);

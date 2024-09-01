@@ -3,6 +3,7 @@ import { db } from "@db/index";
 import {
 	type CreateStaffAccount,
 	selectStaffAccountSchema,
+	type StaffAccount,
 	staffAccount
 } from "@db/schema/staff-account";
 
@@ -19,7 +20,7 @@ export async function getAll() {
 	return staffAccountList.parse(allStaffAccount);
 }
 
-export async function getStaffAccountById(id: string) {
+export async function getStaffAccountById(id: StaffAccount["id"]) {
 	const staffAccountData = await db
 		.select()
 		.from(staffAccount)
@@ -31,7 +32,7 @@ export async function getStaffAccountById(id: string) {
 	return selectStaffAccountSchema.parse(staffAccountData.at(0));
 }
 
-export async function getStaffAccountByStaffId(staffId: string) {
+export async function getStaffAccountByStaffId(staffId: StaffAccount["staffId"]) {
 	const staffAccountData = await db
 		.select()
 		.from(staffAccount)
@@ -44,26 +45,29 @@ export async function createStaffAccount(data: CreateStaffAccount) {
 	await db.insert(staffAccount).values(data);
 }
 
-export async function updateStaffAccountById(id: string, data: UpdateStaffAccountBody) {
+export async function updateStaffAccountById(id: StaffAccount["id"], data: UpdateStaffAccountBody) {
 	await db
 		.update(staffAccount)
 		.set({ ...data, updatedAt: new Date() })
 		.where(and(isExist, eq(staffAccount.id, id)));
 }
-export async function updateStaffAccountByStaffId(staffId: string, data: UpdateStaffAccountBody) {
+export async function updateStaffAccountByStaffId(
+	staffId: StaffAccount["staffId"],
+	data: UpdateStaffAccountBody
+) {
 	await db
 		.update(staffAccount)
 		.set({ ...data, updatedAt: new Date() })
 		.where(and(isExist, eq(staffAccount.staffId, staffId)));
 }
 
-export async function deleteStaffAccountById(id: string) {
+export async function deleteStaffAccountById(id: StaffAccount["id"]) {
 	await db
 		.update(staffAccount)
 		.set({ deletedAt: new Date() })
 		.where(and(isExist, eq(staffAccount.id, id)));
 }
-export async function deleteStaffAccountByStaffId(staffId: string) {
+export async function deleteStaffAccountByStaffId(staffId: StaffAccount["staffId"]) {
 	await db
 		.update(staffAccount)
 		.set({ deletedAt: new Date() })

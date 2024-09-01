@@ -1,11 +1,12 @@
 import { isExisted } from "$lib/utils/db-utils";
 import { db } from "@db/index";
-import { campParticipant } from "@db/schema/camp-participant";
+import { campParticipant, type CampParticipant } from "@db/schema/camp-participant";
 
 import {
 	participant,
 	selectParticipantSchema,
-	type CreateParticipant
+	type CreateParticipant,
+	type Participant
 } from "@db/schema/participant";
 import { and, eq } from "drizzle-orm";
 
@@ -20,7 +21,7 @@ export async function getAll() {
 	return participantList.parse(allParticipants);
 }
 
-export async function getParticipantById(id: string) {
+export async function getParticipantById(id: Participant["id"]) {
 	const participantData = await db
 		.select()
 		.from(participant)
@@ -30,7 +31,7 @@ export async function getParticipantById(id: string) {
 	return participantData[0];
 }
 
-export async function getParticipantsByCampId(campId: string, tx = db) {
+export async function getParticipantsByCampId(campId: CampParticipant["campId"], tx = db) {
 	return await tx
 		.select({ participant })
 		.from(participant)
@@ -42,14 +43,14 @@ export async function createParticipant(data: CreateParticipant, tx = db) {
 	return await tx.insert(participant).values(data).returning();
 }
 
-export async function updateParticipantById(id: string, data: UpdateParticipantBody) {
+export async function updateParticipantById(id: Participant["id"], data: UpdateParticipantBody) {
 	await db
 		.update(participant)
 		.set({ ...data, updatedAt: new Date() })
 		.where(and(isExist, eq(participant.id, id)));
 }
 
-export async function deleteParticipantById(id: string) {
+export async function deleteParticipantById(id: Participant["id"]) {
 	await db
 		.update(participant)
 		.set({ deletedAt: new Date() })

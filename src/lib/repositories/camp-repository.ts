@@ -14,7 +14,7 @@ export async function getAll(): Promise<Camp[]> {
 }
 
 // query builder
-function makeCampByIdDynamicQuery(id: string) {
+function makeCampByIdDynamicQuery(id: Camp["id"]) {
 	return db
 		.select()
 		.from(camp)
@@ -26,14 +26,14 @@ function withCampMajors<T extends PgSelect>(qb: T) {
 	return qb.leftJoin(campMajor, eq(campMajor.campId, camp.id));
 }
 
-export async function getCampById(id: string) {
+export async function getCampById(id: Camp["id"]) {
 	const campData = await makeCampByIdDynamicQuery(id);
 	ifEmptyThrowError(campData, "Camp data not found");
 
 	return campData.at(0);
 }
 
-export async function getCampWithCampMajorsById(id: string) {
+export async function getCampWithCampMajorsById(id: Camp["id"]) {
 	const campData = await withCampMajors(makeCampByIdDynamicQuery(id));
 	ifEmptyThrowError(campData, "Camp data not found");
 
@@ -44,7 +44,7 @@ export async function createCamp(data: CreateCamp) {
 	await db.insert(camp).values(data);
 }
 
-export async function updateCampById(id: string, data: CreateCamp, tx = db) {
+export async function updateCampById(id: Camp["id"], data: CreateCamp, tx = db) {
 	return (
 		await tx
 			.update(camp)
@@ -54,7 +54,7 @@ export async function updateCampById(id: string, data: CreateCamp, tx = db) {
 	)[0];
 }
 
-export async function deleteCampById(id: string) {
+export async function deleteCampById(id: Camp["id"]) {
 	await db
 		.update(camp)
 		.set({ deletedAt: new Date() })

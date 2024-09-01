@@ -2,6 +2,7 @@ import { ifEmptyThrowError, isExisted } from "$lib/utils/db-utils";
 import { db } from "@db/index";
 import {
 	type CreateRoomLaundryItem,
+	type RoomLaundryItem,
 	roomLaundryItem,
 	selectRoomLaundryItemSchema
 } from "@db/schema/room-laundry-item";
@@ -19,7 +20,7 @@ export async function getAll() {
 	return roomLaundryItemList.parse(allRoomLaundryItems);
 }
 
-export async function getRoomLaundryItemById(id: string) {
+export async function getRoomLaundryItemById(id: RoomLaundryItem["id"]) {
 	const roomLaundryItemData = await db
 		.select()
 		.from(roomLaundryItem)
@@ -31,7 +32,7 @@ export async function getRoomLaundryItemById(id: string) {
 	return selectRoomLaundryItemSchema.parse(roomLaundryItemData.at(0));
 }
 
-export async function getRoomLaundryItemsByRoomId(roomId: string) {
+export async function getRoomLaundryItemsByRoomId(roomId: RoomLaundryItem["roomId"]) {
 	const allRoomLaundryItems = await db
 		.select()
 		.from(roomLaundryItem)
@@ -64,14 +65,14 @@ export async function updateRoomLaundryItemsByRoomId(
 	});
 }
 
-export async function deleteRoomLaundryItemById(id: string) {
+export async function deleteRoomLaundryItemById(id: RoomLaundryItem["id"]) {
 	await db
 		.update(roomLaundryItem)
 		.set({ deletedAt: new Date() })
 		.where(and(isExist, eq(roomLaundryItem.id, id)));
 }
 
-export async function deleteRoomLaundryItemsByRoomId(roomId: string) {
+export async function deleteRoomLaundryItemsByRoomId(roomId: RoomLaundryItem["roomId"]) {
 	await db
 		.update(roomLaundryItem)
 		.set({ deletedAt: new Date() })

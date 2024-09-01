@@ -3,7 +3,8 @@ import { db } from "@db/index";
 import {
 	laundryItem,
 	selectLaundryItemSchema,
-	type CreateLaundryItem
+	type CreateLaundryItem,
+	type LaundryItem
 } from "@db/schema/laundry-item";
 import { and, eq, like } from "drizzle-orm";
 
@@ -18,7 +19,7 @@ export async function getAll() {
 	return laundryItemList.parse(allLaundryItems);
 }
 
-export async function getLaundryItemById(id: string) {
+export async function getLaundryItemById(id: LaundryItem["id"]) {
 	const laundryItemData = await db
 		.select()
 		.from(laundryItem)
@@ -30,7 +31,7 @@ export async function getLaundryItemById(id: string) {
 	return selectLaundryItemSchema.parse(laundryItemData.at(0));
 }
 
-export async function getLaundryItemByName(name: string) {
+export async function getLaundryItemByName(name: LaundryItem["name"]) {
 	const laundryItemData = await db
 		.select()
 		.from(laundryItem)
@@ -43,14 +44,14 @@ export async function createLaundryItem(data: CreateLaundryItem) {
 	await db.insert(laundryItem).values(data);
 }
 
-export async function updateLaundryItemById(id: string, data: UpdateLaundryItemBody) {
+export async function updateLaundryItemById(id: LaundryItem["id"], data: UpdateLaundryItemBody) {
 	await db
 		.update(laundryItem)
 		.set({ ...data, updatedAt: new Date() })
 		.where(and(isExist, eq(laundryItem.id, id)));
 }
 
-export async function deleteLaundryItemById(id: string) {
+export async function deleteLaundryItemById(id: LaundryItem["id"]) {
 	await db
 		.update(laundryItem)
 		.set({ deletedAt: new Date() })

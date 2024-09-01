@@ -1,6 +1,6 @@
 import { ifEmptyThrowError, isExisted } from "$lib/utils/db-utils";
 import { db } from "@db/index";
-import { type CreateMajor, major, selectMajorSchema } from "@db/schema/major";
+import { type CreateMajor, type Major, major, selectMajorSchema } from "@db/schema/major";
 
 import { and, eq, like } from "drizzle-orm";
 
@@ -12,7 +12,7 @@ export async function getAll() {
 	return await db.select().from(major).where(isExist);
 }
 
-export async function getMajorById(id: string) {
+export async function getMajorById(id: Major["id"]) {
 	const majorData = await db
 		.select()
 		.from(major)
@@ -24,7 +24,7 @@ export async function getMajorById(id: string) {
 	return selectMajorSchema.parse(majorData.at(0));
 }
 
-export async function getMajorByName(name: string) {
+export async function getMajorByName(name: Major["name"]) {
 	const majorData = await db
 		.select()
 		.from(major)
@@ -37,14 +37,14 @@ export async function createMajor(data: CreateMajor) {
 	await db.insert(major).values(data);
 }
 
-export async function updateMajorById(id: string, data: UpdateMajorBody) {
+export async function updateMajorById(id: Major["id"], data: UpdateMajorBody) {
 	await db
 		.update(major)
 		.set({ ...data, updatedAt: new Date() })
 		.where(and(isExist, eq(major.id, id)));
 }
 
-export async function deleteMajorById(id: string) {
+export async function deleteMajorById(id: Major["id"]) {
 	await db
 		.update(major)
 		.set({ deletedAt: new Date() })
