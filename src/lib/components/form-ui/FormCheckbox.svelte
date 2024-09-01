@@ -2,6 +2,8 @@
 	lang="ts"
 	generics="T extends Record<string, unknown>, K extends FormPathLeaves<T, boolean>"
 >
+	import Checkbox from "../ui/Checkbox.svelte";
+
 	import type { HTMLInputAttributes } from "svelte/elements";
 
 	import type { FormFieldProps, WithLabel } from "./type";
@@ -19,6 +21,6 @@
 </script>
 
 <FormLabel class="flex items-center gap-2">
-	<input {name} type="checkbox" class="rounded border" bind:checked={$value} />
+	<Checkbox {name} bind:checked={$value} />
 	<span>{label}</span>
 </FormLabel>
