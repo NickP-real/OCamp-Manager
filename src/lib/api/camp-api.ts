@@ -13,9 +13,9 @@ export async function getCampParticipantsByCampIdApi(
 ) {
 	const parsedId = idSchema.parse(campId);
 	const searchParams = getSearchParamsFromCollectionParams(collectionParams);
-	const res = await api<Participant[]>(
-		`/api/camps/${parsedId}/participants?${searchParams.toString()}`
-	);
+	const url = new URL(`/api/camps/${parsedId}/participants?`);
+	url.search = searchParams.toString();
+	const res = await api<Participant[]>(url);
 	return await res.json();
 }
 
@@ -25,7 +25,9 @@ export async function getCampStaffsByCampIdApi(
 ) {
 	const parsedId = idSchema.parse(campId);
 	const searchParams = getSearchParamsFromCollectionParams(collectionParams);
-	const res = await api<Staff[]>(`/api/camps/${parsedId}/staffs?${searchParams.toString()}`);
+	const url = new URL(`/api/camps/${parsedId}/staffs`);
+	url.search = searchParams.toString();
+	const res = await api<Staff[]>(url);
 
 	return await res.json();
 }

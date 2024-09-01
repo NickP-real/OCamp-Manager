@@ -16,12 +16,14 @@ interface TypedResponse<T> extends Response {
 	json(): Promise<T>;
 }
 
+type RequestInput = RequestInfo | URL;
+
 declare function fetch<ResponseType = unknown>(
-	input: RequestInfo,
+	input: RequestInput,
 	options?: RequestInit
 ): Promise<TypedResponse<ResponseType>>;
 
 // fetch wrapper
-export async function api<T = unknown>(url: RequestInfo, options?: RequestInit) {
+export async function api<T = unknown>(url: RequestInput, options?: RequestInit) {
 	return await fetch<T>(url, options);
 }
