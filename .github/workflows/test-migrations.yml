@@ -7,7 +7,7 @@ on:
       - main
 
 jobs:
-  test-migrations:
+  test--migrations:
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -41,6 +41,9 @@ jobs:
         run: |
           bun db:check
           bun db:migrate
+      - name: Check vercel db
+        run: |
+          bun db-vercel:check
 
       # - name: Run tests
       #   run: |
