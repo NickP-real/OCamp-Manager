@@ -13,7 +13,7 @@ export async function getAll() {
 }
 
 export async function getCampMajorById(id: string) {
-	const campMajorData = await db.select().from(campMajor).where(eq(campMajor.id, id)).limit(1);
+	const campMajorData = await db.select().from(campMajor).where(eq(campMajor.id, id));
 
 	ifEmptyThrowError(campMajorData, "Camp major data is not found");
 

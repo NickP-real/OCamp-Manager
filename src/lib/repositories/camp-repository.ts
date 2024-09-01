@@ -30,7 +30,7 @@ export async function getCampById(id: string) {
 	const campData = await makeCampByIdDynamicQuery(id);
 	ifEmptyThrowError(campData, "Camp data not found");
 
-	return campData[0];
+	return campData.at(0);
 }
 
 export async function getCampWithCampMajorsById(id: string) {
