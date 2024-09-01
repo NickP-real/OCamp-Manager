@@ -41,10 +41,19 @@ jobs:
         run: |
           bun db:check
           bun db:migrate
+
+  check-vercel-db:
+    runs-on: ubuntu-latest
+    needs: test-migrations
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          npm install -g bun
+          bun install
+
       - name: Check vercel db
         run: |
           bun db-vercel:check
-
-      # - name: Run tests
-      #   run: |
-      #     bun test
