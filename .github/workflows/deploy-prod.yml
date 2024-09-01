@@ -1,0 +1,36 @@
+name: Deploy to Production
+
+on:
+  workflow_dispatch:
+
+jobs:
+  pull-rebase:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Pull rebase "deploy" branch from "main"
+        run: |
+          git fetch origin
+          git checkout deploy
+          git pull --rebase origin main
+          git push origin deploy
+  migrate-db-prod:
+    runs-on: ubuntu-latest
+    needs: pull-rebase
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          ref: deploy
+
+      - name: Install dependencies
+        run: |
+          npm install -g bun
+          bun install
+      - name: Migrate DB prod
+        run: |
+          bun db-vercel:migrate
