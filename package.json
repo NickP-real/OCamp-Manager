@@ -18,12 +18,14 @@
 		"db:migrate": "drizzle-kit migrate",
 		"db:check": "drizzle-kit check",
 		"db:studio": "drizzle-kit studio",
+    "db:seed": "bun run ./src/db/seeds/index.ts",
 		"db-vercel:push": "drizzle-kit push --config ./drizzle.config.vercel.ts",
 		"db-vercel:migrate": "drizzle-kit migrate --config ./drizzle.config.vercel.ts",
 		"db-vercel:check": "drizzle-kit check --config ./drizzle.config.vercel.ts",
 		"db-vercel:studio": "drizzle-kit studio --config ./drizzle.config.vercel.ts"
 	},
 	"devDependencies": {
+		"@faker-js/faker": "^8.4.1",
 		"@fontsource/fira-mono": "^5.0.14",
 		"@neoconfetti/svelte": "^2.2.1",
 		"@playwright/test": "^1.46.1",
