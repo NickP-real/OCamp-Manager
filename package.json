@@ -19,6 +19,7 @@
 		"db:check": "drizzle-kit check",
 		"db:studio": "drizzle-kit studio",
     "db:seed": "bun run ./src/db/seeds/index.ts",
+    "db:nuke": "bun run ./src/db/scripts/nuke.ts",
 		"db-vercel:push": "drizzle-kit push --config ./drizzle.config.vercel.ts",
 		"db-vercel:migrate": "drizzle-kit migrate --config ./drizzle.config.vercel.ts",
 		"db-vercel:check": "drizzle-kit check --config ./drizzle.config.vercel.ts",
