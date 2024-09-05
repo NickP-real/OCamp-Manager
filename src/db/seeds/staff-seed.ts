@@ -1,11 +1,11 @@
 import { staff } from "@db/schema/staff";
 import { generateEntityId } from "@db/utils/entity-utils";
 import { faker } from "@faker-js/faker";
-import type { DB } from "@db/utils/db-instance-utils";
+import { db } from "..";
 
 const SEED_SIZE = 20;
 
-export async function seedStaff(db: DB) {
+export async function seedStaff() {
 	await Promise.all(
 		Array.from({ length: SEED_SIZE }, async () => {
 			const id = generateEntityId("staff");
