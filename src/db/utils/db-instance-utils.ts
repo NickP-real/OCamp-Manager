@@ -5,7 +5,8 @@ import pg from "pg";
 
 export type DB = NodePgDatabase | VercelPgDatabase;
 export async function createDBInstance(databaseURL?: string): Promise<DB> {
-	if (process.env.NODE_ENV === "development") {
+	const env = process.env.NODE_ENV ?? process.env.VERCEL_ENV ?? "development";
+	if (env === "development") {
 		const { Client } = pg;
 		const client = new Client({ connectionString: databaseURL });
 		await client.connect();
