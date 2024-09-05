@@ -1,18 +1,4 @@
-import { sql } from "@vercel/postgres";
-import { drizzle as prodDrizzle, type VercelPgDatabase } from "drizzle-orm/vercel-postgres";
-import pg from "pg";
-import { drizzle as localDrizzle, type NodePgDatabase } from "drizzle-orm/node-postgres";
+import { env } from "$env/dynamic/private";
+import { createDBInstance } from "./utils/db-instance-utils";
 
-export let db: NodePgDatabase | VercelPgDatabase;
-export type DB = typeof db;
-
-// local pg
-if (process.env.NODE_ENV === "development") {
-	const { Client } = pg;
-	const client = new Client({ connectionString: process.env.DATABASE_URL });
-	await client.connect();
-	db = localDrizzle(client, { logger: true });
-} else {
-	// vercel
-	db = prodDrizzle(sql, { logger: true });
-}
+export const db = await createDBInstance(env.DATABASE_URL);

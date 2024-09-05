@@ -1,5 +1,4 @@
 import { camp } from "@db/schema/camp";
-import { db } from "..";
 import { staff } from "@db/schema/staff";
 import { major } from "@db/schema/major";
 import { participant } from "@db/schema/participant";
@@ -12,8 +11,10 @@ import { roomStaff } from "@db/schema/room-staff";
 import { roomParticipant } from "@db/schema/room-participant";
 import { roomLaundryItem } from "@db/schema/room-laundry-item";
 import { laundryItem } from "@db/schema/laundry-item";
+import { createDBInstance } from "@db/utils/db-instance-utils";
 
 async function main() {
+	const db = await createDBInstance(process.env.DATABASE_URL);
 	await db.delete(campMajor);
 	await db.delete(campParticipant);
 	await db.delete(campStaff);

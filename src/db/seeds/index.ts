@@ -1,9 +1,11 @@
+import { createDBInstance } from "@db/utils/db-instance-utils";
 import { seedCamp } from "./camp-seed";
 import { seedStaff } from "./staff-seed";
 
 async function main() {
-	await seedCamp();
-	await seedStaff();
+	const db = await createDBInstance(process.env.DATABASE_URL);
+	await seedCamp(db);
+	await seedStaff(db);
 }
 
 await main()

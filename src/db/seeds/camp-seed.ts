@@ -1,12 +1,12 @@
 import { camp } from "@db/schema/camp";
-import { db } from "..";
 import { faker } from "@faker-js/faker";
 import dayjs from "dayjs";
 import { generateEntityId } from "@db/utils/entity-utils";
+import type { DB } from "@db/utils/db-instance-utils";
 
 export const CAMP_SEED_SIZE = 5;
 
-export async function seedCamp() {
+export async function seedCamp(db: DB) {
 	await Promise.all(
 		Array.from({ length: CAMP_SEED_SIZE }, async () => {
 			const id = generateEntityId("camp");
