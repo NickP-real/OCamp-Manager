@@ -9,11 +9,11 @@ on:
 jobs:
   test:
     runs-on: ubunti-latest
-  steps:
-    - name: install dependencies
-      run: |
-        npm install -g bun
-        bun install
-    name: test
-      run: |
-        bun test
+    steps:
+      - name: install dependencies
+        run: |
+          npm install -g bun
+          bun install
+      name: test
+        run: |
+          bun test
