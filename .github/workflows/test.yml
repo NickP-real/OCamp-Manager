@@ -1,4 +1,4 @@
-name: Unit Test
+name: Test Drizzle Migrations
 
 on:
   pull_request:
@@ -9,11 +9,66 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    needs: test-migrations
     steps:
-      - name: install dependencies
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
         run: |
           npm install -g bun
           bun install
-      name: test
+
+      - name: test
         run: |
           bun test
+  test-migrations:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: admin
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: ocamp
+        options: >-
+          --health-cmd="pg_isready -U admin"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up environment
+        run: |
+          mv .env.test .env
+
+      - name: Install dependencies
+        run: |
+          npm install -g bun
+          bun install
+
+      - name: Run Drizzle migrations
+        run: |
+          bun db:check
+          bun db:migrate
+
+  check-vercel-db:
+    runs-on: ubuntu-latest
+    needs: test-migrations
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          npm install -g bun
+          bun install
+
+      - name: Check vercel db
+        run: |
+          bun db-vercel:check
