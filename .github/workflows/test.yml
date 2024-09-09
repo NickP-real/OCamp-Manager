@@ -1,0 +1,19 @@
+name: Unit Test
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubunti-latest
+  steps:
+    - name: install dependencies
+      run: |
+        npm install -g bun
+        bun install
+    name: test
+      run: |
+        bun test

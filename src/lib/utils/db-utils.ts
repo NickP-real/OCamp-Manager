@@ -5,6 +5,6 @@ export function isExisted(deletedAtColumn: Column<ColumnBaseConfig<"date", strin
 	return isNull(deletedAtColumn);
 }
 
-export function ifEmptyThrowError<T>(data: T[], errorMessage: string) {
-	if (data.length === 0) throw Error(errorMessage);
+export function ifEmptyThrowError<T>(data: T[], errorMessage?: string) {
+	if (data.length === 0) throw Error(errorMessage ?? "Entity not found");
 }
