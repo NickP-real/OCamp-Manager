@@ -1,4 +1,4 @@
-name: Test Drizzle Migrations
+name: Test
 
 on:
   pull_request:
@@ -7,6 +7,20 @@ on:
       - main
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          npm install -g bun
+          bun install
+
+      - name: test
+        run: |
+          bun test
   test-migrations:
     runs-on: ubuntu-latest
     services:
