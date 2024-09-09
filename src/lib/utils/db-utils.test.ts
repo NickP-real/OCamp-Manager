@@ -15,7 +15,8 @@ describe("db utils", () => {
 				shouldError: false
 			}
 		];
-		test.each(testCases)("($name)", ({ input, errorMessage, shouldError }) => {
+
+		it.each(testCases)("$name", ({ input, errorMessage, shouldError }) => {
 			if (shouldError) {
 				expect(() => {
 					ifEmptyThrowError(input, errorMessage);
