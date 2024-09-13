@@ -8,9 +8,7 @@ import {
 
 export async function getAllStaffs() {
 	try {
-		const data = await staffRepository.getAll();
-
-		return selectStaffSchema.array().parse(data);
+		return await staffRepository.getAll();
 	} catch (error) {
 		console.log(error);
 	}

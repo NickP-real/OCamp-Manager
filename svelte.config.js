@@ -14,9 +14,11 @@ const config = {
 		adapter: adapter(),
 		alias: {
 			"@db/*": "./src/db/*",
-			"@repository/*": "./src/lib/repositories/*",
-			"@controller/*": "./src/lib/controllers/*",
-			"@service/*": "./src/lib/services/*"
+			"@repositories/*": "./src/lib/repositories/*",
+			"@controllers/*": "./src/lib/controllers/*",
+			"@services/*": "./src/lib/services/*",
+			"@client/*": "./src/lib/client/*",
+			"@components/*": "./src/lib/components/*"
 		}
 		// csrf: {
 		// 	checkOrigin: false

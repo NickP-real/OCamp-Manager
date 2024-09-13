@@ -1,5 +1,5 @@
 import { majorFormSchema } from "$lib/client/form/major-form";
-import { createMajor } from "@controller/major-controller";
+import { createMajor } from "@controllers/major-controller";
 import { fail, type Actions } from "@sveltejs/kit";
 import { superValidate } from "sveltekit-superforms";
 import { zod } from "sveltekit-superforms/adapters";

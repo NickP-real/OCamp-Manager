@@ -1,4 +1,4 @@
-import { getParticipantById } from "@controller/paticipant-controller";
+import { getParticipantById } from "@controllers/paticipant-controller";
 import { error } from "@sveltejs/kit";
 import type { LayoutServerLoad } from "./$types";
 

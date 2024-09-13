@@ -1,4 +1,4 @@
-import { getStaffById, updateStaffById } from "@controller/staff-controller";
+import { getStaffById, updateStaffById } from "@controllers/staff-controller";
 import type { PageServerLoad, Actions } from "./$types";
 import { message, superValidate, type Infer } from "sveltekit-superforms";
 import { zod } from "sveltekit-superforms/adapters";

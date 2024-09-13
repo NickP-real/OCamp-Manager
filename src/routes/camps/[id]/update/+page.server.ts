@@ -3,8 +3,8 @@ import type { PageServerLoadEvent, Actions } from "./$types";
 import { zod } from "sveltekit-superforms/adapters";
 import { campFormSchema, type CampFormBody } from "$lib/client/form/camp-form";
 import { fail } from "@sveltejs/kit";
-import { updateCampById } from "@controller/camp-controller";
-import { getAllMajors } from "@controller/major-controller";
+import { updateCampById } from "@controllers/camp-controller";
+import { getAllMajors } from "@controllers/major-controller";
 
 export async function load({ parent }: PageServerLoadEvent) {
 	const { camp } = await parent();

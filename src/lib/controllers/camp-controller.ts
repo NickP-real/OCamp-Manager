@@ -1,10 +1,10 @@
 import type { CampFormBody } from "$lib/client/form/camp-form";
 
-import * as campRepository from "@repository/camp-repository";
-import * as campMajorRepository from "@repository/camp-major-repository";
-import * as campStaffRepository from "@repository/camp-staff-repository";
+import * as campRepository from "@repositories/camp-repository";
+import * as campMajorRepository from "@repositories/camp-major-repository";
+import * as campStaffRepository from "@repositories/camp-staff-repository";
 
-import * as campService from "@service/camp-service";
+import * as campService from "@services/camp-service";
 
 import type { CampMajor } from "@db/schema/camp-major";
 import { type CampStaff, type CreateCampStaff, insertCampStaffSchema } from "@db/schema/camp-staff";
@@ -60,9 +60,9 @@ export async function updateCampById(id: Camp["id"], data: CampFormBody): Promis
 	}
 }
 
-export async function createCampStaff(data: CreateCampStaff) {
+export async function createCampStaff(data: CreateCampStaff[]) {
 	try {
-		const body = insertCampStaffSchema.parse(data);
+		const body = insertCampStaffSchema.array().parse(data);
 		await campStaffRepository.createCampStaff(body);
 	} catch (error) {
 		console.log(error);

@@ -40,7 +40,7 @@ export async function getCampStaffsByCampId(campId: CampStaff["campId"]) {
 	return campStaffList.parse(allCampStaffs);
 }
 
-export async function createCampStaff(data: CreateCampStaff) {
+export async function createCampStaff(data: CreateCampStaff[]) {
 	await db.insert(campStaff).values(data);
 }
 

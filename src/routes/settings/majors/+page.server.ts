@@ -1,4 +1,4 @@
-import { getAllMajors } from "@controller/major-controller";
+import { getAllMajors } from "@controllers/major-controller";
 
 export async function load() {
 	return { majors: getAllMajors() };

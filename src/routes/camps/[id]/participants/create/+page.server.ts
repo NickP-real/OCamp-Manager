@@ -1,5 +1,5 @@
 import { participantFormSchema } from "$lib/client/form/participant-form";
-import { createCampParticipant } from "@controller/camp-participant-controller";
+import { createCampParticipant } from "@controllers/camp-participant-controller";
 import { fail, type Actions } from "@sveltejs/kit";
 import { superValidate } from "sveltekit-superforms";
 import { zod } from "sveltekit-superforms/adapters";

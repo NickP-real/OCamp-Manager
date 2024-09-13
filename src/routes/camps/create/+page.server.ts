@@ -1,6 +1,6 @@
 import { campFormSchema } from "$lib/client/form/camp-form";
-import { createCamp } from "@controller/camp-controller";
-import { getAllMajors } from "@controller/major-controller";
+import { createCamp } from "@controllers/camp-controller";
+import { getAllMajors } from "@controllers/major-controller";
 import { fail, type Actions } from "@sveltejs/kit";
 import { message, superValidate } from "sveltekit-superforms";
 import { zod } from "sveltekit-superforms/adapters";

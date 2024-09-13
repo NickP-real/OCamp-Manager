@@ -3,7 +3,7 @@ import type { PageServerLoad } from "./$types";
 import { zod } from "sveltekit-superforms/adapters";
 import { staffFormSchema } from "$lib/client/form/staff-form";
 import type { Actions } from "@sveltejs/kit";
-import { createStaff } from "@controller/staff-controller";
+import { createStaff } from "@controllers/staff-controller";
 
 export const load: PageServerLoad = async () => {
 	const form = await superValidate(zod(staffFormSchema));

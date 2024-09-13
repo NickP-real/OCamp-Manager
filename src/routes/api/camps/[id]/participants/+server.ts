@@ -1,5 +1,5 @@
 import { idSchema } from "$lib/utils/params-utils.js";
-import { getCampParticipantsByCampId } from "@controller/camp-participant-controller.js";
+import { getCampParticipantsByCampId } from "@controllers/camp-participant-controller.js";
 import { json } from "@sveltejs/kit";
 
 export async function GET({ request, url, params: { id } }) {

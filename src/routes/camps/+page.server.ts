@@ -1,4 +1,4 @@
-import { getAll } from "@controller/camp-controller";
+import { getAll } from "@controllers/camp-controller";
 
 export async function load() {
 	return {

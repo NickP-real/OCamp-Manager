@@ -3,14 +3,18 @@ import type { PageServerLoad } from "./$types";
 import { zod } from "sveltekit-superforms/adapters";
 import { campStaffSchema } from "$lib/client/form/camp-staff-form";
 import { fail, type Actions } from "@sveltejs/kit";
-import { createCampStaff } from "@controller/camp-controller";
-import { getAllStaffs } from "@controller/staff-controller";
+import { createCampStaff } from "@controllers/camp-controller";
+import { getCampStaffsByCampId } from "@controllers/camp-staff-controller";
 
-export const load: PageServerLoad = async () => {
-	const form = await superValidate(zod(campStaffSchema));
-	const staffs = getAllStaffs();
+export const load: PageServerLoad = async ({ params: { id: campId } }) => {
+	if (!campId) return fail(400, { message: "Invalid Camp ID" });
+	const campStaffs = await getCampStaffsByCampId(campId);
+	const form = await superValidate(
+		{ staffIds: campStaffs?.map(({ id }) => id) },
+		zod(campStaffSchema)
+	);
 
-	return { form, staffs };
+	return { form };
 };
 
 export const actions: Actions = {

@@ -1,5 +1,5 @@
 import { insertMajorSchema, selectMajorSchema, type Major } from "@db/schema/major";
-import * as majorRepostiory from "@repository/major-repository";
+import * as majorRepostiory from "@repositories/major-repository";
 import type { z } from "zod";
 
 const createMajorSchema = insertMajorSchema.omit({

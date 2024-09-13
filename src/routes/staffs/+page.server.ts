@@ -1,4 +1,4 @@
-import { getAllStaffs } from "@controller/staff-controller";
+import { getAllStaffs } from "@controllers/staff-controller";
 import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async () => {
