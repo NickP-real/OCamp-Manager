@@ -4,4 +4,4 @@
 	export let data;
 </script>
 
-<CampStaffForm formData={data.form} staffs={data.staffs} />
+<CampStaffForm formData={data.form} />

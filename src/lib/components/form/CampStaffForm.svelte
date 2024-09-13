@@ -5,17 +5,45 @@
 	import { zodClient } from "sveltekit-superforms/adapters";
 	import * as Form from "$lib/components/form-ui";
 	import type { Staff } from "@db/schema/staff";
+	import Table from "../table/Table.svelte";
+	import { createColumnHelper } from "@tanstack/svelte-table";
+	import { onMount } from "svelte";
+	import { getStaffApi } from "$lib/api/staff-api";
+	import { page } from "$app/stores";
 
 	export let mode: FormMode = "create";
 	export let formData: SuperValidated<Infer<CampStaffSchema>>;
-	export let staffs: Promise<Staff[] | undefined>;
 
-	const form = superForm(formData, { validators: zodClient(campStaffSchema) });
+	let staffs: Staff[];
+
+	const columnHelper = createColumnHelper<Staff>();
+	const columns = [
+		columnHelper.accessor("firstName", { header: "First name", cell: (info) => info.getValue() }),
+		columnHelper.accessor("lastName", { header: "Last name", cell: (info) => info.getValue() }),
+		columnHelper.accessor("nickname", { header: "Nickname", cell: (info) => info.getValue() })
+	];
+
+	const form = superForm(formData, { validators: zodClient(campStaffSchema), dataType: "json" });
 	const { enhance, form: formFieldData } = form;
+	let selection = $formFieldData.staffIds.reduce(
+		(prev, current) => ({ ...prev, [current]: true }),
+		{}
+	);
 
-	function onStaffSelect(staff: CustomEvent<Staff>) {
-		$formFieldData.staffId = staff.detail.id;
+	async function fetchStaff() {
+		staffs = await getStaffApi();
 	}
+
+	function onStaffSelect() {
+		console.log("render");
+		$formFieldData.staffIds = Object.keys(selection);
+	}
+
+	$: selection, onStaffSelect();
+
+	onMount(() => {
+		fetchStaff();
+	});
 </script>
 
 <form method="post" use:enhance class="space-y-4">
@@ -27,17 +55,22 @@
 		{/if}
 	</Form.Title>
 
-	{#await staffs}
-		<Form.Skeleton>Loading staffs...</Form.Skeleton>
-	{:then staffs}
-		{#if !staffs}
-			<p>No staffs found</p>
-		{:else}
-			{@const items = staffs.map((staff) => ({
-				label: `${staff.firstName} ${staff.lastName}`,
-				value: staff
-			}))}
-			<Form.Combobox id="" {items} on:itemselect={onStaffSelect} />
-		{/if}
-	{/await}
+	<Table data={staffs ?? []} {columns} bind:selection idKey="id" />
+	<Form.ButtonSection>
+		<a href="/camps/{$page.params.id}/staffs">Cancel</a>
+		<button type="submit">Confirm</button>
+	</Form.ButtonSection>
+	<!-- {#await staffs} -->
+	<!-- 	<Form.Skeleton>Loading staffs...</Form.Skeleton> -->
+	<!-- {:then staffs} -->
+	<!-- {#if !staffs} -->
+	<!-- 	<p>No staffs found</p> -->
+	<!-- {:else} -->
+	<!-- 	{@const items = staffs.map((staff) => ({ -->
+	<!-- 		label: `${staff.firstName} ${staff.lastName}`, -->
+	<!-- 		value: staff -->
+	<!-- 	}))} -->
+	<!-- 	<Form.Combobox id="" {items} on:itemselect={onStaffSelect} /> -->
+	<!-- {/if} -->
+	<!-- {/await} -->
 </form>

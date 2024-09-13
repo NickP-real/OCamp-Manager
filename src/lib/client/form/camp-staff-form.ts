@@ -1,11 +1,7 @@
-import { insertCampStaffSchema } from "@db/schema/camp-staff";
+import { z } from "zod";
 
-export const campStaffSchema = insertCampStaffSchema.omit({
-	id: true,
-	campId: true,
-	createdAt: true,
-	updatedAt: true,
-	deletedAt: true
+export const campStaffSchema = z.object({
+	staffIds: z.string().array()
 });
 
 export type CampStaffSchema = typeof campStaffSchema;

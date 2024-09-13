@@ -12,7 +12,6 @@ export function createProgress(from: ProgressFrom, duration: number = DEFAULT_DU
 	const initial = from === "ltr" ? END : INTITIAL;
 	const end = from === "ltr" ? INTITIAL : END;
 	const store = tweened(initial, { duration, easing: linear });
-	console.log(initial, end);
 
 	function getCurrentProgress() {
 		return get(store);

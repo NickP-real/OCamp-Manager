@@ -33,6 +33,6 @@ export function createSearchParams(obj: Record<string, string | number | undefin
 }
 
 export function getSearchParamsFromCollectionParams(collectionParams?: CollectionParams) {
-	const params = collectionParamsSchema.parse(collectionParams);
+	const params = collectionParamsSchema.parse(collectionParams ?? {});
 	return createSearchParams(params);
 }

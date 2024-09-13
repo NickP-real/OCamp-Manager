@@ -61,7 +61,7 @@
 		state: { rowSelection: selection }
 	});
 
-	$: options.update((old) => ({ ...old, data })), console.log("change"), console.log(selection);
+	$: options.update((old) => ({ ...old, data }));
 
 	function onRowSelection(state: Updater<RowSelectionState>) {
 		if (!selection) return;

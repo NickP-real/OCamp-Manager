@@ -60,7 +60,7 @@ export async function updateCampById(id: Camp["id"], data: CampFormBody): Promis
 	}
 }
 
-export async function createCampStaff(data: CreateCampStaff[]) {
+export async function updateCampStaffs(data: CreateCampStaff[]) {
 	try {
 		const body = insertCampStaffSchema.array().parse(data);
 		await campStaffRepository.createCampStaff(body);

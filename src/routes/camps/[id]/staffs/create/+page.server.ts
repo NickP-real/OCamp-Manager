@@ -1,18 +1,18 @@
-import { message, superValidate } from "sveltekit-superforms";
+import { message, superValidate, type Infer } from "sveltekit-superforms";
 import type { PageServerLoad } from "./$types";
 import { zod } from "sveltekit-superforms/adapters";
-import { campStaffSchema } from "$lib/client/form/camp-staff-form";
+import { campStaffSchema, type CampStaffSchema } from "$lib/client/form/camp-staff-form";
 import { fail, type Actions } from "@sveltejs/kit";
-import { createCampStaff } from "@controllers/camp-controller";
+import { updateCampStaffs } from "@controllers/camp-controller";
 import { getCampStaffsByCampId } from "@controllers/camp-staff-controller";
 
 export const load: PageServerLoad = async ({ params: { id: campId } }) => {
-	if (!campId) return fail(400, { message: "Invalid Camp ID" });
+	// if (!campId) return fail(400, { message: "Invalid Camp ID" });
 	const campStaffs = await getCampStaffsByCampId(campId);
-	const form = await superValidate(
-		{ staffIds: campStaffs?.map(({ id }) => id) },
-		zod(campStaffSchema)
-	);
+	const formData: Infer<CampStaffSchema> = {
+		staffIds: campStaffs?.map(({ id }) => id) ?? []
+	};
+	const form = await superValidate(formData, zod(campStaffSchema));
 
 	return { form };
 };
@@ -23,7 +23,7 @@ export const actions: Actions = {
 		const form = await superValidate(request, zod(campStaffSchema));
 
 		if (!form.valid) return fail(400, { form });
-		await createCampStaff({ campId: campId, ...form.data });
+		await updateCampStaffs(form.data.staffIds.map((staffId) => ({ campId, staffId })));
 
 		return message(form, "Add staff to camp successful.");
 	}
